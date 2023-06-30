@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_ready/pages/addProductPage.dart';
 import 'package:get_ready/pages/homePage.dart';
 import 'package:get_ready/pages/lipsPage.dart';
 //Cette fonction permet de démarrer mon application
@@ -28,12 +29,16 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title:Text("Get Ready"),
+          title:[
+            Text("Get Ready"),
+            Text("Nos produits lèvres"),
+            Text("Ajouter un produit"),
+          ][_currentIndex],
         ),
         body: [
           HomePage(),
           LipsPage(),
-          LipsPage() //A changer
+          AddProductPage() //A changer
         ][_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
