@@ -13,6 +13,7 @@ class _AddProductPageState extends State<AddProductPage> {
 
   final productNameController = TextEditingController();
   final productDescriptionController = TextEditingController();
+  String selectedCategorie = 'lips';
 
   @override
   void dispose() {
@@ -61,6 +62,24 @@ class _AddProductPageState extends State<AddProductPage> {
                 },
                 controller: productDescriptionController,
               ),
+            ),
+            DropdownButtonFormField(
+                items: const [
+                  DropdownMenuItem(value:'lips',child: Text("levres")),
+                  DropdownMenuItem(value:'eyes',child: Text("eyes")),
+                  DropdownMenuItem(value:'teint',child: Text("teint")),
+                ],
+                decoration: InputDecoration(
+                  border:OutlineInputBorder(),
+                labelText: 'Catégorie du produit',
+                ),
+                value:selectedCategorie,
+                onChanged: (value){
+                  setState(() {
+                    selectedCategorie = value!;
+                  });
+                }
+
             ),
             SizedBox(
               width:double.infinity,
