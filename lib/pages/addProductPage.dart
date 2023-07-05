@@ -66,7 +66,7 @@ class _AddProductPageState extends State<AddProductPage> {
             DropdownButtonFormField(
                 items: const [
                   DropdownMenuItem(value:'lips',child: Text("levres")),
-                  DropdownMenuItem(value:'eyes',child: Text("eyes")),
+                  DropdownMenuItem(value:'eyes',child: Text("yeux")),
                   DropdownMenuItem(value:'teint',child: Text("teint")),
                 ],
                 decoration: InputDecoration(

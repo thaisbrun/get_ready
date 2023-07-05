@@ -36,7 +36,7 @@ class HomePage extends StatelessWidget {
               Navigator.push(
                   context,
                   PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => LipsPage()
+                      pageBuilder: (_, __, ___) => const LipsPage()
                   )
               );
             },

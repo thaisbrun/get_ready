@@ -2,8 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get_ready/pages/addProductPage.dart';
 import 'package:get_ready/pages/homePage.dart';
 import 'package:get_ready/pages/lipsPage.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 //Cette fonction permet de démarrer mon application
-void main() {
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 //Permet de mettre une page static (readonly)
