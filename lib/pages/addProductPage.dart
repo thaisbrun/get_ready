@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class AddProductPage extends StatefulWidget {
@@ -13,6 +14,9 @@ class _AddProductPageState extends State<AddProductPage> {
 
   final productNameController = TextEditingController();
   final productDescriptionController = TextEditingController();
+  final productConseilUtilController = TextEditingController();
+  final productMesureController = TextEditingController();
+  final productPrixController = TextEditingController();
   String selectedCategorie = 'lips';
 
   @override
@@ -20,6 +24,9 @@ class _AddProductPageState extends State<AddProductPage> {
     super.dispose();
     productNameController.dispose();
     productDescriptionController.dispose();
+    productConseilUtilController.dispose();
+    productMesureController.dispose();
+    productPrixController.dispose();
   }
   @override
   Widget build(BuildContext context) {
@@ -63,6 +70,58 @@ class _AddProductPageState extends State<AddProductPage> {
                 controller: productDescriptionController,
               ),
             ),
+            Container(
+              margin: EdgeInsets.only(bottom: 10),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  labelText: "Conseils d'utilisation : ",
+                  hintText: "Entrez les conseils d'utilisation",
+                  border:OutlineInputBorder(),
+                ),
+                validator: (value){
+                  if(value == null || value.isEmpty){
+                    return "Les conseils d'utilisation ne peut pas être invalide. ";
+                  }
+                  return null;
+                },
+                controller: productConseilUtilController,
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 10),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  labelText: "Mesure : ",
+                  hintText: "Entrer en ml, gr etc...",
+                  border:OutlineInputBorder(),
+                ),
+                validator: (value){
+                  if(value == null || value.isEmpty){
+                    return "La mesure ne peut pas être invalide. ";
+                  }
+                  return null;
+                },
+                controller: productMesureController,
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 10),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  labelText: "Prix : ",
+                  hintText: "Entrer en euros",
+                  border:OutlineInputBorder(),
+                ),
+                validator: (value){
+                  if(value == null || value.isEmpty){
+                    return "Le prix ne peut pas être invalide. ";
+                  }
+                  return null;
+                },
+                controller: productPrixController,
+              ),
+            ),
+
             DropdownButtonFormField(
                 items: const [
                   DropdownMenuItem(value:'lips',child: Text("levres")),
@@ -87,12 +146,27 @@ class _AddProductPageState extends State<AddProductPage> {
               if(_formKey.currentState!.validate()){
                 final productName = productNameController.text;
                 final productDescription = productDescriptionController.text;
+                final productConseilUtil = productConseilUtilController.text;
+                final productMesure = productMesureController.text;
+                final productPrix = productPrixController.text;
                 ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text("Envoi en cours..."))
                 );
 
                 FocusScope.of(context).requestFocus(FocusNode());
-                print("Ajout du produit $productName avec la description $productDescription .");
+
+                //ajout dans la collection firebase
+               CollectionReference productsRef = FirebaseFirestore.instance.collection("Produits");
+               productsRef.add({
+                 'libelle': productName,
+                 'description': productDescription,
+                 'conseilUtil': productConseilUtil,
+                 'categorie' : selectedCategorie,
+                 'prix' : productPrix,
+                 'mesure': productMesure,
+                 'dateCreation': DateTime.now(),
+                 'activation': 1,
+               });
               }
             },
                 child: Text("Ajouter")
