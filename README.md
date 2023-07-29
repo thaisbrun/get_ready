@@ -1,16 +1,22 @@
-# get_ready
+Ce projet à pour but de me familiariser avec le développement d'applications mobiles.
+Passionnée par le makeup, c'est naturellement que je me suis inspirée d'une application fictive de vente de cosmétiques. 
 
-Application mobile de produits cosmétiques
+Les technologies utilisées sont : 
 
-## Getting Started
+- Flutter (Dart)
+- Firebase
 
-This project is a starting point for a Flutter application.
+Les fonctionnalités créées sont : 
 
-A few resources to get you started if this is your first Flutter project:
+Espace utilisateur :
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Visualisation des produits en fonction de filtres ou non
+- Ajout, modification et suppression de produits dans le panier
+- Gestion du compte personnel : modification du compte, suppression du compte
+- Commande de produits via un paiement
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Espace administrateur : 
+
+- Suppression et modification de produits 
+- Ajout de produits sur le site
+- Visualisation des commandes 
