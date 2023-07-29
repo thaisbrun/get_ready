@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_ready/pages/addProductPage.dart';
 import 'package:get_ready/pages/homePage.dart';
 import 'package:get_ready/pages/lipsPage.dart';
+import 'package:get_ready/pages/register.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 //Cette fonction permet de démarrer mon application
@@ -39,13 +40,13 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title:[
             Text("Get Ready"),
-            Text("Nos produits lèvres"),
+            Text("Inscription"),
             Text("Ajouter un produit"),
           ][_currentIndex],
         ),
         body: [
           HomePage(),
-          LipsPage(),
+          RegisterPage(),
           AddProductPage() //A changer
         ][_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
