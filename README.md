@@ -7,6 +7,7 @@ Les technologies utilisées sont :
 - Firebase
 
 Les fonctionnalités créées sont : 
+
 Espace utilisateur :
 
 - Visualisation des produits en fonction de filtres ou non
