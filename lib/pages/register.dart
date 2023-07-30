@@ -149,7 +149,10 @@ class _RegisterState extends State<RegisterPage> {
                });
               }
             },
-                child: Text("M'inscrire")
+                child: Text("M'inscrire"),
+              style:const ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll(Colors.pink)
+              ),
             ),
             )
           ],

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_ready/pages/addProductPage.dart';
 import 'package:get_ready/pages/homePage.dart';
-import 'package:get_ready/pages/lipsPage.dart';
 import 'package:get_ready/pages/register.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -39,10 +38,11 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
         appBar: AppBar(
           title:[
-            Text("Get Ready"),
-            Text("Inscription"),
-            Text("Ajouter un produit"),
+            const Text("Get Ready"),
+            const Text("Inscription"),
+            const Text("Ajouter un produit"),
           ][_currentIndex],
+          backgroundColor: Colors.pink,
         ),
         body: [
           HomePage(),

@@ -30,7 +30,7 @@ class HomePage extends StatelessWidget {
           ElevatedButton.icon(
             style: ButtonStyle(
               padding: MaterialStatePropertyAll(EdgeInsets.all(20)),
-              backgroundColor: MaterialStatePropertyAll(Colors.pinkAccent),
+              backgroundColor: MaterialStatePropertyAll(Colors.pink),
             ),
             onPressed: () {
               Navigator.push(

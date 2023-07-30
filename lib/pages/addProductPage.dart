@@ -142,8 +142,8 @@ class _AddProductPageState extends State<AddProductPage> {
             ),
             SizedBox(
               width:double.infinity,
-            child:ElevatedButton(onPressed: (){
-              if(_formKey.currentState!.validate()){
+              child:ElevatedButton(onPressed: (){
+                if(_formKey.currentState!.validate()){
                 final productName = productNameController.text;
                 final productDescription = productDescriptionController.text;
                 final productConseilUtil = productConseilUtilController.text;
@@ -169,8 +169,11 @@ class _AddProductPageState extends State<AddProductPage> {
                });
               }
             },
-                child: Text("Ajouter")
-            ),
+                child: Text("Ajouter"),
+                style: const ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll(Colors.pink)
+                ),
+              ),
             )
           ],
         ),
