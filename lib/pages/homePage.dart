@@ -1,53 +1,55 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:get_ready/pages/lipsPage.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({
-    super.key,
-  });
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset("assets/images/imageTest.jpg"),
-          const Text(
-            "Application de vente de cosmétiques",
-            style: TextStyle(
-              fontSize: 24,
-            ),
-          ),
-          const Text(
-            "Rouge à lèvres, fard à paupières, fond de teint, blush...",
-            style: TextStyle(
-              fontSize: 24,
-              fontFamily: 'Avenir',
-            ),
-          ),
-          Padding(padding: EdgeInsets.only(top: 20)),
-          ElevatedButton.icon(
-            style: ButtonStyle(
-              padding: MaterialStatePropertyAll(EdgeInsets.all(20)),
-              backgroundColor: MaterialStatePropertyAll(Colors.pink),
-            ),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => const LipsPage()
-                  )
-              );
-            },
-            label: Text("Page lèvres",
-              style: TextStyle(
-                  fontSize: 20
-              ),
-            ), icon: Icon(Icons.abc_outlined),)
-        ],
-      ),
-    );
+  State<HomePage> createState() => _HomePageState();
 }
+class _HomePageState extends State<HomePage> {
 
-}
+    @override
+    Widget build(BuildContext context) {
+      return Center(
+            child: StreamBuilder(
+
+              stream: FirebaseFirestore.instance.collection("Produits").orderBy("libelle").snapshots(),
+              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                }
+
+                if (!snapshot.hasData) {
+                  return Text("Aucun produit");
+                }
+
+                List<dynamic> products = [];
+                snapshot.data!.docs.forEach((element) {
+                  products.add(element);
+                });
+
+                return ListView.builder(
+                    itemCount: products.length,
+                    itemBuilder: (context, index) {
+                      final product = products[index];
+                      final libelle = product['libelle'];
+                      final mesure = product['mesure'];
+                      final description = product['description'];
+                      final conseilUtil = product['conseilUtil'];
+                      final prix = product['prix'];
+
+                      return Card(
+                        child: ListTile(
+                          title: Text('$libelle'),
+                          trailing: Icon(Icons.open_in_new),
+                        ),
+                      );
+                    },
+                );
+              },
+              ),
+      );
+    }
+  }
