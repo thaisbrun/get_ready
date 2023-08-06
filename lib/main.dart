@@ -37,12 +37,14 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title:[
-            const Text("Get Ready"),
-            const Text("Inscription"),
-            const Text("Ajouter un produit"),
-          ][_currentIndex],
+          title:const Text("Get Ready"),
+            centerTitle: true,
           backgroundColor: Colors.pink,
+          leading: IconButton(
+            icon: const Icon(Icons.menu),
+            tooltip: 'Menu Icon',
+            onPressed: () {},
+          ),
         ),
         body: [
           HomePage(),

@@ -38,7 +38,7 @@ class _RegisterState extends State<RegisterPage> {
             Container(
               margin: EdgeInsets.only(bottom: 10),
               child: TextFormField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
              labelText: 'Nom : ',
               hintText: 'Entrez votre nom',
               border:OutlineInputBorder()
@@ -55,7 +55,7 @@ class _RegisterState extends State<RegisterPage> {
             Container(
               margin: EdgeInsets.only(bottom: 10),
               child: TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     labelText: 'Prénom : ',
                     hintText: 'Entrez votre prénom',
                     border:OutlineInputBorder(),
