@@ -30,13 +30,13 @@ class _RegisterState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin:EdgeInsets.all(20),
+      margin:const EdgeInsets.all(20),
       child: Form(
         key: _formKey,
         child:Column(
           children: [
             Container(
-              margin: EdgeInsets.only(bottom: 10),
+              margin: const EdgeInsets.only(bottom: 10),
               child: TextFormField(
               decoration: const InputDecoration(
              labelText: 'Nom : ',
@@ -53,7 +53,7 @@ class _RegisterState extends State<RegisterPage> {
             ),
             ),
             Container(
-              margin: EdgeInsets.only(bottom: 10),
+              margin: const EdgeInsets.only(bottom: 10),
               child: TextFormField(
                 decoration: const InputDecoration(
                     labelText: 'Prénom : ',
@@ -70,9 +70,9 @@ class _RegisterState extends State<RegisterPage> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(bottom: 10),
+              margin: const EdgeInsets.only(bottom: 10),
               child: TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: "Mail : ",
                   hintText: "Entrez votre adresse mail ",
                   border:OutlineInputBorder(),
@@ -87,9 +87,9 @@ class _RegisterState extends State<RegisterPage> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(bottom: 10),
+              margin: const EdgeInsets.only(bottom: 10),
               child: TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: "Téléphone : ",
                   hintText: "Entrez votre numéro",
                   border:OutlineInputBorder(),
@@ -104,9 +104,9 @@ class _RegisterState extends State<RegisterPage> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(bottom: 10),
+              margin: const EdgeInsets.only(bottom: 10),
               child: TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: "Adresse postale : ",
                   hintText: "Entrer en euros",
                   border:OutlineInputBorder(),
@@ -149,7 +149,7 @@ class _RegisterState extends State<RegisterPage> {
                });
               }
             },
-                child: Text("M'inscrire"),
+                child: const Text("M'inscrire"),
               style:const ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll(Colors.pink)
               ),
