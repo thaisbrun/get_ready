@@ -30,7 +30,7 @@ class _LipsPageState extends State<LipsPage> {
             return Card(
               child: ListTile(
                 title: Text('$product'),
-                trailing: Icon(Icons.open_in_new),
+                trailing: const Icon(Icons.open_in_new),
               ),
             );
           }

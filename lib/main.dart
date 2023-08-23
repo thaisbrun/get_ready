@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_ready/pages/addProductPage.dart';
 import 'package:get_ready/pages/homePage.dart';
+import 'package:get_ready/pages/connexion.dart';
 import 'package:get_ready/pages/register.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -47,9 +48,9 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
         body: [
-          HomePage(),
-          RegisterPage(),
-          AddProductPage() //A changer
+          const HomePage(),
+          const RegisterPage(),
+          const AddProductPage(),
         ][_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,

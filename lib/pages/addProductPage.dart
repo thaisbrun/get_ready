@@ -17,7 +17,7 @@ class _AddProductPageState extends State<AddProductPage> {
   final productConseilUtilController = TextEditingController();
   final productMesureController = TextEditingController();
   final productPrixController = TextEditingController();
-  String selectedCategorie = 'lips';
+  String selectedCat = 'lips';
 
   @override
   void dispose() {
@@ -31,15 +31,15 @@ class _AddProductPageState extends State<AddProductPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin:EdgeInsets.all(20),
+      margin:const EdgeInsets.all(20),
       child: Form(
         key: _formKey,
         child:Column(
           children: [
             Container(
-              margin: EdgeInsets.only(bottom: 10),
+              margin: const EdgeInsets.only(bottom: 10),
               child: TextFormField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
              labelText: 'Nom du produit : ',
               hintText: 'Entrez le nom du produit',
               border:OutlineInputBorder()
@@ -54,9 +54,9 @@ class _AddProductPageState extends State<AddProductPage> {
             ),
             ),
             Container(
-              margin: EdgeInsets.only(bottom: 10),
+              margin: const EdgeInsets.only(bottom: 10),
               child: TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     labelText: 'Description : ',
                     hintText: 'Entrez la description',
                     border:OutlineInputBorder(),
@@ -71,9 +71,9 @@ class _AddProductPageState extends State<AddProductPage> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(bottom: 10),
+              margin: const EdgeInsets.only(bottom: 10),
               child: TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: "Conseils d'utilisation : ",
                   hintText: "Entrez les conseils d'utilisation",
                   border:OutlineInputBorder(),
@@ -88,9 +88,9 @@ class _AddProductPageState extends State<AddProductPage> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(bottom: 10),
+              margin: const EdgeInsets.only(bottom: 10),
               child: TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: "Mesure : ",
                   hintText: "Entrer en ml, gr etc...",
                   border:OutlineInputBorder(),
@@ -105,9 +105,9 @@ class _AddProductPageState extends State<AddProductPage> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(bottom: 10),
+              margin: const EdgeInsets.only(bottom: 10),
               child: TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: "Prix : ",
                   hintText: "Entrer en euros",
                   border:OutlineInputBorder(),
@@ -121,24 +121,25 @@ class _AddProductPageState extends State<AddProductPage> {
                 controller: productPrixController,
               ),
             ),
-
-            DropdownButtonFormField(
+            Container(
+              child: DropdownButtonFormField(
                 items: const [
                   DropdownMenuItem(value:'lips',child: Text("levres")),
                   DropdownMenuItem(value:'eyes',child: Text("yeux")),
                   DropdownMenuItem(value:'teint',child: Text("teint")),
                 ],
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border:OutlineInputBorder(),
                 labelText: 'Catégorie du produit',
                 ),
-                value:selectedCategorie,
+                value:selectedCat,
                 onChanged: (value){
                   setState(() {
-                    selectedCategorie = value!;
+                    selectedCat = value!;
                   });
                 }
 
+              ),
             ),
             SizedBox(
               width:double.infinity,
@@ -161,7 +162,7 @@ class _AddProductPageState extends State<AddProductPage> {
                  'libelle': productName,
                  'description': productDescription,
                  'conseilUtil': productConseilUtil,
-                 'categorie' : selectedCategorie,
+                 'categorie' : selectedCat,
                  'prix' : productPrix,
                  'mesure': productMesure,
                  'dateCreation': DateTime.now(),
@@ -169,10 +170,10 @@ class _AddProductPageState extends State<AddProductPage> {
                });
               }
             },
-                child: Text("Ajouter"),
                 style: const ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll(Colors.pink)
                 ),
+                child: const Text("Ajouter"),
               ),
             )
           ],
