@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_ready/main.dart';
 
+import 'myAccount.dart';
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -14,7 +17,6 @@ class _HomePageState extends State<HomePage> {
   }
     @override
     Widget build(BuildContext context) {
-
       //SearchBar(),
       //bar avec liste catégorie
       //affichage liste produits
@@ -40,6 +42,17 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
                 ],
+              ),
+            ),
+            Container(
+              child: CupertinoButton(
+                child: const Text("J'ai déjà un compte"),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(builder: (context) => const MyAccount()),
+                  );
+                },
               ),
             ),
         /*     Container(

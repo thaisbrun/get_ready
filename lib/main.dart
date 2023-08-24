@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_ready/pages/addProductPage.dart';
 import 'package:get_ready/pages/homePage.dart';
@@ -5,6 +6,8 @@ import 'package:get_ready/pages/connexion.dart';
 import 'package:get_ready/pages/register.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:get_ready/pages/myAccount.dart';
+
 //Cette fonction permet de démarrer mon application
 
 void main() async {
@@ -44,13 +47,15 @@ class _MyAppState extends State<MyApp> {
           leading: IconButton(
             icon: const Icon(Icons.menu),
             tooltip: 'Menu Icon',
-            onPressed: () {},
+            onPressed: () {
+
+            },
           ),
         ),
         body: [
           const HomePage(),
           const RegisterPage(),
-          const AddProductPage(),
+           const MyAccount(),
         ][_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
