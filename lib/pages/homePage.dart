@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_ready/main.dart';
 
+import 'getProduct.dart';
 import 'myAccount.dart';
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -146,6 +147,19 @@ class _HomePageState extends State<HomePage> {
                               visualDensity: const VisualDensity(vertical: 1),                              title: Text('$libelle'),
                               textColor: Colors.pink,
                               trailing: const Icon(Icons.open_in_new),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const GetProduct(),
+                                    // Pass the arguments as part of the RouteSettings. The
+                                    // DetailScreen reads the arguments from these settings.
+                                    settings: RouteSettings(
+                                      arguments: products[index],
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                           );
                         },
