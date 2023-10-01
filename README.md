@@ -14,8 +14,10 @@ Tous mes projets suivent la même organisation :
 
 6 - Mettre en place les règles OWASP, check complet des fonctionnalités
 
-7 - Fin de la V1 et projet ajouté à mon portfolio
+7 - Mise en forme visuelle avec un framework css (en général soi Bootstrap soi Bulma)
 
-8 - Selon mon inspiration, tâches pour évolution de la plateforme rajoutées dans le Kanban
+8 - Fin de la V1 et projet ajouté à mon portfolio
 
-9 - Début de la V2 et travail sur les évolutions à faire (création nouvelle branche)
+9 - Selon mon inspiration, tâches pour évolution de la plateforme rajoutées dans le Kanban
+
+10 - Début de la V2 et travail sur les évolutions à faire (création nouvelle branche)
