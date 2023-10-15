@@ -1,16 +1,24 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_ready/pages/connexion.dart';
+import 'package:get_ready/pages/homePage.dart';
 import 'package:get_ready/pages/lipsPage.dart';
 import 'package:get_ready/pages/myAccount.dart';
 
+import 'firebase_options.dart';
+
 //Cette fonction permet de démarrer mon application
 
-void main() => runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  static const appTitle = 'Drawer Demo';
+  static const appTitle = 'Get Ready';
 
   @override
   Widget build(BuildContext context) {
@@ -103,6 +111,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const Connexion()),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Accueil'),
+              selected: _selectedIndex == 3,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HomePage()),
                 );
               },
             ),
