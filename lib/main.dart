@@ -1,9 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get_ready/pages/EyesPage.dart';
+import 'package:get_ready/pages/browPage.dart';
 import 'package:get_ready/pages/connexion.dart';
 import 'package:get_ready/pages/homePage.dart';
 import 'package:get_ready/pages/lipsPage.dart';
 import 'package:get_ready/pages/myAccount.dart';
+import 'package:get_ready/pages/nailsPage.dart';
+import 'package:get_ready/pages/skinPage.dart';
 
 import 'firebase_options.dart';
 
@@ -84,6 +88,26 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text('Get Ready'),
             ),
             ListTile(
+              title: const Text('Produits teint'),
+              selected: _selectedIndex == 3,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SkinPage()),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Produits yeux'),
+              selected: _selectedIndex == 3,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const EyesPage()),
+                );
+              },
+            ),
+            ListTile(
               title: const Text('Produits lèvres'),
               selected: _selectedIndex == 0,
               onTap: () {
@@ -95,6 +119,28 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
+              title: const Text('Produits sourcils'),
+              selected: _selectedIndex == 3,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const BrowPage()),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Produits ongles'),
+              selected: _selectedIndex == 3,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const NailsPage()),
+                );
+              },
+            ),
+
+      /*   A METTRE DANS UN FOOTER
+         ListTile(
               title: const Text('Mon compte'),
               selected: _selectedIndex == 1,
               onTap: () {
@@ -123,7 +169,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   MaterialPageRoute(builder: (context) => const HomePage()),
                 );
               },
-            ),
+            ),*/
           ],
         ),
       ),
