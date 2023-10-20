@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_ready/pages/EyesPage.dart';
 import 'package:get_ready/pages/browPage.dart';
 import 'package:get_ready/pages/connexion.dart';
+import 'package:get_ready/pages/getProduct.dart';
 import 'package:get_ready/pages/homePage.dart';
 import 'package:get_ready/pages/lipsPage.dart';
 import 'package:get_ready/pages/myAccount.dart';
@@ -45,20 +48,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-  ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -71,7 +60,155 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
       body: Center(
-        child: _widgetOptions[_selectedIndex],
+        child: Column(
+          children: [
+            Image.asset("assets/images/homeImg.jpg"),
+            Container(
+              child: const Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text('Saisir un mot clé :'),
+                    ),
+                  ),
+                  Expanded(
+                    child:Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: SearchBar(
+                          constraints: BoxConstraints(minWidth: 0.0, maxWidth: 300.0, minHeight: 50.0)
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              child: CupertinoButton(
+                child: const Text("J'ai déjà un compte"),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(builder: (context) => const MyAccount()),
+                  );
+                },
+              ),
+            ),
+            /*     Container(
+               child: Row(
+                  children: [
+                  const Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text('Choisir une catégorie :'),
+                    ),
+                  ),
+                    Flexible(
+                    child:Expanded(
+                      child:Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: StreamBuilder(
+                        stream: FirebaseFirestore.instance.collection("Categories").orderBy("libelle").snapshots(),
+                        builder: (context, snapshot) {
+                        List<DropdownMenuItem> listeCategories = [];
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        }
+                        if (!snapshot.hasData) {
+                          return const Text("Aucune catégorie");
+                        }
+                        final categories = snapshot.data?.docs.reversed.toList();
+                        listeCategories.add(const DropdownMenuItem(
+                        value:'0',
+                          child: Text('Sélectionner catégorie'),
+                        ));
+                        for(var categorie in categories!){
+                          listeCategories.add(DropdownMenuItem(
+                          value: categorie.id,
+                          child: Text(categorie['libelle'],
+                          ),
+                          ),
+                        );
+                        }
+
+                        return DropdownButtonFormField(
+                        items: listeCategories,
+                          value:selectedCategorie,
+                          onChanged: (value){
+                          setState(() {
+                            selectedCategorie = value!;
+                        });
+                          },
+                          isExpanded: false,
+                        );
+                        }),
+                    ),
+                ),
+            ),
+          ],
+      ),
+             ), */
+            Container(
+              child: Flexible(
+                child:Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: StreamBuilder(
+                    stream: FirebaseFirestore.instance.collection("Produits").orderBy("libelle").snapshots(),
+                    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      }
+
+                      if (!snapshot.hasData) {
+                        return const Text("Aucun produit");
+                      }
+
+                      List<dynamic> products = [];
+                      snapshot.data!.docs.forEach((element) {
+                        products.add(element);
+                      });
+
+                      return ListView.builder(
+                        itemCount: products.length,
+                        itemBuilder: (context, index) {
+                          final product = products[index];
+                          final libelle = product['libelle'];
+                          final mesure = product['mesure'];
+                          final description = product['description'];
+                          final conseilUtil = product['conseilUtil'];
+                          final prix = product['prix'];
+
+                          return Card(
+                            child: ListTile(
+                              dense: true,
+                              visualDensity: const VisualDensity(vertical: 1),                              title: Text('$libelle'),
+                              textColor: Colors.pink,
+                              trailing: const Icon(Icons.open_in_new),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const GetProduct(),
+                                    // Pass the arguments as part of the RouteSettings. The
+                                    // DetailScreen reads the arguments from these settings.
+                                    settings: RouteSettings(
+                                      arguments: products[index],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
@@ -138,41 +275,29 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
-
-      /*   A METTRE DANS UN FOOTER
-         ListTile(
-              title: const Text('Mon compte'),
-              selected: _selectedIndex == 1,
-              onTap: () {
-                Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const MyAccount()),
-              );
-              },
-            ),
-            ListTile(
-              title: const Text('Connexion'),
-              selected: _selectedIndex == 2,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Connexion()),
-                );
-              },
-            ),
-            ListTile(
-              title: const Text('Accueil'),
-              selected: _selectedIndex == 3,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const HomePage()),
-                );
-              },
-            ),*/
           ],
         ),
+
       ),
+    bottomNavigationBar: BottomNavigationBar(
+    items: const <BottomNavigationBarItem>[
+    BottomNavigationBarItem(
+    icon: Icon(Icons.home),
+    label: 'Accueil',
+    ),
+    BottomNavigationBarItem(
+    icon: Icon(Icons.shopping_bag),
+    label: 'Mon Panier',
+    ),
+    BottomNavigationBarItem(
+    icon: Icon(Icons.supervised_user_circle_sharp),
+    label: 'Mon Compte',
+    )
+    ],
+      onTap: _onItemTapped,
+      currentIndex: _selectedIndex,
+
+    ),
     );
   }
 }
