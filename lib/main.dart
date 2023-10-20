@@ -58,7 +58,9 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
+      appBar: AppBar(
+          title: Text(widget.title),
+      backgroundColor: Colors.red[200]!,),
       body: Center(
         child: Column(
           children: [
@@ -183,7 +185,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             child: ListTile(
                               dense: true,
                               visualDensity: const VisualDensity(vertical: 1),                              title: Text('$libelle'),
-                              textColor: Colors.pink,
+                              textColor: Colors.red[200]!,
                               trailing: const Icon(Icons.open_in_new),
                               onTap: () {
                                 Navigator.push(
@@ -220,7 +222,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             const DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.pink,
+                color: Color(0xFFEF9A9A),
               ),
               child: Text('Get Ready'),
             ),
@@ -283,17 +285,18 @@ class _MyHomePageState extends State<MyHomePage> {
     items: const <BottomNavigationBarItem>[
     BottomNavigationBarItem(
     icon: Icon(Icons.home),
-    label: 'Accueil',
+      label: 'Accueil',
     ),
     BottomNavigationBarItem(
     icon: Icon(Icons.shopping_bag),
-    label: 'Mon Panier',
+      label: 'Mon Panier',
     ),
     BottomNavigationBarItem(
     icon: Icon(Icons.supervised_user_circle_sharp),
-    label: 'Mon Compte',
+      label: 'Mon Compte',
     )
     ],
+      selectedItemColor: Colors.red[200],
       onTap: _onItemTapped,
       currentIndex: _selectedIndex,
 

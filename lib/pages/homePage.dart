@@ -146,7 +146,7 @@ class _HomePageState extends State<HomePage> {
                             child: ListTile(
                               dense: true,
                               visualDensity: const VisualDensity(vertical: 1),                              title: Text('$libelle'),
-                              textColor: Colors.pink,
+                              textColor: Colors.red[200]!,
                               trailing: const Icon(Icons.open_in_new),
                               onTap: () {
                                 Navigator.push(
