@@ -46,6 +46,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
   int _selectedIndex = 0;
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
@@ -54,7 +55,6 @@ class _MyHomePageState extends State<MyHomePage> {
       _selectedIndex = index;
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,36 +65,32 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           children: [
             Image.asset("assets/images/homeImg.jpg"),
-            Container(
-              child: const Row(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text('Saisir un mot clé :'),
+            const Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text('Saisir un mot clé :'),
+                  ),
+                ),
+                Expanded(
+                  child:Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: SearchBar(
+                        constraints: BoxConstraints(minWidth: 0.0, maxWidth: 300.0, minHeight: 50.0)
                     ),
                   ),
-                  Expanded(
-                    child:Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: SearchBar(
-                          constraints: BoxConstraints(minWidth: 0.0, maxWidth: 300.0, minHeight: 50.0)
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-            Container(
-              child: CupertinoButton(
-                child: const Text("J'ai déjà un compte"),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    CupertinoPageRoute(builder: (context) => const MyAccount()),
-                  );
-                },
-              ),
+            CupertinoButton(
+              child: const Text("J'ai déjà un compte"),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(builder: (context) => const MyAccount()),
+                );
+              },
             ),
             /*     Container(
                child: Row(
@@ -210,7 +206,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
           ],
-        ),
+            ),
       ),
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
@@ -282,6 +278,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
       ),
     bottomNavigationBar: BottomNavigationBar(
+      currentIndex: _selectedIndex,
+      onTap: _onItemTapped,
     items: const <BottomNavigationBarItem>[
     BottomNavigationBarItem(
     icon: Icon(Icons.home),
@@ -297,10 +295,10 @@ class _MyHomePageState extends State<MyHomePage> {
     )
     ],
       selectedItemColor: Colors.red[200],
-      onTap: _onItemTapped,
-      currentIndex: _selectedIndex,
+
 
     ),
+
     );
   }
 }
