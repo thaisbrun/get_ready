@@ -183,7 +183,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const GetProduct(),
+                                  builder: (context) => const GetProduct(title: MyApp.appTitle),
                                   // Pass the arguments as part of the RouteSettings. The
                                   // DetailScreen reads the arguments from these settings.
                                   settings: RouteSettings(
@@ -223,7 +223,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const SkinPage()),
+                  MaterialPageRoute(builder: (context) => const SkinPage(title:MyApp.appTitle)),
                 );
               },
             ),
@@ -233,7 +233,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const EyesPage()),
+                  MaterialPageRoute(builder: (context) => const EyesPage(title: MyApp.appTitle)),
                 );
               },
             ),
@@ -244,7 +244,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 // Update the state of the app
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const LipsPage()),
+                  MaterialPageRoute(builder: (context) => const LipsPage(title: MyApp.appTitle)),
                 );
               },
             ),
@@ -254,7 +254,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const BrowPage()),
+                  MaterialPageRoute(builder: (context) => const BrowPage(title: MyApp.appTitle,)),
                 );
               },
             ),
@@ -264,7 +264,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const NailsPage()),
+                  MaterialPageRoute(builder: (context) => const NailsPage(title: MyApp.appTitle)),
                 );
               },
             ),

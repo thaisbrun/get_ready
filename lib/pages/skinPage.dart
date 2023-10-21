@@ -1,11 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_ready/main.dart';
 
 import 'getProduct.dart';
 
 class SkinPage extends StatefulWidget {
-  const SkinPage({super.key});
+  const SkinPage({super.key, required this.title});
+  final String title;
+
 
   @override
   State<SkinPage> createState() => _SkinPageState();
@@ -57,7 +60,7 @@ class _SkinPageState extends State<SkinPage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const GetProduct(),
+                                  builder: (context) => const GetProduct(title: MyApp.appTitle),
                                   // Pass the arguments as part of the RouteSettings. The
                                   // DetailScreen reads the arguments from these settings.
                                   settings: RouteSettings(

@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../main.dart';
 import 'getProduct.dart';
 import 'myAccount.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key, required this.title});
+  final String title;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -21,6 +23,9 @@ class _HomePageState extends State<HomePage> {
       //bar avec liste catégorie
       //affichage liste produits
       return Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title),
+          backgroundColor: Colors.red[200]!,),
         body:Column(
           children: [
             Image.asset("assets/images/homeImg.jpg"),
@@ -143,14 +148,15 @@ class _HomePageState extends State<HomePage> {
                           return Card(
                             child: ListTile(
                               dense: true,
-                              visualDensity: const VisualDensity(vertical: 1),                              title: Text('$libelle'),
+                              visualDensity: const VisualDensity(vertical: 1),
+                              title: Text('$libelle'),
                               textColor: Colors.red[200]!,
                               trailing: const Icon(Icons.open_in_new),
                               onTap: () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const GetProduct(),
+                                    builder: (context) => const GetProduct(title: MyApp.appTitle),
                                     // Pass the arguments as part of the RouteSettings. The
                                     // DetailScreen reads the arguments from these settings.
                                     settings: RouteSettings(

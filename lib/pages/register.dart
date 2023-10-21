@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_ready/main.dart';
 import 'package:get_ready/pages/connexion.dart';
 import 'homePage.dart';
 
@@ -79,7 +80,7 @@ class _RegisterState extends State<RegisterPage> {
                   );
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const HomePage()),
+                    MaterialPageRoute(builder: (context) => const HomePage(title: MyApp.appTitle)),
                   );
                 } on FirebaseAuthException catch (e) {
                   if (e.code == 'weak-password') {
