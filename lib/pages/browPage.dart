@@ -25,7 +25,7 @@ class _BrowPageState extends State<BrowPage> {
               child:Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: StreamBuilder(
-                  stream: FirebaseFirestore.instance.collection("SousCategories").where("idCategorie", isEqualTo: FirebaseFirestore.instance.doc('Categories/zqlU4lCuCAfiu30KIH6h')).snapshots(),
+                  stream: FirebaseFirestore.instance.collection("SousCategories").where("idCategorie", isEqualTo: FirebaseFirestore.instance.doc('Categories/3C5vfgtxttPvB0Nc79d2')).snapshots(),
                   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
 
                     if (snapshot.connectionState == ConnectionState.waiting) {

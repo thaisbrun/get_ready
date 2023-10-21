@@ -4,9 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_ready/pages/EyesPage.dart';
 import 'package:get_ready/pages/browPage.dart';
-import 'package:get_ready/pages/connexion.dart';
 import 'package:get_ready/pages/getProduct.dart';
-import 'package:get_ready/pages/homePage.dart';
 import 'package:get_ready/pages/lipsPage.dart';
 import 'package:get_ready/pages/myAccount.dart';
 import 'package:get_ready/pages/nailsPage.dart';
@@ -48,7 +46,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   int _selectedIndex = 0;
-  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   void _onItemTapped(int index) {
     setState(() {
@@ -146,62 +143,60 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
       ),
              ), */
-            Container(
-              child: Flexible(
-                child:Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: StreamBuilder(
-                    stream: FirebaseFirestore.instance.collection("Produits").orderBy("libelle").snapshots(),
-                    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            Flexible(
+              child:Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: StreamBuilder(
+                  stream: FirebaseFirestore.instance.collection("Produits").orderBy("libelle").snapshots(),
+                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
 
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const CircularProgressIndicator();
-                      }
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    }
 
-                      if (!snapshot.hasData) {
-                        return const Text("Aucun produit");
-                      }
+                    if (!snapshot.hasData) {
+                      return const Text("Aucun produit");
+                    }
 
-                      List<dynamic> products = [];
-                      snapshot.data!.docs.forEach((element) {
-                        products.add(element);
-                      });
+                    List<dynamic> products = [];
+                    snapshot.data!.docs.forEach((element) {
+                      products.add(element);
+                    });
 
-                      return ListView.builder(
-                        itemCount: products.length,
-                        itemBuilder: (context, index) {
-                          final product = products[index];
-                          final libelle = product['libelle'];
-                          final mesure = product['mesure'];
-                          final description = product['description'];
-                          final conseilUtil = product['conseilUtil'];
-                          final prix = product['prix'];
+                    return ListView.builder(
+                      itemCount: products.length,
+                      itemBuilder: (context, index) {
+                        final product = products[index];
+                        final libelle = product['libelle'];
+                        final mesure = product['mesure'];
+                        final description = product['description'];
+                        final conseilUtil = product['conseilUtil'];
+                        final prix = product['prix'];
 
-                          return Card(
-                            child: ListTile(
-                              dense: true,
-                              visualDensity: const VisualDensity(vertical: 1),                              title: Text('$libelle'),
-                              textColor: Colors.red[200]!,
-                              trailing: const Icon(Icons.open_in_new),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const GetProduct(),
-                                    // Pass the arguments as part of the RouteSettings. The
-                                    // DetailScreen reads the arguments from these settings.
-                                    settings: RouteSettings(
-                                      arguments: products[index],
-                                    ),
+                        return Card(
+                          child: ListTile(
+                            dense: true,
+                            visualDensity: const VisualDensity(vertical: 1),                              title: Text('$libelle'),
+                            textColor: Colors.red[200]!,
+                            trailing: const Icon(Icons.open_in_new),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const GetProduct(),
+                                  // Pass the arguments as part of the RouteSettings. The
+                                  // DetailScreen reads the arguments from these settings.
+                                  settings: RouteSettings(
+                                    arguments: products[index],
                                   ),
-                                );
-                              },
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    );
+                  },
                 ),
               ),
             ),

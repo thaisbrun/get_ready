@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get_ready/main.dart';
 
 class GetProduct extends StatefulWidget {
   const GetProduct({Key? key}) : super(key: key);
