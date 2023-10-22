@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_ready/pages/skinPage.dart';
@@ -37,10 +38,16 @@ class _GetProductState extends State<GetProduct> {
       appBar: AppBar(
         //title: Text(product.libelle),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-       // child: Text(product.description),
-      ),
+      body: Container(
+        child: Flexible(
+           child: StreamBuilder(
+              stream: FirebaseFirestore.instance.collection("Produits").doc(product as String?).snapshots(),
+             builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot<Map<String?, dynamic>>> snapshot) {
+                return Text(product.toString());
+             },
+            ),
+          ),
+        ),
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
         // through the options in the drawer if there isn't enough vertical
@@ -128,8 +135,6 @@ class _GetProductState extends State<GetProduct> {
           )
         ],
         selectedItemColor: Colors.red[200],
-
-
       ),
     );
   }

@@ -172,7 +172,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         final description = product['description'];
                         final conseilUtil = product['conseilUtil'];
                         final prix = product['prix'];
-
+                        final _firestoreDocID = snapshot.data!.docs[index].id.toString();
                         return Card(
                           child: ListTile(
                             dense: true,
@@ -184,7 +184,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const GetProduct(title: MyApp.appTitle),
+                                  builder: (context) => GetProduct(title: MyApp.appTitle, firestoreDocID: _firestoreDocID),
                                   // Pass the arguments as part of the RouteSettings. The
                                   // DetailScreen reads the arguments from these settings.
                                   settings: RouteSettings(
