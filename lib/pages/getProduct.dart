@@ -11,13 +11,12 @@ import 'nailsPage.dart';
 
 class GetProduct extends StatefulWidget {
   const GetProduct({super.key, required this.title, required this.firestoreDocID});
-  final String? firestoreDocID;
   final String title;
+  final String? firestoreDocID;
   @override
   State<GetProduct> createState() => _GetProductState();
 
 }
-
 class _GetProductState extends State<GetProduct> {
   int _selectedIndex = 0;
 
@@ -32,22 +31,48 @@ class _GetProductState extends State<GetProduct> {
 
   @override
   Widget build(BuildContext context) {
-    final product = ModalRoute.of(context)!.settings.arguments;
+    final product = ModalRoute.of(context)!.settings.arguments.toString();
 
     return Scaffold(
       appBar: AppBar(
         //title: Text(product.libelle),
       ),
-      body: Container(
+      body: SizedBox(
         child: Flexible(
-           child: StreamBuilder(
-              stream: FirebaseFirestore.instance.collection("Produits").doc(product as String?).snapshots(),
-             builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot<Map<String?, dynamic>>> snapshot) {
-                return Text(product.toString());
+           child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child:StreamBuilder(
+              stream: FirebaseFirestore.instance.collection("Produits").doc(product).snapshots(),
+             builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+
+               if (snapshot.connectionState == ConnectionState.waiting) {
+                 return const CircularProgressIndicator();
+               }
+
+               if (!snapshot.hasData) {
+                 return const Text("Aucun produit");
+               }
+
+               dynamic product = snapshot.data;
+               return ListView.builder(
+               itemBuilder: (context, index) {
+                 final selectedProduct = product[index];
+                 final libelle = selectedProduct['libelle'];
+                 return Card(
+                     child: ListTile(
+                     dense: true,
+                     visualDensity: const VisualDensity(vertical: 1),
+                 title: Text('$libelle'),
+                 textColor: Colors.red[200]!
+                 ),
+                 );
+               }
+               );
              },
             ),
+           ),
           ),
-        ),
+      ),
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
         // through the options in the drawer if there isn't enough vertical
