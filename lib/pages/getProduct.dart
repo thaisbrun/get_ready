@@ -9,7 +9,8 @@ import 'lipsPage.dart';
 import 'nailsPage.dart';
 
 class GetProduct extends StatefulWidget {
-  const GetProduct({super.key, required this.title});
+  const GetProduct({super.key, required this.title, required this.firestoreDocID});
+  final String? firestoreDocID;
   final String title;
   @override
   State<GetProduct> createState() => _GetProductState();

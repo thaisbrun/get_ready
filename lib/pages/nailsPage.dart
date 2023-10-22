@@ -69,7 +69,7 @@ class _NailsPageState extends State<NailsPage> {
                               title: Text('$libelle'),
                               textColor: Colors.red[200]!,
                               trailing: const Icon(Icons.open_in_new),
-                              onTap: () {
+                              /*onTap: () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -82,7 +82,7 @@ class _NailsPageState extends State<NailsPage> {
                                     ),
                                   ),
                                 );
-                              },
+                              },*/
                             ),
                           );
                         },
