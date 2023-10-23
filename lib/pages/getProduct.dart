@@ -20,6 +20,8 @@ class GetProduct extends StatefulWidget {
 class _GetProductState extends State<GetProduct> {
   int _selectedIndex = 0;
 
+  get firestoreDocID => 'AXg2ouAmz9t6115IFvdM';
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -31,8 +33,6 @@ class _GetProductState extends State<GetProduct> {
 
   @override
   Widget build(BuildContext context) {
-    final product = ModalRoute.of(context)!.settings.arguments.toString();
-
     return Scaffold(
       appBar: AppBar(
         //title: Text(product.libelle),
@@ -41,10 +41,9 @@ class _GetProductState extends State<GetProduct> {
         child: Flexible(
            child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child:StreamBuilder(
-              stream: FirebaseFirestore.instance.collection("Produits").doc(product).snapshots(),
-             builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-
+            child:FutureBuilder(
+              future: FirebaseFirestore.instance.collection("Produits").doc(firestoreDocID).get(),
+             builder: (BuildContext context, snapshot) {
                if (snapshot.connectionState == ConnectionState.waiting) {
                  return const CircularProgressIndicator();
                }
@@ -52,21 +51,10 @@ class _GetProductState extends State<GetProduct> {
                if (!snapshot.hasData) {
                  return const Text("Aucun produit");
                }
-
-               dynamic product = snapshot.data;
-               return ListView.builder(
-               itemBuilder: (context, index) {
-                 final selectedProduct = product[index];
-                 final libelle = selectedProduct['libelle'];
-                 return Card(
-                     child: ListTile(
-                     dense: true,
-                     visualDensity: const VisualDensity(vertical: 1),
-                 title: Text('$libelle'),
-                 textColor: Colors.red[200]!
-                 ),
-                 );
-               }
+               var product = snapshot.data;
+               return Card(
+                child: Text(product!["libelle"]),
+                color: Colors.red[200]!
                );
              },
             ),

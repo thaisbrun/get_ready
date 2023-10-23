@@ -3,9 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_ready/main.dart';
 import 'package:get_ready/pages/skinPage.dart';
-
 import 'EyesPage.dart';
-import 'getProduct.dart';
 import 'lipsPage.dart';
 import 'nailsPage.dart';
 

@@ -5,7 +5,6 @@ import 'package:get_ready/pages/skinPage.dart';
 
 import '../main.dart';
 import 'browPage.dart';
-import 'getProduct.dart';
 import 'lipsPage.dart';
 import 'nailsPage.dart';
 

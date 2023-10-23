@@ -5,7 +5,6 @@ import 'package:get_ready/main.dart';
 import 'package:get_ready/pages/skinPage.dart';
 import 'EyesPage.dart';
 import 'browPage.dart';
-import 'getProduct.dart';
 import 'nailsPage.dart';
 
 class LipsPage extends StatefulWidget {
