@@ -1,4 +1,4 @@
-Ce projet a été réalisé afin de me familiariser avec le développement d'applications mobiles et d'apprendre à utiliser le framework Flutter (Dart). 
+Ce projet a été réalisé afin de me familiariser avec le développement d'applications mobiles et d'apprendre à utiliser le framework Flutter (Dart). Il s'agit d'une application mobile de vente de cosmétiques fictive. 
 
 Tous mes projets suivent la même organisation : 
 
