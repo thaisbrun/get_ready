@@ -37,7 +37,29 @@ class _GetProductState extends State<GetProduct> {
       appBar: AppBar(
         //title: Text(product.libelle),
       ),
-      body: SizedBox(
+      body:
+      Padding(
+    padding: EdgeInsets.all(20.0),
+    child:
+        Column( crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+          Text(
+          'Informations du produit',
+          style: TextStyle(
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(height: 20.0),
+    Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+        Image.network(
+        'https://via.placeholder.com/150',
+        width: 150,
+        height: 150,
+      ),
+      SizedBox(
         child: Flexible(
            child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -53,14 +75,15 @@ class _GetProductState extends State<GetProduct> {
                }
                var product = snapshot.data;
                return Card(
-                child: Text(product!["libelle"]),
+                child: Text(product!["conseilUtil"]),
                 color: Colors.red[200]!
                );
              },
             ),
            ),
           ),
-      ),
+      ),],
+    ),],),),
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
         // through the options in the drawer if there isn't enough vertical
