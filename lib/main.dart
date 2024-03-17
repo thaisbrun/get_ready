@@ -11,6 +11,7 @@ import 'package:get_ready/pages/nailsPage.dart';
 import 'package:get_ready/pages/skinPage.dart';
 
 import 'firebase_options.dart';
+import 'models/product_model.dart';
 
 //Cette fonction permet de démarrer mon application
 
@@ -158,20 +159,20 @@ class _MyHomePageState extends State<MyHomePage> {
                       return const Text("Aucun produit");
                     }
 
-                    List<dynamic> products = [];
-                    snapshot.data!.docs.forEach((element) {
-                      products.add(element);
+                    List<Product> products = [];
+                    snapshot.data!.docs.forEach((data) {
+                      products.add(Product.fromData(data));
                     });
 
                     return ListView.builder(
                       itemCount: products.length,
                       itemBuilder: (context, index) {
                         final product = products[index];
-                        final libelle = product['libelle'];
-                        final mesure = product['mesure'];
-                        final description = product['description'];
-                        final conseilUtil = product['conseilUtil'];
-                        final prix = product['prix'];
+                        final libelle = product.libelle;
+                       /* final mesure = product['mesure']; */
+                        final description = product.description;
+                        /*final conseilUtil = product['conseilUtil'];
+                        final prix = product['prix']; */
                         final _firestoreDocID = snapshot.data!.docs[index].id.toString();
                         return Card(
                           child: ListTile(
@@ -188,7 +189,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   // Pass the arguments as part of the RouteSettings. The
                                   // DetailScreen reads the arguments from these settings.
                                   settings: RouteSettings(
-                                    arguments: products[index],
+                                    arguments: product.libelle,
                                   ),
                                 ),
                               );
