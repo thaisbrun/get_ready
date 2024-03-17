@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_ready/main.dart';
 import 'package:get_ready/pages/connexion.dart';
-import 'homePage.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -79,7 +78,7 @@ class _RegisterState extends State<RegisterPage> {
                   );
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const HomePage(title: MyApp.appTitle)),
+                    MaterialPageRoute(builder: (context) => const MyHomePage(title: MyApp.appTitle)),
                   );
                 } on FirebaseAuthException catch (e) {
                   if (e.code == 'weak-password') {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_ready/main.dart';
-import 'package:get_ready/pages/homePage.dart';
 
 class Connexion extends StatefulWidget {
   const Connexion({Key? key}) : super(key: key);
@@ -81,7 +80,7 @@ class _ConnexionState extends State<Connexion> {
               );
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const HomePage(title: MyApp.appTitle)),
+                MaterialPageRoute(builder: (context) => const MyHomePage(title: MyApp.appTitle)),
               );
             } on FirebaseAuthException catch (e) {
               if (e.code == 'user-not-found') {
