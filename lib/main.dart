@@ -66,6 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: <Widget>[
                   Text('Nom : ${product.libelle}'),
                   Text('Description : ${product.description}'),
+             //     Text('Marque : ${product.brand.libelle}')
                 ],
               ),
             ),
@@ -202,11 +203,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         itemBuilder: (context, index) {
                           final product = products[index];
                           final libelle = product.libelle;
+                          //final brand = product.brand;
                          /* final mesure = product['mesure']; */
                           final description = product.description;
                           /*final conseilUtil = product['conseilUtil'];
                           final prix = product['prix']; */
-                          final _firestoreDocID = snapshot.data!.docs[index].id.toString();
                           return Card(
                             child: ListTile(
                               dense: true,
