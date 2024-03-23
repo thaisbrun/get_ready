@@ -81,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: <Widget>[
                   Text('Nom : ${product.libelle}'),
                   Text('Description : ${product.description}'),
-                  Text('Marque : ${product.brand} ')
+              //    Text('Marque : ${product.brand} ')
                 ],
               ),
             ),
@@ -160,7 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         itemBuilder: (context, index) {
                           final product = productsList![index];
                           final libelle = product.libelle;
-                          final brand = product.brand;
+                         // final brand = product.brand;
                          /* final mesure = product['mesure']; */
                           final description = productsList![index].description;
                           /*final conseilUtil = product['conseilUtil'];
@@ -174,7 +174,9 @@ class _MyHomePageState extends State<MyHomePage> {
                               trailing: IconButton(
                                   icon:const Icon(Icons.open_in_new),
                              onPressed: () {
-                                showProductInformationsDialog(Product(libelle: libelle, description: description, brand:brand));
+                                showProductInformationsDialog(Product(libelle: libelle, description: description,
+                                    //brand:brand
+                                    ));
                               },
                             ),
                           ),

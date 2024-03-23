@@ -4,6 +4,19 @@ import 'package:get_ready/models/product_model.dart';
 class ProductService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
+
+  Future<List<Product>> retrieveProducts() async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> snapshot =
+      await _db.collection("Produits").get();
+      return snapshot.docs
+          .map((docSnapshot) => Product.fromDocumentSnapshot(docSnapshot))
+          .toList();
+    }catch(e){
+      print("Erreur lors de la récupération des produits: $e");
+      throw e;
+    }
+  }
   addProduct(Product productData) async {
     await _db.collection("Produits").add(productData.toMap());
   }
@@ -14,13 +27,5 @@ class ProductService {
 
   Future<void> deleteProduct(String documentId) async {
     await _db.collection("Produits").doc(documentId).delete();
-  }
-
-  Future<List<Product>> retrieveProducts() async {
-    QuerySnapshot<Map<String, dynamic>> snapshot =
-        await _db.collection("Produits").get();
-    return snapshot.docs
-        .map((docSnapshot) => Product.fromDocumentSnapshot(docSnapshot))
-        .toList();
   }
 }
