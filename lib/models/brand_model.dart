@@ -4,7 +4,11 @@ class Brand {
     required this.libelle,
   });
 
-  factory Brand.fromData(dynamic data) {
-    return Brand(libelle: data['libelle']);
+  Map<String, dynamic> toMap() {
+    return {
+      'libelle': libelle,
+    };
   }
+  Brand.fromMap(Map<String, dynamic> brandMap) :
+        libelle = brandMap['libelle'];
 }

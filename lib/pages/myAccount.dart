@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MyAccount extends StatefulWidget {
-  const MyAccount({Key? key}) : super(key: key);
+  const MyAccount({super.key});
 
   @override
   State<MyAccount> createState() => _MyAccountState();
@@ -14,6 +13,7 @@ class _MyAccountState extends State<MyAccount> {
 
   final user = FirebaseAuth.instance.currentUser;
 
+  @override
   void dispose() {
     super.dispose();
   }

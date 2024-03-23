@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_ready/main.dart';
 import 'package:get_ready/pages/skinPage.dart';
@@ -23,6 +22,7 @@ class _BrowPageState extends State<BrowPage> {
       _selectedIndex = index;
     });
   }
+  @override
   void dispose() {
     super.dispose();
   }
@@ -51,9 +51,9 @@ class _BrowPageState extends State<BrowPage> {
                     }
 
                     List<dynamic> sousCategories = [];
-                    snapshot.data!.docs.forEach((element) {
+                    for (var element in snapshot.data!.docs) {
                       sousCategories.add(element);
-                    });
+                    }
 
                     return ListView.builder(
                       itemCount: sousCategories.length,

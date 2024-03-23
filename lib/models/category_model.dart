@@ -1,10 +1,16 @@
 class Category{
   final String libelle;
+
   Category({
     required this.libelle,
   });
 
-  factory Category.fromData(dynamic data) {
-    return Category(libelle: data['libelle']);
+
+  Map<String, dynamic> toMap() {
+    return {
+      'libelle': libelle,
+    };
   }
+  Category.fromMap(Map<String, dynamic> subCategoryMap) :
+        libelle = subCategoryMap['libelle'];
 }

@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_ready/main.dart';
 
 class Connexion extends StatefulWidget {
-  const Connexion({Key? key}) : super(key: key);
+  const Connexion({super.key});
 
   @override
   State<Connexion> createState() => _ConnexionState();
@@ -25,7 +25,7 @@ class _ConnexionState extends State<Connexion> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-      title:Text('Connexion'),
+      title:const Text('Connexion'),
       ),
      body:Container(
           margin:const EdgeInsets.all(20),

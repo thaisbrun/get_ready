@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_ready/main.dart';
 
@@ -50,9 +49,9 @@ class _SkinPageState extends State<SkinPage> {
                     }
 
                     List<dynamic> sousCategories = [];
-                    snapshot.data!.docs.forEach((element) {
+                    for (var element in snapshot.data!.docs) {
                       sousCategories.add(element);
-                    });
+                    }
 
                     return ListView.builder(
                       itemCount: sousCategories.length,

@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +7,7 @@ import 'package:get_ready/pages/lipsPage.dart';
 import 'package:get_ready/pages/myAccount.dart';
 import 'package:get_ready/pages/nailsPage.dart';
 import 'package:get_ready/pages/skinPage.dart';
+import 'package:get_ready/services/product_service.dart';
 
 import 'firebase_options.dart';
 import 'models/product_model.dart';
@@ -45,16 +45,31 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  ProductService service = ProductService();
+  Future<List<Product>>? products;
+  List<Product>? productsList;
   int _selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _initRetrieval();
+  }
+
+  Future<void> _initRetrieval() async {
+    products = service.retrieveProducts();
+    productsList = await service.retrieveProducts();
+  }
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
+
   @override
   Widget build(BuildContext context) {
-    Future<void> _showProductInformationsDialog(Product product) async {
+    Future<void> showProductInformationsDialog(Product product) async {
       return showDialog<void>(
         context: context,
         barrierDismissible: true, // user peut cliquer a coté pour fermer
@@ -66,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: <Widget>[
                   Text('Nom : ${product.libelle}'),
                   Text('Description : ${product.description}'),
-             //     Text('Marque : ${product.brand.libelle}')
+                  Text('Marque : ${product.brand} ')
                 ],
               ),
             ),
@@ -124,66 +139,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   );
                 },
               ),
-              /*     Container(
-                 child: Row(
-                    children: [
-                    const Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text('Choisir une catégorie :'),
-                      ),
-                    ),
-                      Flexible(
-                      child:Expanded(
-                        child:Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: StreamBuilder(
-                          stream: FirebaseFirestore.instance.collection("Categories").orderBy("libelle").snapshots(),
-                          builder: (context, snapshot) {
-                          List<DropdownMenuItem> listeCategories = [];
-                          if (snapshot.connectionState == ConnectionState.waiting) {
-                            return const CircularProgressIndicator();
-                          }
-                          if (!snapshot.hasData) {
-                            return const Text("Aucune catégorie");
-                          }
-                          final categories = snapshot.data?.docs.reversed.toList();
-                          listeCategories.add(const DropdownMenuItem(
-                          value:'0',
-                            child: Text('Sélectionner catégorie'),
-                          ));
-                          for(var categorie in categories!){
-                            listeCategories.add(DropdownMenuItem(
-                            value: categorie.id,
-                            child: Text(categorie['libelle'],
-                            ),
-                            ),
-                          );
-                          }
-
-                          return DropdownButtonFormField(
-                          items: listeCategories,
-                            value:selectedCategorie,
-                            onChanged: (value){
-                            setState(() {
-                              selectedCategorie = value!;
-                          });
-                            },
-                            isExpanded: false,
-                          );
-                          }),
-                      ),
-                  ),
-              ),
-            ],
-        ),
-               ), */
               Flexible(
                 child:Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: StreamBuilder(
-                    stream: FirebaseFirestore.instance.collection("Produits").orderBy("libelle").snapshots(),
-                    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  child: FutureBuilder(
+                    future: products,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<Product>> snapshot) {
 
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const CircularProgressIndicator();
@@ -193,31 +155,26 @@ class _MyHomePageState extends State<MyHomePage> {
                         return const Text("Aucun produit");
                       }
 
-                      List<Product> products = [];
-                      snapshot.data!.docs.forEach((data) {
-                        products.add(Product.fromData(data));
-                      });
-
                       return ListView.builder(
-                        itemCount: products.length,
+                        itemCount: productsList!.length,
                         itemBuilder: (context, index) {
-                          final product = products[index];
+                          final product = productsList![index];
                           final libelle = product.libelle;
-                          //final brand = product.brand;
+                          final brand = product.brand;
                          /* final mesure = product['mesure']; */
-                          final description = product.description;
+                          final description = productsList![index].description;
                           /*final conseilUtil = product['conseilUtil'];
                           final prix = product['prix']; */
                           return Card(
                             child: ListTile(
                               dense: true,
                               visualDensity: const VisualDensity(vertical: 1),
-                              title: Text('$libelle'),
+                              title: Text(libelle),
                               textColor: Colors.red[200]!,
                               trailing: IconButton(
-                                  icon:Icon(Icons.open_in_new),
+                                  icon:const Icon(Icons.open_in_new),
                              onPressed: () {
-                                _showProductInformationsDialog(Product(libelle: libelle, description: description));
+                                showProductInformationsDialog(Product(libelle: libelle, description: description, brand:brand));
                               },
                             ),
                           ),
