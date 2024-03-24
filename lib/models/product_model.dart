@@ -7,14 +7,16 @@ class Product{
   final String? id;
   final String libelle;
   final String description;
-  //final Brand brand;
+  final String? brandId;
+  final Brand? brand; // Référence à un document Firestore
 
   Product(
       {
      this.id,
     required this.libelle,
     required this.description,
-    //required this.brand
+     this.brand,
+        this.brandId,
       }
       );
 
@@ -22,21 +24,24 @@ class Product{
     return {
       'libelle': libelle,
       'description': description,
-    //  'brand': brand.toMap()
+      'idMarque': brandId, // Stocker l'ID de la référence
     };
   }
-
   factory Product.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
-    try {
-      Map<String, dynamic> data = snapshot.data()!;
+    Map<String, dynamic> data = snapshot.data()!;
 
-      return Product(
-        libelle: data['libelle'],
-        description: data['description'],
-       // brand: Brand.fromMap(snapshot.data()!['libelle']),
-      );
-    }catch(e){
-      throw e;
-    }
+    // Récupérer l'ID de référence du document Brand
+    String? brandId = data['idMarque'].id;
+
+    // Utiliser l'ID de référence pour créer une instance de Product sans le champ brand pour l'instant
+    String libelle = data['libelle'];
+    String description = data['description'];
+
+    return Product(
+      libelle: libelle,
+      description: description,
+      brandId: brandId,
+    );
   }
+
 }

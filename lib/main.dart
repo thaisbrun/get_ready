@@ -46,20 +46,34 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   ProductService service = ProductService();
-  Future<List<Product>>? products;
   List<Product>? productsList;
   int _selectedIndex = 0;
 
+  // Méthode asynchrone pour charger les données de Product avec les données de Brand
+  Future<void> loadProductWithBrandData() async {
+    // Récupérer les données de Product depuis Firestore (par exemple avec retrieveProducts())
+    List<Product> products = await ProductService().retrieveProducts();
+
+    // Charger les données de Brand pour chaque Product
+    List<Product> productsWithBrandData = [];
+    for (Product product in products) {
+      Product productWithBrandData = await ProductService.getProductWithBrandData(product);
+      productsWithBrandData.add(productWithBrandData);
+    }
+
+    // Mettre à jour l'état de votre Widget avec les nouveaux produits chargés
+    setState(() {
+      productsList = productsWithBrandData;
+    });
+  }
+
+// Exemple d'utilisation dans votre Widget
   @override
   void initState() {
     super.initState();
-    _initRetrieval();
+    loadProductWithBrandData(); // Appeler la méthode pour charger les données avec les données de Brand
   }
 
-  Future<void> _initRetrieval() async {
-    products = service.retrieveProducts();
-    productsList = await service.retrieveProducts();
-  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -81,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: <Widget>[
                   Text('Nom : ${product.libelle}'),
                   Text('Description : ${product.description}'),
-              //    Text('Marque : ${product.brand} ')
+                  Text('Marque : ${product.brand?.libelle} ')
                 ],
               ),
             ),
@@ -140,27 +154,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
               ),
               Flexible(
-                child:Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: FutureBuilder(
-                    future: products,
-                    builder: (BuildContext context,
-                        AsyncSnapshot<List<Product>> snapshot) {
-
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const CircularProgressIndicator();
-                      }
-
-                      if (!snapshot.hasData) {
-                        return const Text("Aucun produit");
-                      }
-
-                      return ListView.builder(
+                child:ListView.builder(
                         itemCount: productsList!.length,
                         itemBuilder: (context, index) {
                           final product = productsList![index];
                           final libelle = product.libelle;
-                         // final brand = product.brand;
+                          final brand = product.brand;
                          /* final mesure = product['mesure']; */
                           final description = productsList![index].description;
                           /*final conseilUtil = product['conseilUtil'];
@@ -174,17 +173,16 @@ class _MyHomePageState extends State<MyHomePage> {
                               trailing: IconButton(
                                   icon:const Icon(Icons.open_in_new),
                              onPressed: () {
-                                showProductInformationsDialog(Product(libelle: libelle, description: description,
-                                    //brand:brand
+                                showProductInformationsDialog(Product(
+                                  libelle: libelle,
+                                    description: description,
+                                    brand:brand
                                     ));
                               },
                             ),
                           ),
                           );
-                        },
-                      );
                     },
-                  ),
                 ),
               ),
             ],
