@@ -3,7 +3,7 @@ class Order{
   final DateTime dateCommande;
   final double prixTotal;
   final int quantite;
-
+  //final Utilisateur utilisateur;
   Order({
     required this.adresseLivraison,
     required this.dateCommande,

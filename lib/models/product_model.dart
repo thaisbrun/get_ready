@@ -1,14 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get_ready/models/subCategory_model.dart';
 
 import 'brand_model.dart';
+import 'ingredient_model.dart';
 
 
 class Product{
   final String? id;
   final String libelle;
   final String description;
+  final int? nombre;
+  final String? conseilUtil;
   final String? brandId;
   final Brand? brand; // Référence à un document Firestore
+  final SubCategory? subCategory;
+  final List<Ingredient>? listIngredients;
+  final bool? activation;
+  final DateTime? dateCreation;
 
   Product(
       {
@@ -17,6 +25,12 @@ class Product{
     required this.description,
      this.brand,
         this.brandId,
+        this.nombre,
+        this.conseilUtil,
+        this.subCategory,
+        this.dateCreation,
+        this.activation,
+        this.listIngredients
       }
       );
 
@@ -25,6 +39,7 @@ class Product{
       'libelle': libelle,
       'description': description,
       'idMarque': brandId, // Stocker l'ID de la référence
+      'nombre' : nombre,
     };
   }
   factory Product.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
@@ -36,11 +51,13 @@ class Product{
     // Utiliser l'ID de référence pour créer une instance de Product sans le champ brand pour l'instant
     String libelle = data['libelle'];
     String description = data['description'];
+    int nombre = data['nombre'];
 
     return Product(
       libelle: libelle,
       description: description,
       brandId: brandId,
+      nombre: nombre
     );
   }
 
