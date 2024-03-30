@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_ready/models/category_model.dart';
 
+/*
 class SubCategory{
   final String name;
   final Category category;
-  final DateTime dateCreation;
+  final Timestamp dateCreation;
   final bool activation;
 
   SubCategory({
@@ -27,3 +29,4 @@ class SubCategory{
         dateCreation = subCategoryMap['dateCreation'],
         activation = subCategoryMap['activation'];
 }
+*/

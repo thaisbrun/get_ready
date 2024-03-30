@@ -1,5 +1,5 @@
 import 'package:get_ready/models/product_model.dart';
-
+/*
 class Image {
   final String lienImage;
   final Product produit;
@@ -29,3 +29,5 @@ class Image {
       dateCreation = imageMap['dateCreation'],
         activation = imageMap['activation'];
 }
+
+ */

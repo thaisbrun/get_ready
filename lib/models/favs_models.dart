@@ -1,7 +1,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_ready/models/product_model.dart';
-
+/*
 class Fav {
   final User user;
   final Product produit;
@@ -31,3 +31,5 @@ class Fav {
         dateCreation = favMap['dateCreation'],
         activation = favMap['activation'];
 }
+
+ */

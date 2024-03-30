@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_ready/pages/EyesPage.dart';
 import 'package:get_ready/pages/browPage.dart';
+import 'package:get_ready/pages/connexion.dart';
 import 'package:get_ready/pages/lipsPage.dart';
 import 'package:get_ready/pages/myAccount.dart';
 import 'package:get_ready/pages/nailsPage.dart';
@@ -147,10 +149,15 @@ class _MyHomePageState extends State<MyHomePage> {
               CupertinoButton(
                 child: const Text("J'ai déjà un compte"),
                 onPressed: () {
+                  if(FirebaseAuth.instance.currentUser != null){
                   Navigator.push(
                     context,
-                    CupertinoPageRoute(builder: (context) => const MyAccount()),
-                  );
+                    CupertinoPageRoute(builder: (context) => const MyAccount(title:MyApp.appTitle)));
+                  }else{
+                  Navigator.push(
+                  context,
+                  CupertinoPageRoute(builder: (context) => const Connexion()));
+                  }
                 },
               ),
               Flexible(
@@ -160,10 +167,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           final product = productsList![index];
                           final libelle = product.libelle;
                           final brand = product.brand;
-                         /* final mesure = product['mesure']; */
                           final description = productsList![index].description;
-                          /*final conseilUtil = product['conseilUtil'];
-                          final prix = product['prix']; */
                           return Card(
                             child: ListTile(
                               dense: true,

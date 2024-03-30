@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_ready/models/product_model.dart';
 
+/*
 class Cart {
   final int prixTotal;
   final List<Product>? listProduits;
@@ -32,3 +33,4 @@ class Cart {
       dateCreation = cartMap['dateCreation'],
       activation = cartMap['activation'];
 }
+*/

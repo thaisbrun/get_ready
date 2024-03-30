@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-
+/*
 class Category {
   final String libelle;
   final DateTime dateCreation;
@@ -25,3 +25,4 @@ class Category {
         dateCreation = categoryMap['dateCreation'],
         activation = categoryMap['activation'];
 }
+ */

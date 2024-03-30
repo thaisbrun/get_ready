@@ -2,7 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MyAccount extends StatefulWidget {
-  const MyAccount({super.key});
+  const MyAccount({super.key, required this.title});
+  final String title;
 
   @override
   State<MyAccount> createState() => _MyAccountState();
@@ -11,7 +12,7 @@ class MyAccount extends StatefulWidget {
 
 class _MyAccountState extends State<MyAccount> {
 
-  final user = FirebaseAuth.instance.currentUser;
+  //final user = FirebaseAuth.instance.currentUser;
 
   @override
   void dispose() {
@@ -21,46 +22,11 @@ class _MyAccountState extends State<MyAccount> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+          title: Text(widget.title),
+          backgroundColor: Colors.red[200]!),
         body:Container(
           margin:const EdgeInsets.all(20),
-          child:Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(bottom: 10),
-                  child: TextFormField(
-                    initialValue: FirebaseAuth.instance.currentUser?.email,
-                    decoration: const InputDecoration(
-                      labelText: "Mail : ",
-                      hintText: "Entrez votre adresse mail ",
-                      border:OutlineInputBorder(),
-                    ),
-                    validator: (value){
-                      if(value == null || value.isEmpty){
-                        return "Le mail ne peut pas être invalide. ";
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(bottom: 10),
-                  child: TextFormField(
-                    //initialValue: FirebaseAuth.instance.currentUser?.phoneNumber,
-                    decoration: const InputDecoration(
-                      labelText: 'Mot de passe : ',
-                      hintText: 'Entrez votre mdp',
-                      border:OutlineInputBorder(),
-                    ),
-                    validator: (value){
-                      if(value == null || value.isEmpty){
-                        return "Le mdp ne peut pas être invalide. ";
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-              ],
-            ),
         ),
         );
   }

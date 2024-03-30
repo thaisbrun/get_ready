@@ -1,3 +1,4 @@
+/*
 class Order{
   final String adresseLivraison;
   final DateTime dateCommande;
@@ -18,4 +19,4 @@ class Order{
         quantite: data['quantite']
     );
   }
-}
+} */
