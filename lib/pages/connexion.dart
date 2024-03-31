@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_ready/main.dart';
+import 'package:get_ready/pages/register.dart';
 
 class Connexion extends StatefulWidget {
   const Connexion({super.key});
@@ -97,7 +99,15 @@ class _ConnexionState extends State<Connexion> {
             child: const Text("Me connecter"),
           ),
         ),
-
+        CupertinoButton(
+          child: const Text("Je n'ai pas encore de compte"),
+          onPressed: () {
+            Navigator.push(
+              context,
+              CupertinoPageRoute(builder: (context) => const RegisterPage()),
+            );
+          },
+        ),
       ],
       ),
       ),
