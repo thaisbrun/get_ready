@@ -14,7 +14,7 @@ class RegisterPage extends StatefulWidget {
 class _RegisterState extends State<RegisterPage> {
 
   final _formKey = GlobalKey<FormState>();
-
+  int _selectedIndex = 0;
   final mailController = TextEditingController();
   final mdpController = TextEditingController();
   final prenomController = TextEditingController();
@@ -29,6 +29,12 @@ class _RegisterState extends State<RegisterPage> {
     telController.dispose();
     nomController.dispose();
     prenomController.dispose();
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
   @override
   Widget build(BuildContext context) {
@@ -45,10 +51,12 @@ class _RegisterState extends State<RegisterPage> {
             Container(
               margin: const EdgeInsets.only(bottom: 10),
               child: TextFormField(
-                decoration: const InputDecoration(
-                  labelText: "Prénom : ",
+                decoration: InputDecoration(
+                  labelText: "Prénom ",
                   hintText: "Entrez votre prénom ",
-                  border:OutlineInputBorder(),
+                  enabledBorder:OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red[200]!, width: 2.0),
+                  ),
                 ),
                 validator: (value){
                   if(value == null || value.isEmpty){
@@ -62,10 +70,12 @@ class _RegisterState extends State<RegisterPage> {
             Container(
               margin: const EdgeInsets.only(bottom: 10),
               child: TextFormField(
-                decoration: const InputDecoration(
-                  labelText: "Nom : ",
+                decoration: InputDecoration(
+                  labelText: "Nom ",
                   hintText: "Entrez votre nom ",
-                  border:OutlineInputBorder(),
+                  enabledBorder:OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red[200]!, width: 2.0),
+                  ),
                 ),
                 validator: (value){
                   if(value == null || value.isEmpty){
@@ -79,10 +89,12 @@ class _RegisterState extends State<RegisterPage> {
             Container(
               margin: const EdgeInsets.only(bottom: 10),
               child: TextFormField(
-                decoration: const InputDecoration(
-                  labelText: "Téléphone : ",
+                decoration: InputDecoration(
+                  labelText: "Téléphone ",
                   hintText: "Entrez votre numéro de téléphone ",
-                  border:OutlineInputBorder(),
+                  enabledBorder:OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red[200]!, width: 2.0),
+                  ),
                 ),
                 validator: (value){
                   if(value == null || value.isEmpty){
@@ -96,10 +108,12 @@ class _RegisterState extends State<RegisterPage> {
             Container(
               margin: const EdgeInsets.only(bottom: 10),
               child: TextFormField(
-                decoration: const InputDecoration(
-                  labelText: "Mail : ",
+                decoration: InputDecoration(
+                  labelText: "Mail ",
                   hintText: "Entrez votre adresse mail ",
-                  border:OutlineInputBorder(),
+                  enabledBorder:OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red[200]!, width: 2.0),
+                  ),
                 ),
                 validator: (value){
                   if(value == null || value.isEmpty){
@@ -113,10 +127,12 @@ class _RegisterState extends State<RegisterPage> {
             Container(
               margin: const EdgeInsets.only(bottom: 10),
               child: TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Mot de passe : ',
+                decoration: InputDecoration(
+                  labelText: 'Mot de passe ',
                   hintText: 'Entrez votre mdp',
-                  border:OutlineInputBorder(),
+                  enabledBorder:OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red[200]!, width: 2.0),
+                  ),
                 ),
                 validator: (value){
                   if(value == null || value.isEmpty){
@@ -173,7 +189,26 @@ class _RegisterState extends State<RegisterPage> {
           ],
         ),
       ),
-    )
+    ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Accueil',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_bag),
+            label: 'Mon Panier',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.supervised_user_circle_sharp),
+            label: 'Mon Compte',
+          )
+        ],
+        selectedItemColor: Colors.red[200],
+      ),
     );
   }
 }

@@ -15,6 +15,7 @@ class _ConnexionState extends State<Connexion> {
   final mdpController = TextEditingController();
   final mailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  int _selectedIndex = 0;
 
   @override
   void dispose() {
@@ -23,12 +24,17 @@ class _ConnexionState extends State<Connexion> {
     mdpController.dispose();
   }
 
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
       title:const Text('Connexion'),
-      ),
+          backgroundColor: Colors.red[200]!),
      body:Container(
           margin:const EdgeInsets.all(20),
       child: Form(
@@ -38,10 +44,12 @@ class _ConnexionState extends State<Connexion> {
       Container(
       margin: const EdgeInsets.only(bottom: 10),
       child: TextFormField(
-      decoration: const InputDecoration(
-      labelText: 'Mail : ',
+      decoration: InputDecoration(
+      labelText: 'Mail  ',
       hintText: 'Entrez votre mail',
-      border:OutlineInputBorder()
+        enabledBorder:OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.red[200]!, width: 2.0),
+          ),
       ),
       validator: (value){
       if(value == null || value.isEmpty){
@@ -55,10 +63,12 @@ class _ConnexionState extends State<Connexion> {
       Container(
       margin: const EdgeInsets.only(bottom: 10),
       child: TextFormField(
-      decoration: const InputDecoration(
-      labelText: 'Mot de passe : ',
+      decoration: InputDecoration(
+      labelText: 'Mot de passe ',
       hintText: 'Entrez votre mot de passe',
-      border:OutlineInputBorder(),
+        enabledBorder:OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.red[200]!, width: 2.0),
+        ),
       ),
       validator: (value){
       if(value == null || value.isEmpty){
@@ -93,8 +103,9 @@ class _ConnexionState extends State<Connexion> {
 
             }
           },
-            style:const ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll(Colors.pink)
+            style: ButtonStyle(
+              backgroundColor: MaterialStatePropertyAll(Colors.red[200]!),
+              foregroundColor: const MaterialStatePropertyAll(Colors.white),
             ),
             child: const Text("Me connecter"),
           ),
@@ -111,6 +122,25 @@ class _ConnexionState extends State<Connexion> {
       ],
       ),
       ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Accueil',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_bag),
+            label: 'Mon Panier',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.supervised_user_circle_sharp),
+            label: 'Mon Compte',
+          )
+        ],
+        selectedItemColor: Colors.red[200],
       ),
     );
   }
