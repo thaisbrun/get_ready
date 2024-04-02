@@ -50,11 +50,26 @@ class ProductService {
       return null;
     }
   }
+  // Fonction asynchrone pour récupérer les données de Brand à partir de son ID
+  static Future<SubCategory?> fetchSubCategoryData(String? subCategoryId) async {
+    if (subCategoryId == null) return null;
+
+    DocumentSnapshot<Map<String, dynamic>> subCategorySnapshot = await FirebaseFirestore.instance
+        .collection('SousCategories')
+        .doc(subCategoryId)
+        .get();
+
+    if (subCategorySnapshot.exists) {
+      return SubCategory.fromMap(subCategorySnapshot.data()!);
+    } else {
+      return null;
+    }
+  }
 
 // Utilisation de fetchBrandData pour récupérer les données de Brand et compléter l'instance de Product
   static Future<Product> getProductWithBrandData(Product product) async {
     Brand? brand = await fetchBrandData(product.brandId);
-    //SubCategory? subCategory = await fetchSubCategoryData(product.subCategoryId);
+    SubCategory? subCategory = await fetchSubCategoryData(product.subCategoryId);
     // Créer une nouvelle instance de Product avec les données de Brand
     return Product(
       libelle: product.libelle,
@@ -63,6 +78,7 @@ class ProductService {
       mesure:product.mesure,
       prix: product.prix,
       brand: brand,
+      subCategory: subCategory,
     );
   }
 }

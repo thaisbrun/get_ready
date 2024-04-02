@@ -127,7 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Image.asset('assets/images/imageTest.jpg'),
                   ListBody(
                     children: <Widget>[
-                      Text('\n ${product.brand?.libelle.toUpperCase()} '),
+                      Text('\nProduit ${product.subCategory?.name} - ${product.brand?.libelle.toUpperCase()} '),
                       Text('${product.libelle} \n', selectionColor: Colors.red[200]!,
                           style: TextStyle(fontWeight: FontWeight.bold,
                               color: Colors.red[200]!,
@@ -227,6 +227,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           final product = productsList![index];
                           final libelle = product.libelle;
                           final brand = product.brand;
+                          final subCategory = product.subCategory;
                           final conseilUtilisation = product.conseilUtilisation;
                           final mesure = product.mesure;
                           final prix = product.prix;
@@ -244,6 +245,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   libelle: libelle,
                                     description: description,
                                     brand:brand,
+                                    subCategory: subCategory,
                                     conseilUtilisation:conseilUtilisation,
                                     mesure:mesure,
                                     prix:prix,

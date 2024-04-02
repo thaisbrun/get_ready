@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get_ready/models/subCategory_model.dart';
 import 'brand_model.dart';
 
 class Product{
@@ -9,11 +10,13 @@ class Product{
   final String description;
   final String? brandId;
   final Brand? brand; // Référence à un document Firestore
+  final String? subCategoryId;
+  final SubCategory? subCategory;
   final String? conseilUtilisation;
   final String mesure;
   final double prix;
   //final int? nombre;
- // final SubCategory? subCategory;
+
   //final List<Ingredient>? listIngredients;
   //final bool? activation;
   //final DateTime? dateCreation;
@@ -28,6 +31,8 @@ class Product{
         this.conseilUtilisation,
         required this.mesure,
         required this.prix,
+        this.subCategoryId,
+        this.subCategory,
       /*  this.nombre,
         this.subCategory,
         this.dateCreation,
@@ -41,6 +46,7 @@ class Product{
       'libelle': libelle,
       'description': description,
       'idMarque': brandId, // Stocker l'ID de la référence
+      'idSousCategorie' : subCategoryId,
       'conseilUtil': conseilUtilisation,
       'mesure': mesure,
       'prix': prix,
@@ -51,7 +57,7 @@ class Product{
 
     // Récupérer l'ID de référence du document Brand
     String? brandId = data['idMarque'].id;
-
+    String? subCategoryId = data['idSousCategorie'].id;
     // Utiliser l'ID de référence pour créer une instance de Product sans le champ brand pour l'instant
     String libelle = data['libelle'];
     String description = data['description'];
@@ -63,6 +69,7 @@ class Product{
       libelle: libelle,
       description: description,
       brandId: brandId,
+      subCategoryId: subCategoryId,
       conseilUtilisation: conseilUtilisation,
       mesure: mesure,
       prix:prix,
