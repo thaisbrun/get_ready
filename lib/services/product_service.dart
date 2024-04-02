@@ -58,6 +58,9 @@ class ProductService {
     return Product(
       libelle: product.libelle,
       description: product.description,
+      conseilUtilisation: product.conseilUtilisation,
+      mesure:product.mesure,
+      prix: product.prix,
       brand: brand,
     );
   }

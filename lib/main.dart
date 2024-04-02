@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get_ready/pages/EyesPage.dart';
 import 'package:get_ready/pages/browPage.dart';
 import 'package:get_ready/pages/connexion.dart';
@@ -91,19 +92,52 @@ class _MyHomePageState extends State<MyHomePage> {
         barrierDismissible: true, // user peut cliquer a coté pour fermer
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Informations produit'),
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  Text('Nom : ${product.libelle}'),
-                  Text('Description : ${product.description}'),
-                  Text('Marque : ${product.brand?.libelle} ')
+            title: Text('Informations produit', selectionColor: Colors.red[200]!,
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            content:
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  Image.asset('assets/images/imageTest.jpg'),
+                  ListBody(
+                    children: <Widget>[
+                      Text('\n ${product.brand?.libelle.toUpperCase()} '),
+                      Text('${product.libelle} \n', selectionColor: Colors.red[200]!,
+                          style: TextStyle(fontWeight: FontWeight.bold,
+                              color: Colors.red[200]!,
+                          fontSize: 18)),
+                      //Prix et mesure
+                      Text('${product.prix.toString()} €',
+                      textAlign: TextAlign.right,
+                      style: TextStyle(fontWeight: FontWeight.bold,
+                      color: Colors.pink,
+                      fontSize: 20),),
+                      Text(product.mesure,
+                          textAlign: TextAlign.right,
+                        style: TextStyle(fontStyle: FontStyle.italic)
+                      ),
+                      Text('Description ',
+                        style: TextStyle(fontWeight: FontWeight.normal,
+                            color: Colors.red[200]!,
+                            fontSize: 12)),
+                      Text(product.description),
+                      Text("\nConseils d'utilisation ",
+                          style: TextStyle(fontWeight: FontWeight.normal,
+                              color: Colors.red[200]!,
+                              fontSize: 12)),
+                      Text(product.conseilUtilisation!),
+                    ],
+                  ),
                 ],
               ),
             ),
             actions: <Widget>[
               ElevatedButton(
-                child: const Text('Ajouter au panier'),
+                child: const Text('Ajouter au panier', selectionColor: Colors.white),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll(Colors.red[200]!),
+                  foregroundColor: const MaterialStatePropertyAll(Colors.white),
+                ),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -167,6 +201,9 @@ class _MyHomePageState extends State<MyHomePage> {
                           final product = productsList![index];
                           final libelle = product.libelle;
                           final brand = product.brand;
+                          final conseilUtilisation = product.conseilUtilisation;
+                          final mesure = product.mesure;
+                          final prix = product.prix;
                           final description = productsList![index].description;
                           return Card(
                             child: ListTile(
@@ -180,7 +217,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                 showProductInformationsDialog(Product(
                                   libelle: libelle,
                                     description: description,
-                                    brand:brand
+                                    brand:brand,
+                                    conseilUtilisation:conseilUtilisation,
+                                    mesure:mesure,
+                                    prix:prix,
                                     ));
                               },
                             ),
