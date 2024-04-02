@@ -8,6 +8,8 @@ import 'package:get_ready/pages/browPage.dart';
 import 'package:get_ready/pages/connexion.dart';
 import 'package:get_ready/pages/lipsPage.dart';
 import 'package:get_ready/pages/myAccount.dart';
+import 'package:get_ready/pages/myCart.dart';
+import 'package:get_ready/pages/myFav.dart';
 import 'package:get_ready/pages/nailsPage.dart';
 import 'package:get_ready/pages/skinPage.dart';
 import 'package:get_ready/services/product_service.dart';
@@ -81,6 +83,30 @@ class _MyHomePageState extends State<MyHomePage> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      if(_selectedIndex==0) {
+        Navigator.of(context).pushReplacement(
+            new MaterialPageRoute(builder: (context) => new MyHomePage(title: MyApp.appTitle)
+            )
+        );
+      }
+      if(_selectedIndex==1) {
+        Navigator.of(context).pushReplacement(
+            new MaterialPageRoute(builder: (context) => new MyCart()
+            )
+        );
+      }
+      if(_selectedIndex==2) {
+        Navigator.of(context).pushReplacement(
+            new MaterialPageRoute(builder: (context) => new MyFav()
+            )
+        );
+      }
+    if(_selectedIndex==3) {
+      Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(builder: (context) => new MyAccount(title:MyApp.appTitle)
+          )
+      );
+      }
     });
   }
 
@@ -302,6 +328,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
         ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
       items: const <BottomNavigationBarItem>[
@@ -313,6 +340,10 @@ class _MyHomePageState extends State<MyHomePage> {
       icon: Icon(Icons.shopping_bag),
         label: 'Mon Panier',
       ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.favorite),
+          label: 'Mes favoris',
+        ),
       BottomNavigationBarItem(
       icon: Icon(Icons.supervised_user_circle_sharp),
         label: 'Mon Compte',

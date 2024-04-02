@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_ready/models/product_model.dart';
 
 import '../models/brand_model.dart';
+import '../models/subCategory_model.dart';
 
 class ProductService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -53,7 +54,7 @@ class ProductService {
 // Utilisation de fetchBrandData pour récupérer les données de Brand et compléter l'instance de Product
   static Future<Product> getProductWithBrandData(Product product) async {
     Brand? brand = await fetchBrandData(product.brandId);
-    print(brand?.libelle);
+    //SubCategory? subCategory = await fetchSubCategoryData(product.subCategoryId);
     // Créer une nouvelle instance de Product avec les données de Brand
     return Product(
       libelle: product.libelle,

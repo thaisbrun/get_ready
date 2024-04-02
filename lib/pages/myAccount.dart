@@ -3,6 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_ready/main.dart';
 
+import 'myCart.dart';
+import 'myFav.dart';
+
 class MyAccount extends StatefulWidget {
   const MyAccount({super.key, required this.title});
   final String title;
@@ -16,7 +19,7 @@ class _MyAccountState extends State<MyAccount> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final user = FirebaseAuth.instance.currentUser;
   final _formKey = GlobalKey<FormState>();
-
+  int _selectedIndex = 0;
   final mailController = TextEditingController();
   final prenomController = TextEditingController();
   final nomController = TextEditingController();
@@ -34,6 +37,35 @@ class _MyAccountState extends State<MyAccount> {
     nomController.dispose();
     telController.dispose();
     mailController.dispose();
+  }
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+      if(_selectedIndex==0) {
+        Navigator.of(context).pushReplacement(
+            new MaterialPageRoute(builder: (context) => new MyHomePage(title: MyApp.appTitle)
+            )
+        );
+      }
+      if(_selectedIndex==1) {
+        Navigator.of(context).pushReplacement(
+            new MaterialPageRoute(builder: (context) => new MyCart()
+            )
+        );
+      }
+      if(_selectedIndex==2) {
+        Navigator.of(context).pushReplacement(
+            new MaterialPageRoute(builder: (context) => new MyFav()
+            )
+        );
+      }
+      if(_selectedIndex==3) {
+        Navigator.of(context).pushReplacement(
+            new MaterialPageRoute(builder: (context) => new MyAccount(title:MyApp.appTitle)
+            )
+        );
+      }
+    });
   }
 
   @override
@@ -153,6 +185,33 @@ class _MyAccountState extends State<MyAccount> {
     ),
     ),
     ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Accueil',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_bag),
+            label: 'Mon Panier',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Mes favoris',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.supervised_user_circle_sharp),
+            label: 'Mon Compte',
+          )
+        ],
+        selectedItemColor: Colors.red[200],
+
+
+      ),
     );
+
   }
   }
