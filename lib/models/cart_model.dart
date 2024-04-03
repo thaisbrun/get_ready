@@ -40,7 +40,7 @@ class Cart {
 
 // Récupérer l'ID de référence du document Brand
     int prixTotal = data['prixTotal'].id;
-   // List listProducts = data['idProduit'].id;
+   // List<Product>? listProducts = data['idProduit'].id;
 // Utiliser l'ID de référence pour créer une instance de Product sans le champ brand pour l'instant
     DateTime? dateCreation = data['dateCreation'];
     bool activation = data['activation'];

@@ -1,9 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_ready/main.dart';
 import 'package:get_ready/pages/skinPage.dart';
 import 'EyesPage.dart';
 import 'browPage.dart';
+import 'connexion.dart';
+import 'myAccount.dart';
+import 'myCart.dart';
+import 'myFav.dart';
 import 'nailsPage.dart';
 
 class LipsPage extends StatefulWidget {
@@ -15,77 +20,93 @@ class LipsPage extends StatefulWidget {
 }
 class _LipsPageState extends State<LipsPage> {
   int _selectedIndex = 0;
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      if(_selectedIndex==0) {
+        Navigator.of(context).pushReplacement(
+            new MaterialPageRoute(builder: (context) => new MyHomePage(title: MyApp.appTitle)
+            )
+        );
+      }
+      if(_selectedIndex==1) {
+        Navigator.of(context).pushReplacement(
+            new MaterialPageRoute(builder: (context) => new MyCart()
+            )
+        );
+      }
+      if(_selectedIndex==2) {
+        Navigator.of(context).pushReplacement(
+            new MaterialPageRoute(builder: (context) => new MyFav()
+            )
+        );
+      }
+      if(_selectedIndex==3) {
+        if(FirebaseAuth.instance.currentUser != null){
+          Navigator.of(context).pushReplacement(
+              new MaterialPageRoute(builder: (context) => const MyAccount(title:MyApp.appTitle))
+          );
+        }else{
+          Navigator.of(context).pushReplacement(
+              new MaterialPageRoute(builder: (context) => const Connexion())
+          );
+        };
+      }
     });
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text('Produits lèvres'),
         backgroundColor: Colors.red[200]!,),
       body: Column(
         children: [
           Container(
-      child:Flexible(
-          child:Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: StreamBuilder(
-              stream: FirebaseFirestore.instance.collection("SousCategories").where("idCategorie", isEqualTo: FirebaseFirestore.instance.doc('Categories/zqlU4lCuCAfiu30KIH6h')).snapshots(),
-              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            child:Flexible(
+              child:Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: StreamBuilder(
+                  stream: FirebaseFirestore.instance.collection("SousCategories").where("idCategorie", isEqualTo: FirebaseFirestore.instance.doc('Categories/S06QeCJdPDMn7E4LavRK')).snapshots(),
+                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
 
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
-                }
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    }
 
-                if (!snapshot.hasData) {
-                  return const Text("Aucun produit");
-                }
+                    if (!snapshot.hasData) {
+                      return const Text("Aucun produit");
+                    }
 
-                List<dynamic> sousCategories = [];
-                for (var element in snapshot.data!.docs) {
-                  sousCategories.add(element);
-                }
+                    List<dynamic> sousCategories = [];
+                    for (var element in snapshot.data!.docs) {
+                      sousCategories.add(element);
+                    }
 
-                return ListView.builder(
-                  itemCount: sousCategories.length,
-                  itemBuilder: (context, index) {
-                    final sousCategorie = sousCategories[index];
-                    final libelle = sousCategorie['libelle'];
+                    return ListView.builder(
+                      itemCount: sousCategories.length,
+                      itemBuilder: (context, index) {
+                        final sousCategorie = sousCategories[index];
+                        final libelle = sousCategorie['libelle'];
 
-                    return Card(
-                      child: ListTile(
-                        dense: true,
-                        visualDensity: const VisualDensity(vertical: 1),
-                        title: Text('$libelle'),
-                        textColor: Colors.red[200]!,
-                        trailing: const Icon(Icons.open_in_new),
-    /* onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const GetProduct(title: MyApp.appTitle),
-                              // Pass the arguments as part of the RouteSettings. The
-                              // DetailScreen reads the arguments from these settings.
-                              settings: RouteSettings(
-                                arguments: sousCategorie[index],
-                              ),
-                            ),
-                          );
-                        }, */
-                      ),
+                        return Card(
+                          child: ListTile(
+                            dense: true,
+                            visualDensity: const VisualDensity(vertical: 1),
+                            title: Text('$libelle'),
+                            textColor: Colors.red[200]!,
+                            trailing: const Icon(Icons.open_in_new),
+
+                          ),
+                        );
+                      },
                     );
                   },
-                );
-              },
+                ),
+              ),
             ),
           ),
-        ),
-      ),
-    ],
+        ],
       ),
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
@@ -160,6 +181,7 @@ class _LipsPageState extends State<LipsPage> {
 
       ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: const <BottomNavigationBarItem>[
@@ -170,6 +192,10 @@ class _LipsPageState extends State<LipsPage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_bag),
             label: 'Mon Panier',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Mes favoris',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.supervised_user_circle_sharp),

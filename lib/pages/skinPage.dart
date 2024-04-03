@@ -1,10 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_ready/main.dart';
 
 import 'EyesPage.dart';
 import 'browPage.dart';
+import 'connexion.dart';
 import 'lipsPage.dart';
+import 'myAccount.dart';
+import 'myCart.dart';
+import 'myFav.dart';
 import 'nailsPage.dart';
 
 class SkinPage extends StatefulWidget {
@@ -18,17 +23,45 @@ class SkinPage extends StatefulWidget {
 
 class _SkinPageState extends State<SkinPage> {
   int _selectedIndex = 0;
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      if(_selectedIndex==0) {
+        Navigator.of(context).pushReplacement(
+            new MaterialPageRoute(builder: (context) => new MyHomePage(title: MyApp.appTitle)
+            )
+        );
+      }
+      if(_selectedIndex==1) {
+        Navigator.of(context).pushReplacement(
+            new MaterialPageRoute(builder: (context) => new MyCart()
+            )
+        );
+      }
+      if(_selectedIndex==2) {
+        Navigator.of(context).pushReplacement(
+            new MaterialPageRoute(builder: (context) => new MyFav()
+            )
+        );
+      }
+      if(_selectedIndex==3) {
+        if(FirebaseAuth.instance.currentUser != null){
+          Navigator.of(context).pushReplacement(
+              new MaterialPageRoute(builder: (context) => const MyAccount(title:MyApp.appTitle))
+          );
+        }else{
+          Navigator.of(context).pushReplacement(
+              new MaterialPageRoute(builder: (context) => const Connexion())
+          );
+        };
+      }
     });
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text('Produits teint'),
         backgroundColor: Colors.red[200]!,),
       body: Column(
         children: [
@@ -66,19 +99,7 @@ class _SkinPageState extends State<SkinPage> {
                             title: Text('$libelle'),
                             textColor: Colors.red[200]!,
                             trailing: const Icon(Icons.open_in_new),
-                           /* onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const GetProduct(title: MyApp.appTitle),
-                                  // Pass the arguments as part of the RouteSettings. The
-                                  // DetailScreen reads the arguments from these settings.
-                                  settings: RouteSettings(
-                                    arguments: sousCategorie[index],
-                                  ),
-                                ),
-                              );
-                            },*/
+
                           ),
                         );
                       },
@@ -163,6 +184,7 @@ class _SkinPageState extends State<SkinPage> {
 
       ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: const <BottomNavigationBarItem>[
@@ -173,6 +195,10 @@ class _SkinPageState extends State<SkinPage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_bag),
             label: 'Mon Panier',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Mes favoris',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.supervised_user_circle_sharp),
