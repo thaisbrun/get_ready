@@ -1,6 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get_ready/models/category_model.dart';
-
 
 class SubCategory{
   final String name;

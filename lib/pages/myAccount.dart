@@ -28,7 +28,7 @@ class _MyAccountState extends State<MyAccount> {
   signOut() async {
     await auth.signOut();
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => MyHomePage(title: MyApp.appTitle)));
+        context, MaterialPageRoute(builder: (context) => const MyHomePage(title: MyApp.appTitle)));
   }
   @override
   void dispose() {
@@ -43,25 +43,25 @@ class _MyAccountState extends State<MyAccount> {
       _selectedIndex = index;
       if(_selectedIndex==0) {
         Navigator.of(context).pushReplacement(
-            new MaterialPageRoute(builder: (context) => new MyHomePage(title: MyApp.appTitle)
+             MaterialPageRoute(builder: (context) => const MyHomePage(title: MyApp.appTitle)
             )
         );
       }
       if(_selectedIndex==1) {
         Navigator.of(context).pushReplacement(
-            new MaterialPageRoute(builder: (context) => new MyCart()
+             MaterialPageRoute(builder: (context) => const MyCart()
             )
         );
       }
       if(_selectedIndex==2) {
         Navigator.of(context).pushReplacement(
-            new MaterialPageRoute(builder: (context) => new MyFav()
+             MaterialPageRoute(builder: (context) => const MyFav()
             )
         );
       }
       if(_selectedIndex==3) {
         Navigator.of(context).pushReplacement(
-            new MaterialPageRoute(builder: (context) => new MyAccount(title:MyApp.appTitle)
+             MaterialPageRoute(builder: (context) => const MyAccount(title:MyApp.appTitle)
             )
         );
       }
@@ -72,7 +72,7 @@ class _MyAccountState extends State<MyAccount> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: Text('Mes informations de profil'),
+            title: const Text('Mes informations de profil'),
             backgroundColor: Colors.red[200]!),
         body:Container(
         margin:const EdgeInsets.all(20),

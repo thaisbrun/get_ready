@@ -40,7 +40,7 @@ class _RegisterState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: Text('Inscription'),
+            title: const Text('Inscription'),
             backgroundColor: Colors.red[200]!),
     body:Container(
       margin:const EdgeInsets.all(20),

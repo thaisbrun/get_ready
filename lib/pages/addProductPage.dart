@@ -121,25 +121,23 @@ class _AddProductPageState extends State<AddProductPage> {
                 controller: productPrixController,
               ),
             ),
-            Container(
-              child: DropdownButtonFormField(
-                items: const [
-                  DropdownMenuItem(value:'lips',child: Text("levres")),
-                  DropdownMenuItem(value:'eyes',child: Text("yeux")),
-                  DropdownMenuItem(value:'teint',child: Text("teint")),
-                ],
-                decoration: const InputDecoration(
-                  border:OutlineInputBorder(),
-                labelText: 'Catégorie du produit',
-                ),
-                value:selectedCat,
-                onChanged: (value){
-                  setState(() {
-                    selectedCat = value!;
-                  });
-                }
-
+            DropdownButtonFormField(
+              items: const [
+                DropdownMenuItem(value:'lips',child: Text("levres")),
+                DropdownMenuItem(value:'eyes',child: Text("yeux")),
+                DropdownMenuItem(value:'teint',child: Text("teint")),
+              ],
+              decoration: const InputDecoration(
+                border:OutlineInputBorder(),
+              labelText: 'Catégorie du produit',
               ),
+              value:selectedCat,
+              onChanged: (value){
+                setState(() {
+                  selectedCat = value!;
+                });
+              }
+
             ),
             SizedBox(
               width:double.infinity,

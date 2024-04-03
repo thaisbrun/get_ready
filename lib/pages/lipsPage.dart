@@ -44,13 +44,13 @@ class _LipsPageState extends State<LipsPage> {
       if(_selectedIndex==3) {
         if(FirebaseAuth.instance.currentUser != null){
           Navigator.of(context).pushReplacement(
-              new MaterialPageRoute(builder: (context) => const MyAccount(title:MyApp.appTitle))
+               MaterialPageRoute(builder: (context) => const MyAccount(title:MyApp.appTitle))
           );
         }else{
           Navigator.of(context).pushReplacement(
-              new MaterialPageRoute(builder: (context) => const Connexion())
+               MaterialPageRoute(builder: (context) => const Connexion())
           );
-        };
+        }
       }
     });
   }
@@ -62,47 +62,45 @@ class _LipsPageState extends State<LipsPage> {
         backgroundColor: Colors.red[200]!,),
       body: Column(
         children: [
-          Container(
-            child:Flexible(
-              child:Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: StreamBuilder(
-                  stream: FirebaseFirestore.instance.collection("SousCategories").where("idCategorie", isEqualTo: FirebaseFirestore.instance.doc('Categories/S06QeCJdPDMn7E4LavRK')).snapshots(),
-                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          Flexible(
+            child:Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: StreamBuilder(
+                stream: FirebaseFirestore.instance.collection("SousCategories").where("idCategorie", isEqualTo: FirebaseFirestore.instance.doc('Categories/S06QeCJdPDMn7E4LavRK')).snapshots(),
+                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
 
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
-                    }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  }
 
-                    if (!snapshot.hasData) {
-                      return const Text("Aucun produit");
-                    }
+                  if (!snapshot.hasData) {
+                    return const Text("Aucun produit");
+                  }
 
-                    List<dynamic> sousCategories = [];
-                    for (var element in snapshot.data!.docs) {
-                      sousCategories.add(element);
-                    }
+                  List<dynamic> sousCategories = [];
+                  for (var element in snapshot.data!.docs) {
+                    sousCategories.add(element);
+                  }
 
-                    return ListView.builder(
-                      itemCount: sousCategories.length,
-                      itemBuilder: (context, index) {
-                        final sousCategorie = sousCategories[index];
-                        final libelle = sousCategorie['libelle'];
+                  return ListView.builder(
+                    itemCount: sousCategories.length,
+                    itemBuilder: (context, index) {
+                      final sousCategorie = sousCategories[index];
+                      final libelle = sousCategorie['libelle'];
 
-                        return Card(
-                          child: ListTile(
-                            dense: true,
-                            visualDensity: const VisualDensity(vertical: 1),
-                            title: Text('$libelle'),
-                            textColor: Colors.red[200]!,
-                            trailing: const Icon(Icons.open_in_new),
+                      return Card(
+                        child: ListTile(
+                          dense: true,
+                          visualDensity: const VisualDensity(vertical: 1),
+                          title: Text('$libelle'),
+                          textColor: Colors.red[200]!,
+                          trailing: const Icon(Icons.open_in_new),
 
-                          ),
-                        );
-                      },
-                    );
-                  },
-                ),
+                        ),
+                      );
+                    },
+                  );
+                },
               ),
             ),
           ),

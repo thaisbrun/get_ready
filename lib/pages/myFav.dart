@@ -21,32 +21,32 @@ class _MyFavState extends State<MyFav> {
       _selectedIndex = index;
       if(_selectedIndex==0) {
         Navigator.of(context).pushReplacement(
-            new MaterialPageRoute(builder: (context) => new MyHomePage(title: MyApp.appTitle)
+             MaterialPageRoute(builder: (context) => const MyHomePage(title: MyApp.appTitle)
             )
         );
       }
       if(_selectedIndex==1) {
         Navigator.of(context).pushReplacement(
-            new MaterialPageRoute(builder: (context) => new MyCart()
+             MaterialPageRoute(builder: (context) => const MyCart()
             )
         );
       }
       if(_selectedIndex==2) {
         Navigator.of(context).pushReplacement(
-            new MaterialPageRoute(builder: (context) => new MyFav()
+             MaterialPageRoute(builder: (context) => const MyFav()
             )
         );
       }
       if(_selectedIndex==3) {
         if(FirebaseAuth.instance.currentUser != null){
           Navigator.of(context).pushReplacement(
-              new MaterialPageRoute(builder: (context) => const MyAccount(title:MyApp.appTitle))
+               MaterialPageRoute(builder: (context) => const MyAccount(title:MyApp.appTitle))
           );
         }else{
           Navigator.of(context).pushReplacement(
-              new MaterialPageRoute(builder: (context) => const Connexion())
+               MaterialPageRoute(builder: (context) => const Connexion())
           );
-        };
+        }
       }
     });
   }

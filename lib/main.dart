@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get_ready/models/favs_models.dart';
 import 'package:get_ready/pages/EyesPage.dart';
 import 'package:get_ready/pages/browPage.dart';
@@ -88,32 +86,32 @@ class _MyHomePageState extends State<MyHomePage> {
       _selectedIndex = index;
       if(_selectedIndex==0) {
         Navigator.of(context).pushReplacement(
-            new MaterialPageRoute(builder: (context) => new MyHomePage(title: MyApp.appTitle)
+             MaterialPageRoute(builder: (context) => const MyHomePage(title: MyApp.appTitle)
             )
         );
       }
       if(_selectedIndex==1) {
         Navigator.of(context).pushReplacement(
-            new MaterialPageRoute(builder: (context) => new MyCart()
+             MaterialPageRoute(builder: (context) => const MyCart()
             )
         );
       }
       if(_selectedIndex==2) {
         Navigator.of(context).pushReplacement(
-            new MaterialPageRoute(builder: (context) => new MyFav()
+             MaterialPageRoute(builder: (context) => const MyFav()
             )
         );
       }
     if(_selectedIndex==3) {
       if(FirebaseAuth.instance.currentUser != null){
         Navigator.of(context).pushReplacement(
-            new MaterialPageRoute(builder: (context) => const MyAccount(title:MyApp.appTitle))
+             MaterialPageRoute(builder: (context) => const MyAccount(title:MyApp.appTitle))
         );
       }else{
         Navigator.of(context).pushReplacement(
-            new MaterialPageRoute(builder: (context) => const Connexion())
+             MaterialPageRoute(builder: (context) => const Connexion())
         );
-      };
+      }
     }
     });
   }
@@ -127,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text('Informations produit', selectionColor: Colors.red[200]!,
-                style: TextStyle(fontWeight: FontWeight.bold)),
+                style: const TextStyle(fontWeight: FontWeight.bold)),
             content:
             SingleChildScrollView(
               child: Column(
@@ -143,12 +141,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       //Prix et mesure
                       Text('${product.prix.toString()} €',
                       textAlign: TextAlign.right,
-                      style: TextStyle(fontWeight: FontWeight.bold,
+                      style: const TextStyle(fontWeight: FontWeight.bold,
                       color: Colors.pink,
                       fontSize: 20),),
                       Text(product.mesure,
                           textAlign: TextAlign.right,
-                        style: TextStyle(fontStyle: FontStyle.italic)
+                        style: const TextStyle(fontStyle: FontStyle.italic)
                       ),
                       Text('Description ',
                         style: TextStyle(fontWeight: FontWeight.normal,
@@ -168,7 +166,7 @@ class _MyHomePageState extends State<MyHomePage> {
             actions: <Widget>[
               IconButton(
                 color: Colors.pink,
-                icon:Icon(Icons.favorite_border),
+                icon: const Icon(Icons.favorite_border),
                 iconSize: 24.0,
                 onPressed: () {
                   favService.addFav(Fav(userId: FirebaseAuth.instance.currentUser?.uid,
@@ -176,7 +174,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
               ),
               ElevatedButton(
-                child: const Text('Ajouter au panier', selectionColor: Colors.white),
                 style: ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll(Colors.red[200]!),
                   foregroundColor: const MaterialStatePropertyAll(Colors.white),
@@ -184,6 +181,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
+                child: const Text('Ajouter au panier', selectionColor: Colors.white),
               ),
               TextButton(
                 child: const Text('Fermer'),
@@ -242,7 +240,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           return Card(
                             color:Colors.red[100]!,
                             child: ListTile(
-                              leading: CircleAvatar(
+                              leading: const CircleAvatar(
                                 backgroundImage: AssetImage("assets/images/homeImg.jpg"), // No matter how big it is, it won't overflow
                               ),
                               dense: true,

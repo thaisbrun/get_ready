@@ -14,7 +14,7 @@ class CartService {
           .toList();
     } catch (e) {
       print("Erreur lors de la récupération des favoris: $e");
-      throw e;
+      rethrow;
     }
   }
 

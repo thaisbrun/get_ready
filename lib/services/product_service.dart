@@ -17,7 +17,7 @@ class ProductService {
           .toList();
     } catch (e) {
       print("Erreur lors de la récupération des produits: $e");
-      throw e;
+      rethrow;
     }
   }
 
