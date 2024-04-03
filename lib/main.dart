@@ -60,12 +60,12 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> loadProductWithBrandData() async {
     // Récupérer les données de Product depuis Firestore (par exemple avec retrieveProducts())
     List<Product> products = await ProductService().retrieveProducts();
-
     // Charger les données de Brand pour chaque Product
     List<Product> productsWithBrandData = [];
     for (Product product in products) {
       Product productWithBrandData = await ProductService.getProductWithBrandData(product);
       productsWithBrandData.add(productWithBrandData);
+
     }
 
     // Mettre à jour l'état de votre Widget avec les nouveaux produits chargés
@@ -158,6 +158,20 @@ class _MyHomePageState extends State<MyHomePage> {
                               color: Colors.red[200]!,
                               fontSize: 12)),
                       Text(product.conseilUtilisation!),
+                      Text("\nIngrédients ",
+                          style: TextStyle(fontWeight: FontWeight.normal,
+                              color: Colors.red[200]!,
+                              fontSize: 12)),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: product.listIngredients.length,
+                        itemBuilder: (context, index) {
+                          final ingredient = product.listIngredients[index];
+                          return ListTile(
+                            title: Text(ingredient.libelle),
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ],
@@ -236,7 +250,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           final conseilUtilisation = product.conseilUtilisation;
                           final mesure = product.mesure;
                           final prix = product.prix;
-                          final description = productsList![index].description;
+                          final description = product.description;
+                          final listIngredients = product.listIngredients;
                           return Card(
                             color:Colors.red[100]!,
                             child: ListTile(
@@ -259,6 +274,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     conseilUtilisation:conseilUtilisation,
                                     mesure:mesure,
                                     prix:prix,
+                                    listIngredients: listIngredients,
                                     ));
                               },
                             ),

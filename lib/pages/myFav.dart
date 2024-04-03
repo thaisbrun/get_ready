@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get_ready/services/favori_service.dart';
 
 import '../main.dart';
+import '../models/favs_models.dart';
 import 'connexion.dart';
 import 'myAccount.dart';
 import 'myCart.dart';
@@ -15,7 +17,29 @@ class MyFav extends StatefulWidget {
 }
 
 class _MyFavState extends State<MyFav> {
+
   int _selectedIndex = 0;
+  @override
+  void initState() {
+    super.initState();
+   // loadFavoriWithProductData(); // Appeler la méthode pour charger les données avec les données de Brand
+  }
+  Future<void> loadFavoriWithProductData() async {
+    // Récupérer les données de Product depuis Firestore (par exemple avec retrieveProducts())
+    List<Fav> favoris = await FavService().retrieveFavoris();
+    // Charger les données de Brand pour chaque Product
+    List<Fav> favorisWithBrandData = [];
+    for (Fav favori in favoris) {
+      //Fav favoriWithBrandData = await FavService.getFavWithProductData(favori);
+     // favorisWithBrandData.add(favoriWithBrandData);
+
+    }
+
+    // Mettre à jour l'état de votre Widget avec les nouveaux produits chargés
+    setState(() {
+  //    favorisList = favorisWithBrandData;
+    });
+  }
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -57,10 +81,80 @@ class _MyFavState extends State<MyFav> {
       appBar: AppBar(
           title:const Text('Liste de mes favoris'),
           backgroundColor: Colors.red[200]!),
-      body:Container(
-        margin:const EdgeInsets.all(20),
+      body: Center(
+        child: Column(
+          children: [
+            Image.asset("assets/images/homeImg.jpg"),
+            const Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text('Saisir un mot clé :'),
+                  ),
                 ),
-
+                Expanded(
+                  child:Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: SearchBar(
+                        constraints: BoxConstraints(minWidth: 0.0, maxWidth: 300.0, minHeight: 50.0)
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Text('\nNOS BEST-SELLERS', style: TextStyle(fontWeight: FontWeight.bold,
+                color: Colors.red[200]!,
+                fontSize: 20)),
+    /*
+            Flexible(
+              child:ListView.builder(
+                itemCount: productsList!.length,
+                itemBuilder: (context, index) {
+                  final product = productsList![index];
+                  final id = product.id;
+                  final libelle = product.libelle;
+                  final brand = product.brand;
+                  final subCategory = product.subCategory;
+                  final conseilUtilisation = product.conseilUtilisation;
+                  final mesure = product.mesure;
+                  final prix = product.prix;
+                  final description = product.description;
+                  final listIngredients = product.listIngredients;
+                  return Card(
+                    color:Colors.red[100]!,
+                    child: ListTile(
+                      leading: const CircleAvatar(
+                        backgroundImage: AssetImage("assets/images/homeImg.jpg"), // No matter how big it is, it won't overflow
+                      ),
+                      dense: true,
+                      visualDensity: const VisualDensity(vertical: 1),
+                      title: Text(libelle),
+                      textColor: Colors.black,
+                      trailing: IconButton(
+                        icon:const Icon(Icons.open_in_new),
+                        onPressed: () {
+                          showProductInformationsDialog(Product(
+                            id:id,
+                            libelle: libelle,
+                            description: description,
+                            brand:brand,
+                            subCategory: subCategory,
+                            conseilUtilisation:conseilUtilisation,
+                            mesure:mesure,
+                            prix:prix,
+                            listIngredients: listIngredients,
+                          ));
+                        },
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ), */
+          ],
+        ),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,

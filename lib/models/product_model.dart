@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_ready/models/subCategory_model.dart';
 import 'brand_model.dart';
+import 'ingredient_model.dart';
 
 class Product{
   final String? id;
@@ -15,7 +16,7 @@ class Product{
   final String mesure;
   final double prix;
   //final int? nombre;
-  //final List<Ingredient>? listIngredients;
+  final List<Ingredient> listIngredients;
   //final bool? activation;
   //final DateTime? dateCreation;
 
@@ -24,6 +25,7 @@ class Product{
      this.id,
     required this.libelle,
     required this.description,
+        required this.listIngredients,
      this.brand,
         this.brandId,
         this.conseilUtilisation,
@@ -34,8 +36,7 @@ class Product{
       /*  this.nombre,
         this.subCategory,
         this.dateCreation,
-        this.activation,
-        this.listIngredients */
+        this.activation */
       }
       );
 
@@ -48,6 +49,7 @@ class Product{
       'conseilUtil': conseilUtilisation,
       'mesure': mesure,
       'prix': prix,
+     'listIngredients': listIngredients,
     };
   }
   factory Product.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
@@ -63,6 +65,10 @@ class Product{
     String conseilUtilisation = data['conseilUtil'];
     String mesure = data['mesure'];
     double prix = data['prix'];
+    // Convertir la liste d'ingrédients
+    List<dynamic> ingredientsData = data['listIngredients'];
+    List<Ingredient> listIngredients = ingredientsData.map((ingredientData) => Ingredient.fromMap(ingredientData)).toList();
+
 
     return Product(
       id:id,
@@ -73,6 +79,7 @@ class Product{
       conseilUtilisation: conseilUtilisation,
       mesure: mesure,
       prix:prix,
+       listIngredients:listIngredients,
     );
   }
 
