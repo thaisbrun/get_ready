@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_ready/models/subCategory_model.dart';
@@ -16,7 +15,6 @@ class Product{
   final String mesure;
   final double prix;
   //final int? nombre;
-
   //final List<Ingredient>? listIngredients;
   //final bool? activation;
   //final DateTime? dateCreation;
@@ -55,6 +53,7 @@ class Product{
   factory Product.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
     Map<String, dynamic> data = snapshot.data()!;
 
+    String id = snapshot.reference.id;
     // Récupérer l'ID de référence du document Brand
     String? brandId = data['idMarque'].id;
     String? subCategoryId = data['idSousCategorie'].id;
@@ -66,6 +65,7 @@ class Product{
     double prix = data['prix'];
 
     return Product(
+      id:id,
       libelle: libelle,
       description: description,
       brandId: brandId,

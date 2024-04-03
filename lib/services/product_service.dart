@@ -71,7 +71,9 @@ class ProductService {
     Brand? brand = await fetchBrandData(product.brandId);
     SubCategory? subCategory = await fetchSubCategoryData(product.subCategoryId);
     // Créer une nouvelle instance de Product avec les données de Brand
+
     return Product(
+      id: product.id,
       libelle: product.libelle,
       description: product.description,
       conseilUtilisation: product.conseilUtilisation,

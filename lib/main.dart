@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get_ready/models/favs_models.dart';
 import 'package:get_ready/pages/EyesPage.dart';
 import 'package:get_ready/pages/browPage.dart';
 import 'package:get_ready/pages/connexion.dart';
@@ -12,6 +14,7 @@ import 'package:get_ready/pages/myCart.dart';
 import 'package:get_ready/pages/myFav.dart';
 import 'package:get_ready/pages/nailsPage.dart';
 import 'package:get_ready/pages/skinPage.dart';
+import 'package:get_ready/services/favori_service.dart';
 import 'package:get_ready/services/product_service.dart';
 
 import 'firebase_options.dart';
@@ -51,6 +54,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   ProductService service = ProductService();
+  FavService favService = FavService();
   List<Product>? productsList;
   int _selectedIndex = 0;
 
@@ -79,7 +83,6 @@ class _MyHomePageState extends State<MyHomePage> {
     loadProductWithBrandData(); // Appeler la méthode pour charger les données avec les données de Brand
   }
 
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -102,11 +105,16 @@ class _MyHomePageState extends State<MyHomePage> {
         );
       }
     if(_selectedIndex==3) {
-      Navigator.of(context).pushReplacement(
-          new MaterialPageRoute(builder: (context) => new MyAccount(title:MyApp.appTitle)
-          )
-      );
-      }
+      if(FirebaseAuth.instance.currentUser != null){
+        Navigator.of(context).pushReplacement(
+            new MaterialPageRoute(builder: (context) => const MyAccount(title:MyApp.appTitle))
+        );
+      }else{
+        Navigator.of(context).pushReplacement(
+            new MaterialPageRoute(builder: (context) => const Connexion())
+        );
+      };
+    }
     });
   }
 
@@ -158,6 +166,15 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             actions: <Widget>[
+              IconButton(
+                color: Colors.pink,
+                icon:Icon(Icons.favorite_border),
+                iconSize: 24.0,
+                onPressed: () {
+                  favService.addFav(Fav(userId: FirebaseAuth.instance.currentUser?.uid,
+                      productId: product.id, dateCreation: Timestamp.now(), activation: true));
+                },
+              ),
               ElevatedButton(
                 child: const Text('Ajouter au panier', selectionColor: Colors.white),
                 style: ButtonStyle(
@@ -206,25 +223,15 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ],
               ),
-              CupertinoButton(
-                child: const Text("J'ai déjà un compte"),
-                onPressed: () {
-                  if(FirebaseAuth.instance.currentUser != null){
-                  Navigator.push(
-                    context,
-                    CupertinoPageRoute(builder: (context) => const MyAccount(title:MyApp.appTitle)));
-                  }else{
-                  Navigator.push(
-                  context,
-                  CupertinoPageRoute(builder: (context) => const Connexion()));
-                  }
-                },
-              ),
+              Text('\nNOS BEST-SELLERS', style: TextStyle(fontWeight: FontWeight.bold,
+                  color: Colors.red[200]!,
+                  fontSize: 20)),
               Flexible(
                 child:ListView.builder(
                         itemCount: productsList!.length,
                         itemBuilder: (context, index) {
                           final product = productsList![index];
+                          final id = product.id;
                           final libelle = product.libelle;
                           final brand = product.brand;
                           final subCategory = product.subCategory;
@@ -233,15 +240,20 @@ class _MyHomePageState extends State<MyHomePage> {
                           final prix = product.prix;
                           final description = productsList![index].description;
                           return Card(
+                            color:Colors.red[100]!,
                             child: ListTile(
+                              leading: CircleAvatar(
+                                backgroundImage: AssetImage("assets/images/homeImg.jpg"), // No matter how big it is, it won't overflow
+                              ),
                               dense: true,
                               visualDensity: const VisualDensity(vertical: 1),
                               title: Text(libelle),
-                              textColor: Colors.red[200]!,
+                              textColor: Colors.black,
                               trailing: IconButton(
                                   icon:const Icon(Icons.open_in_new),
                              onPressed: () {
                                 showProductInformationsDialog(Product(
+                                  id:id,
                                   libelle: libelle,
                                     description: description,
                                     brand:brand,
