@@ -25,19 +25,19 @@ class _LipsPageState extends State<LipsPage> {
       _selectedIndex = index;
       if(_selectedIndex==0) {
         Navigator.of(context).pushReplacement(
-            new MaterialPageRoute(builder: (context) => new MyHomePage(title: MyApp.appTitle)
+            MaterialPageRoute(builder: (context) => const MyHomePage(title: MyApp.appTitle)
             )
         );
       }
       if(_selectedIndex==1) {
         Navigator.of(context).pushReplacement(
-            new MaterialPageRoute(builder: (context) => new MyCart()
+            MaterialPageRoute(builder: (context) => const MyCart()
             )
         );
       }
       if(_selectedIndex==2) {
         Navigator.of(context).pushReplacement(
-            new MaterialPageRoute(builder: (context) => new MyFav()
+            MaterialPageRoute(builder: (context) => const MyFav()
             )
         );
       }
@@ -58,7 +58,7 @@ class _LipsPageState extends State<LipsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Produits lèvres'),
+        title: const Text('Produits lèvres'),
         backgroundColor: Colors.red[200]!,),
       body: Column(
         children: [

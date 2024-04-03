@@ -6,7 +6,7 @@ import 'package:get_ready/models/product_model.dart';
 class Cart {
   final int prixTotal;
 //  final List<Product>? listProduits;
- // final User utilisateur;
+ // final User? utilisateur;
   final DateTime? dateCreation;
   final bool activation;
 
@@ -14,14 +14,14 @@ class Cart {
     required this.prixTotal,
    // this.listProduits,
     this.dateCreation,
-   // required this.utilisateur,
+  //  this.utilisateur,
     required this.activation
   });
 
   Map<String, dynamic> toMap() {
     return {
       'prixTotal': prixTotal,
-     // 'idUtilisateur' : utilisateur,
+    //  'idUtilisateur' : utilisateur,
      // 'listExemplaires': listProduits,
       'dateCreation': dateCreation,
       'activation': activation,
