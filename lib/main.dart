@@ -12,10 +12,12 @@ import 'package:get_ready/pages/myCart.dart';
 import 'package:get_ready/pages/myFav.dart';
 import 'package:get_ready/pages/nailsPage.dart';
 import 'package:get_ready/pages/skinPage.dart';
+import 'package:get_ready/services/cart_service.dart';
 import 'package:get_ready/services/favori_service.dart';
 import 'package:get_ready/services/product_service.dart';
 
 import 'firebase_options.dart';
+import 'models/cart_model.dart';
 import 'models/ingredient_model.dart';
 import 'models/product_model.dart';
 
@@ -201,7 +203,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   foregroundColor: const MaterialStatePropertyAll(Colors.white),
                 ),
                 onPressed: () {
-                  Navigator.of(context).pop();
                 },
                 child: const Text('Ajouter au panier', selectionColor: Colors.white),
               ),
