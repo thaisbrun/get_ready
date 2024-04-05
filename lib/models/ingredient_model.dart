@@ -1,9 +1,10 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Ingredient {
   final String? id;
   final String libelle;
-  final DateTime dateCreation;
+  final Timestamp dateCreation;
   final bool activation;
 
   Ingredient({
@@ -23,9 +24,29 @@ class Ingredient {
     };
   }
 
-  Ingredient.fromMap(Map<String, dynamic> categoryMap) :
-      id = categoryMap['id'],
-        libelle = categoryMap['libelle'],
-        dateCreation = categoryMap['dateCreation'],
-        activation = categoryMap['activation'];
+  factory Ingredient.fromMap(Map<String, dynamic> ingredientMap) {
+    return Ingredient(
+      id: ingredientMap['id'],
+      libelle: ingredientMap['libelle'],
+      dateCreation: ingredientMap['dateCreation'],
+      activation: ingredientMap['activation'],
+    );
+  }
+factory Ingredient.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
+Map<String, dynamic> data = snapshot.data()!;
+
+String id = snapshot.reference.id;
+
+// Utiliser l'ID de référence pour créer une instance de Product sans le champ brand pour l'instant
+String libelle = data['libelle'];
+Timestamp dateCreation = data['dateCreation'];
+bool activation = data['activation'];
+
+return Ingredient(
+id:id,
+libelle: libelle,
+dateCreation: dateCreation,
+activation:activation,
+);
+}
 }

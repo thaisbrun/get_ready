@@ -16,6 +16,7 @@ import 'package:get_ready/services/favori_service.dart';
 import 'package:get_ready/services/product_service.dart';
 
 import 'firebase_options.dart';
+import 'models/ingredient_model.dart';
 import 'models/product_model.dart';
 
 //Cette fonction permet de démarrer mon application
@@ -138,7 +139,6 @@ class _MyHomePageState extends State<MyHomePage> {
                           style: TextStyle(fontWeight: FontWeight.bold,
                               color: Colors.red[200]!,
                           fontSize: 18)),
-                      //Prix et mesure
                       Text('${product.prix.toString()} €',
                       textAlign: TextAlign.right,
                       style: const TextStyle(fontWeight: FontWeight.bold,
@@ -162,15 +162,23 @@ class _MyHomePageState extends State<MyHomePage> {
                           style: TextStyle(fontWeight: FontWeight.normal,
                               color: Colors.red[200]!,
                               fontSize: 12)),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: product.listIngredients.length,
-                        itemBuilder: (context, index) {
-                          final ingredient = product.listIngredients[index];
-                          return ListTile(
-                            title: Text(ingredient.libelle),
-                          );
-                        },
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: List.generate(
+                          product.listIngredients.length,
+                              (index) => FutureBuilder<Ingredient?>(
+                            future: product.listIngredients[index], // Récupère le Future<Ingredient?>
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState == ConnectionState.done) {
+                                final ingredient = snapshot.data;
+                                if (ingredient != null) {
+                                  return Text(ingredient.libelle); // Utilise libelle après la résolution
+                                }
+                              }
+                              return CircularProgressIndicator(); // Affiche une indication de chargement en attendant la résolution du Future
+                            },
+                              ),
+                              ),
                       ),
                     ],
                   ),
@@ -208,8 +216,7 @@ class _MyHomePageState extends State<MyHomePage> {
         },
       );
     }
-    return Center(
-      child: Scaffold(
+    return Scaffold(
         appBar: AppBar(
             title: Text(widget.title),
         backgroundColor: Colors.red[200]!),
@@ -252,6 +259,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           final prix = product.prix;
                           final description = product.description;
                           final listIngredients = product.listIngredients;
+                          final ingredient = product.listIngredients[index];
                           return Card(
                             color:Colors.red[100]!,
                             child: ListTile(
@@ -378,12 +386,8 @@ class _MyHomePageState extends State<MyHomePage> {
       )
       ],
         selectedItemColor: Colors.red[200],
-
-
       ),
-
-      ),
-    );
+      );
   }
 }
 

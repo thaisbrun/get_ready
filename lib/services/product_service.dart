@@ -1,3 +1,4 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_ready/models/product_model.dart';
 
@@ -8,7 +9,6 @@ import '../models/subCategory_model.dart';
 class ProductService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-
   Future<List<Product>> retrieveProducts() async {
     try {
       QuerySnapshot<Map<String, dynamic>> snapshot =
@@ -18,6 +18,30 @@ class ProductService {
           .toList();
     } catch (e) {
       print("Erreur lors de la récupération des produits: $e");
+      rethrow;
+    }
+  }
+  Future<List<Product>> retrieveProductsByCategoryId(String categoryId) async {
+    try {
+      // 1. Récupérez les sous-catégories correspondant à l'ID de catégorie spécifié
+      QuerySnapshot<Map<String, dynamic>> subCategorySnapshot = await _db
+          .collection("SousCategories")
+          .where("idCategorie", isEqualTo: '/Categories/ $categoryId')
+          .get();
+
+      List<String> subCategoryIds = subCategorySnapshot.docs.map((doc) => '/SousCategories/${doc.id}').toList();
+
+      // 2. Récupérez les produits correspondant aux sous-catégories obtenues
+      QuerySnapshot<Map<String, dynamic>> productSnapshot = await _db
+          .collection("Produits")
+          .where("idSousCategorie", whereIn: subCategoryIds)
+          .get();
+
+      return productSnapshot.docs
+          .map((docSnapshot) => Product.fromDocumentSnapshot(docSnapshot))
+          .toList();
+    } catch (e) {
+      print("Erreur lors de la récupération des produits par sub cat : $e");
       rethrow;
     }
   }
@@ -50,7 +74,6 @@ class ProductService {
       return null;
     }
   }
-  // Fonction asynchrone pour récupérer les données de Brand à partir de son ID
   static Future<SubCategory?> fetchSubCategoryData(String? subCategoryId) async {
     if (subCategoryId == null) return null;
 
@@ -65,7 +88,6 @@ class ProductService {
       return null;
     }
   }
-  // Fonction asynchrone pour récupérer les données de Brand à partir de son ID
   static Future<Ingredient?> fetchIngredientData(String? ingredientId) async {
 
     if (ingredientId == null) return null;
@@ -80,30 +102,22 @@ class ProductService {
       return null;
     }
   }
-// Utilisation de fetchBrandData pour récupérer les données de Brand et compléter l'instance de Product
+
   static Future<Product> getProductWithBrandData(Product product) async {
 
     Brand? brand = await fetchBrandData(product.brandId);
     SubCategory? subCategory = await fetchSubCategoryData(product.subCategoryId);
     //Ici pour la liste d'ingrédients
-    List<Ingredient> ingredients = []; // Liste pour stocker les détails des ingrédients
+    List<dynamic> ingredients = []; // Liste pour stocker les détails des ingrédients
     // Récupération des détails des ingrédients pour chaque référence d'ingrédient dans le produit
-    for (var ingredientRef in product.listIngredients) {
-      Ingredient? ingredient = await fetchIngredientData(ingredientRef.id);
-      if (ingredient !=null) {
-        print("ok");
-        // Création de l'objet Ingredient à partir des données récupérées
-        Ingredient ingredientProduct = Ingredient(
-          id: ingredient.id,
-          // Ajoutez d'autres propriétés d'ingrédient en fonction de votre modèle de données
-          libelle: ingredient.libelle,
-          dateCreation: ingredient.dateCreation,
-          activation: ingredient.activation
-          // Exemple : name est supposé être une propriété dans votre modèle d'ingrédient
-        );
-        ingredients.add(ingredientProduct);
-      }
+    // Utilisation de forEach
+
+    product.listIngredients.forEach((ingredient) {
+      if (product.listIngredients.isNotEmpty) {
+      Future<Ingredient?> ing = fetchIngredientData(ingredient.id);
+      ingredients.add(ing);
     }
+    });
 
     return Product(
       id: product.id,

@@ -16,8 +16,8 @@ class Product{
   final String mesure;
   final double prix;
   //final int? nombre;
-  final List<Ingredient> listIngredients;
-  //final bool? activation;
+  final List<dynamic> listIngredients;
+  final bool? activation;
   //final DateTime? dateCreation;
 
   Product(
@@ -35,8 +35,8 @@ class Product{
         this.subCategory,
       /*  this.nombre,
         this.subCategory,
-        this.dateCreation,
-        this.activation */
+        this.dateCreation, */
+        this.activation
       }
       );
 
@@ -49,7 +49,8 @@ class Product{
       'conseilUtil': conseilUtilisation,
       'mesure': mesure,
       'prix': prix,
-     'listIngredients': listIngredients,
+      'activation':activation,
+      'listIngredients':listIngredients,
     };
   }
   factory Product.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
@@ -65,10 +66,8 @@ class Product{
     String conseilUtilisation = data['conseilUtil'];
     String mesure = data['mesure'];
     double prix = data['prix'];
-    // Convertir la liste d'ingrédients
-    List<dynamic> ingredientsData = data['listIngredients'];
-    List<Ingredient> listIngredients = ingredientsData.map((ingredientData) => Ingredient.fromMap(ingredientData)).toList();
-
+    bool activation = data['activation'];
+    List<dynamic> listIngredients = data['listIngredients'];
 
     return Product(
       id:id,
@@ -79,7 +78,8 @@ class Product{
       conseilUtilisation: conseilUtilisation,
       mesure: mesure,
       prix:prix,
-       listIngredients:listIngredients,
+      activation:activation,
+      listIngredients:listIngredients,
     );
   }
 
