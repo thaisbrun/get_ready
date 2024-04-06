@@ -63,6 +63,19 @@ class _NailsPageState extends State<NailsPage> {
         backgroundColor: Colors.red[200]!,),
       body: Column(
         children: [
+          const Row(
+            children: [
+              Expanded(
+                child:Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: SearchBar(
+                    hintText: 'Rechercher un produit ongle...',
+                      constraints: BoxConstraints(minWidth: 0.0, maxWidth: 250.0, minHeight: 50.0)
+                  ),
+                ),
+              ),
+            ],
+          ),
           Flexible(
             child:Padding(
               padding: const EdgeInsets.all(8.0),
