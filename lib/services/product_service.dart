@@ -49,12 +49,10 @@ class ProductService {
   addProduct(Product productData) async {
     await _db.collection("Produits").add(productData.toMap());
   }
-
   updateProduct(Product productData) async {
     await _db.collection("Produits").doc(productData.id).update(
         productData.toMap());
   }
-
   Future<void> deleteProduct(String documentId) async {
     await _db.collection("Produits").doc(documentId).delete();
   }
