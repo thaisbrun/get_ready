@@ -39,11 +39,20 @@ class _MyFavState extends State<MyFav> {
       Fav favoriWithBrandData = await FavService.getFavWithProductData(favori);
       favorisWithBrandData.add(favoriWithBrandData);
     }
-
     // Mettre à jour l'état de votre Widget avec les nouveaux produits chargés
     setState(() {
       favList = favorisWithBrandData;
     });
+  }
+  String getImagePath(String? id) {
+    // Logique pour déterminer le chemin de l'image en fonction de l'ID du produit
+    if (id == 'AXg2ouAmz9t6115IFvdM') {
+      return 'assets/images/homeImg.jpg'; // Chemin de l'image pour le produit avec ID 1
+    } else if (id == 'mztE3llC2MpQ7n8cxtLO') {
+      return 'assets/images/imageTest.jpg'; // Chemin de l'image pour le produit avec ID 2
+    }
+    else{
+    return 'pas de lien';}
   }
   void _onItemTapped(int index) {
     setState(() {
@@ -120,28 +129,6 @@ class _MyFavState extends State<MyFav> {
                               color: Colors.red[200]!,
                               fontSize: 12)),
                       Text(product.conseilUtilisation!),
-                      Text("\nIngrédients ",
-                          style: TextStyle(fontWeight: FontWeight.normal,
-                              color: Colors.red[200]!,
-                              fontSize: 12)),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: List.generate(
-                          product.listIngredients.length,
-                              (index) => FutureBuilder<Ingredient?>(
-                            future: product.listIngredients[index], // Récupère le Future<Ingredient?>
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState == ConnectionState.done) {
-                                final ingredient = snapshot.data;
-                                if (ingredient != null) {
-                                  return Text(ingredient.libelle); // Utilise libelle après la résolution
-                                }
-                              }
-                              return CircularProgressIndicator(); // Affiche une indication de chargement en attendant la résolution du Future
-                            },
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                 ],
@@ -185,9 +172,7 @@ class _MyFavState extends State<MyFav> {
       body: Center(
         child: Column(
           children: [
-            Text('\nVOS FAVORIS', style: TextStyle(fontWeight: FontWeight.bold,
-                color: Colors.red[200]!,
-                fontSize: 20)),
+            Padding(padding: const EdgeInsets.all(16.0)),
             Flexible(
               child:ListView.builder(
                 itemCount: favList!.length,
@@ -199,42 +184,55 @@ class _MyFavState extends State<MyFav> {
                   final dateCreation = favori.dateCreation;
                   if (produit != null) {
                   return Card(
-                    color:Colors.red[100]!,
-                    child: ListTile(
-                      leading: const CircleAvatar(
-                        backgroundImage: AssetImage("assets/images/homeImg.jpg"), // No matter how big it is, it won't overflow
-                      ),
-                      dense: true,
-                      visualDensity: const VisualDensity(vertical: 1),
+                    margin: EdgeInsets.all(10.0),
+                      clipBehavior: Clip.antiAlias,
+                      child: Column(
+                          children: [
+                            Image.asset(getImagePath(favori.productId)),
+                            ListTile(
                       title: Text(produit.libelle),
-                      textColor: Colors.black,
-                      trailing: IconButton(
-                        icon:const Icon(Icons.open_in_new),
-                        onPressed: () {
-
-                          showProductInformationsDialog(Product(
-                            id:produit.id,
-                            libelle: produit.libelle,
-                            description: produit.description,
-                            brand:produit.brand,
-                            subCategory: produit.subCategory,
-                            conseilUtilisation:produit.conseilUtilisation,
-                            mesure:produit.mesure,
-                            prix:produit.prix,
-                            listIngredients: produit.listIngredients,
-                          ));
-                        },
+                      subtitle: Text(
+                        ' Produit ${produit.subCategory!.name.toLowerCase()} de chez ${produit.brand!.libelle.toUpperCase()} ',
+                        style: TextStyle(color: Colors.black.withOpacity(0.6)),
                       ),
                     ),
-                  );}
-    else{
-    Text("Vous n'avez pas encore de favoris");
-    }
-                },
-              ),
-            ),
-          ],
-        ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        children: [
+                          IconButton(
+                            icon:Icon(Icons.close_rounded),
+                            onPressed: () {
+                              favService.deleteFav(favori.id);
+                            },
+                          ),
+                          Text('Supprimer favoris'),
+                          Container(
+                            margin: const EdgeInsets.only(left: 25.0),
+                            child:ElevatedButton(
+                            style: ButtonStyle(
+                              padding: MaterialStateProperty.all<EdgeInsets>(
+                            EdgeInsets.all(10)),
+                              backgroundColor: MaterialStatePropertyAll(Colors.red[200]!),
+                              foregroundColor: const MaterialStatePropertyAll(Colors.white),
+                            ),
+                            onPressed: () {
+                            },
+                            child: const Text('Ajouter au panier', selectionColor: Colors.white),
+                          ),
+                          ),
+                        ]
+                    ),
+                    ),
+                          ],
+                  ),
+                  );
+                  }
+                }
+    )
+      )
+        ]
+    )
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -259,8 +257,6 @@ class _MyFavState extends State<MyFav> {
           )
         ],
         selectedItemColor: Colors.red[200],
-
-
       ),
     );
   }

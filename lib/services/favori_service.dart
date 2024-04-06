@@ -62,4 +62,7 @@ class FavService {
     await _db.collection("Favoris").add(favData.toMap());
     print("Le favori ajouté est ${favData.userId}, ${favData.productId}, ${favData.dateCreation}");
   }
+  Future<void> deleteFav(String? documentId) async {
+    await _db.collection("Favoris").doc(documentId).delete();
+  }
 }

@@ -251,7 +251,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         itemCount: productsList!.length,
                         itemBuilder: (context, index) {
                           final product = productsList![index];
-                          final id = product.id;
                           final libelle = product.libelle;
                           final brand = product.brand;
                           final subCategory = product.subCategory;
@@ -260,7 +259,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           final prix = product.prix;
                           final description = product.description;
                           final listIngredients = product.listIngredients;
-                          final ingredient = product.listIngredients[index];
+                          final ingredient = index < listIngredients.length ? listIngredients[index] : null;
                           return Card(
                             color:Colors.red[100]!,
                             child: ListTile(
@@ -275,7 +274,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                   icon:const Icon(Icons.open_in_new),
                              onPressed: () {
                                 showProductInformationsDialog(Product(
-                                  id:id,
                                   libelle: libelle,
                                     description: description,
                                     brand:brand,
