@@ -1,11 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_ready/models/favs_models.dart';
-import 'package:get_ready/services/product_service.dart';
 
-import '../models/brand_model.dart';
 import '../models/product_model.dart';
-import '../models/subCategory_model.dart';
 
 class FavService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;

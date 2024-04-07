@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_ready/models/subCategory_model.dart';
 import '../services/product_service.dart';
 import 'brand_model.dart';
-import 'ingredient_model.dart';
 
 class Product{
   final String? id;

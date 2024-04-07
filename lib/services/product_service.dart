@@ -23,18 +23,19 @@ class ProductService {
   }
   Future<List<Product>> retrieveProductsByCategoryId(String categoryId) async {
     try {
+      DocumentReference categoryRef = _db.collection("Categories").doc(categoryId);
       // 1. Récupérez les sous-catégories correspondant à l'ID de catégorie spécifié
-      QuerySnapshot<Map<String, dynamic>> subCategorySnapshot = await _db
-          .collection("SousCategories")
-          .where("idCategorie", isEqualTo: '/Categories/ $categoryId')
+      QuerySnapshot<Map<String, dynamic>> subCategorySnapshot =
+      await _db.collection("SousCategories")
+          .where("idCategorie", isEqualTo: categoryRef) // Assurez-vous que la clé utilisateur est correcte
           .get();
 
-      List<String> subCategoryIds = subCategorySnapshot.docs.map((doc) => '/SousCategories/${doc.id}').toList();
+      List<DocumentReference> subCategoryRefs = subCategorySnapshot.docs.map((doc) => doc.reference).toList();
 
       // 2. Récupérez les produits correspondant aux sous-catégories obtenues
       QuerySnapshot<Map<String, dynamic>> productSnapshot = await _db
           .collection("Produits")
-          .where("idSousCategorie", whereIn: subCategoryIds)
+          .where("idSousCategorie", whereIn: subCategoryRefs)
           .get();
 
       return productSnapshot.docs
@@ -110,12 +111,12 @@ class ProductService {
     // Récupération des détails des ingrédients pour chaque référence d'ingrédient dans le produit
     // Utilisation de forEach
 
-    product.listIngredients.forEach((ingredient) {
+    for (var ingredient in product.listIngredients) {
       if (product.listIngredients.isNotEmpty) {
       Future<Ingredient?> ing = fetchIngredientData(ingredient.id);
       ingredients.add(ing);
     }
-    });
+    }
 
     return Product(
       id: product.id,

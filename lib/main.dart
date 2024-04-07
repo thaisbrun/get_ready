@@ -3,21 +3,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_ready/models/favs_models.dart';
-import 'package:get_ready/pages/EyesPage.dart';
-import 'package:get_ready/pages/browPage.dart';
 import 'package:get_ready/pages/connexion.dart';
-import 'package:get_ready/pages/lipsPage.dart';
 import 'package:get_ready/pages/myAccount.dart';
 import 'package:get_ready/pages/myCart.dart';
 import 'package:get_ready/pages/myFav.dart';
-import 'package:get_ready/pages/nailsPage.dart';
-import 'package:get_ready/pages/skinPage.dart';
-import 'package:get_ready/services/cart_service.dart';
+import 'package:get_ready/pages/ProductByCategoryPage.dart';
 import 'package:get_ready/services/favori_service.dart';
 import 'package:get_ready/services/product_service.dart';
 
 import 'firebase_options.dart';
-import 'models/cart_model.dart';
 import 'models/ingredient_model.dart';
 import 'models/product_model.dart';
 
@@ -177,7 +171,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   return Text(ingredient.libelle); // Utilise libelle après la résolution
                                 }
                               }
-                              return CircularProgressIndicator(); // Affiche une indication de chargement en attendant la résolution du Future
+                              return const CircularProgressIndicator(); // Affiche une indication de chargement en attendant la résolution du Future
                             },
                               ),
                               ),
@@ -313,7 +307,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const SkinPage(title:MyApp.appTitle)),
+                    MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'S06QeCJdPDMn7E4LavRK')),
                   );
                 },
               ),
@@ -323,7 +317,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const EyesPage(title: MyApp.appTitle)),
+                    MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'IJNzsCvZlQiYLgWsOT8k')),
                   );
                 },
               ),
@@ -334,7 +328,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   // Update the state of the app
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const LipsPage(title: MyApp.appTitle)),
+                    MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'zqlU4lCuCAfiu30KIH6h')),
                   );
                 },
               ),
@@ -344,7 +338,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const BrowPage(title: MyApp.appTitle,)),
+                    MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'3C5vfgtxttPvB0Nc79d2')),
                   );
                 },
               ),
@@ -354,7 +348,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const NailsPage(title: MyApp.appTitle)),
+                    MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'4UFwQChDvPHUrg7k8XiS')),
                   );
                 },
               ),

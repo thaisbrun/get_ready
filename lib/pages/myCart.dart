@@ -1,16 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get_ready/pages/skinPage.dart';
-
+import 'package:get_ready/pages/ProductByCategoryPage.dart';
 import '../main.dart';
-import 'EyesPage.dart';
-import 'browPage.dart';
 import 'connexion.dart';
-import 'lipsPage.dart';
 import 'myAccount.dart';
 import 'myFav.dart';
-import 'nailsPage.dart';
 
 class MyCart extends StatefulWidget {
   const MyCart({super.key});
@@ -127,7 +122,7 @@ class _MyCartState extends State<MyCart> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const SkinPage(title: MyApp.appTitle)),
+                  MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'S06QeCJdPDMn7E4LavRK')),
                 );
               },
             ),
@@ -137,8 +132,7 @@ class _MyCartState extends State<MyCart> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const EyesPage(
-                      title: MyApp.appTitle)),
+                  MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'IJNzsCvZlQiYLgWsOT8k')),
                 );
               },
             ),
@@ -149,7 +143,7 @@ class _MyCartState extends State<MyCart> {
                 // Update the state of the app
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const LipsPage(title: MyApp.appTitle)),
+                  MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'zqlU4lCuCAfiu30KIH6h')),
                 );
               },
             ),
@@ -159,8 +153,7 @@ class _MyCartState extends State<MyCart> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const BrowPage(
-                      title: MyApp.appTitle)),
+                  MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'3C5vfgtxttPvB0Nc79d2')),
                 );
               },
             ),
@@ -170,8 +163,7 @@ class _MyCartState extends State<MyCart> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const NailsPage(
-                      title: MyApp.appTitle)),
+                  MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'4UFwQChDvPHUrg7k8XiS')),
                 );
               },
             ),

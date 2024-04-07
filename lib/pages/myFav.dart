@@ -5,7 +5,6 @@ import 'package:get_ready/services/favori_service.dart';
 
 import '../main.dart';
 import '../models/favs_models.dart';
-import '../models/ingredient_model.dart';
 import '../models/product_model.dart';
 import 'connexion.dart';
 import 'myAccount.dart';
@@ -172,7 +171,7 @@ class _MyFavState extends State<MyFav> {
       body: Center(
         child: Column(
           children: [
-            Padding(padding: const EdgeInsets.all(16.0)),
+            const Padding(padding: EdgeInsets.all(16.0)),
             Flexible(
               child:ListView.builder(
                 itemCount: favList!.length,
@@ -184,7 +183,7 @@ class _MyFavState extends State<MyFav> {
                   final dateCreation = favori.dateCreation;
                   if (produit != null) {
                   return Card(
-                    margin: EdgeInsets.all(10.0),
+                    margin: const EdgeInsets.all(10.0),
                       clipBehavior: Clip.antiAlias,
                       child: Column(
                           children: [
@@ -201,18 +200,18 @@ class _MyFavState extends State<MyFav> {
                       child: Row(
                         children: [
                           IconButton(
-                            icon:Icon(Icons.close_rounded),
+                            icon:const Icon(Icons.close_rounded),
                             onPressed: () {
                               favService.deleteFav(favori.id);
                             },
                           ),
-                          Text('Supprimer favoris'),
+                          const Text('Supprimer favoris'),
                           Container(
                             margin: const EdgeInsets.only(left: 25.0),
                             child:ElevatedButton(
                             style: ButtonStyle(
                               padding: MaterialStateProperty.all<EdgeInsets>(
-                            EdgeInsets.all(10)),
+                            const EdgeInsets.all(10)),
                               backgroundColor: MaterialStatePropertyAll(Colors.red[200]!),
                               foregroundColor: const MaterialStatePropertyAll(Colors.white),
                             ),
@@ -228,6 +227,7 @@ class _MyFavState extends State<MyFav> {
                   ),
                   );
                   }
+                  return null;
                 }
     )
       )
