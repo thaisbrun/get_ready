@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_ready/main.dart';
 
+import '../models/utilisateur_model.dart';
+import '../services/utilisateur_service.dart';
 import 'myCart.dart';
 import 'myFav.dart';
 
@@ -18,25 +20,38 @@ class MyAccount extends StatefulWidget {
 class _MyAccountState extends State<MyAccount> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final user = FirebaseAuth.instance.currentUser;
+  late Utilisateur utilisateur;
   final _formKey = GlobalKey<FormState>();
+  UtilisateurService utilisateurService = UtilisateurService();
   int _selectedIndex = 0;
   final mailController = TextEditingController();
   final prenomController = TextEditingController();
   final nomController = TextEditingController();
   final telController = TextEditingController();
 
+// Exemple d'utilisation dans votre Widget
+  @override
+  void initState() {
+    super.initState();
+    loadUserData(); // Appeler la méthode pour charger les données avec les données de Brand
+  }
+  Future<void> loadUserData() async {
+    // Récupérer les données de Product depuis Firestore (par exemple avec retrieveProducts())
+    Utilisateur utilisateur = (await UtilisateurService().getUserLinkToFirestore(user?.uid)) as Utilisateur;
+
+    // Mettre à jour l'état de votre Widget avec les nouveaux produits chargés
+    setState(() {
+      utilisateur = utilisateur;
+      prenomController.text = utilisateur.prenom;
+      nomController.text = utilisateur.nom;
+      telController.text = utilisateur.telephone;
+      mailController.text = user!.email!;
+    });
+  }
   signOut() async {
     await auth.signOut();
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => const MyHomePage(title: MyApp.appTitle)));
-  }
-  @override
-  void dispose() {
-    super.dispose();
-    prenomController.dispose();
-    nomController.dispose();
-    telController.dispose();
-    mailController.dispose();
   }
   void _onItemTapped(int index) {
     setState(() {
