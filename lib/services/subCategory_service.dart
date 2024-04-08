@@ -17,5 +17,19 @@ class SubCategoryService {
       rethrow;
     }
   }
+  static Future<SubCategory?> fetchSubCategoryData(String? subCategoryId) async {
+    if (subCategoryId == null) return null;
+
+    DocumentSnapshot<Map<String, dynamic>> subCategorySnapshot = await FirebaseFirestore.instance
+        .collection('SousCategories')
+        .doc(subCategoryId)
+        .get();
+
+    if (subCategorySnapshot.exists) {
+      return SubCategory.fromMap(subCategorySnapshot.data()!);
+    } else {
+      return null;
+    }
+  }
 
 }

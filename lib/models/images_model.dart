@@ -1,11 +1,13 @@
 import 'package:get_ready/models/product_model.dart';
 
 class Image {
+  //proprietes
   final String lienImage;
   final Product produit;
   final DateTime dateCreation;
   final bool activation;
 
+  //constructeur
   Image({
     required this.lienImage,
     required this.produit,
@@ -13,7 +15,7 @@ class Image {
     required this.activation
   });
 
-
+  //methodes
   Map<String, dynamic> toMap() {
     return {
       'lienImage': lienImage,

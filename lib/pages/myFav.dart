@@ -27,28 +27,24 @@ class _MyFavState extends State<MyFav> {
   @override
   void initState() {
     super.initState();
-    loadFavoriWithProductData(); // Appeler la méthode pour charger les données avec les données de Brand
+    loadFavoriWithProductData(); //Je charge la méthode qui permet de load les favoris et ses infos
   }
   Future<void> loadFavoriWithProductData() async {
-    // Récupérer les données de Product depuis Firestore (par exemple avec retrieveProducts())
     List<Fav> favoris = await FavService().retrieveFavoris(FirebaseAuth.instance.currentUser?.uid);
-    // Charger les données de Brand pour chaque Product
     List<Fav> favorisWithBrandData = [];
     for (Fav favori in favoris) {
       Fav favoriWithBrandData = await FavService.getFavWithProductData(favori);
       favorisWithBrandData.add(favoriWithBrandData);
     }
-    // Mettre à jour l'état de votre Widget avec les nouveaux produits chargés
     setState(() {
       favList = favorisWithBrandData;
     });
   }
   String getImagePath(String? id) {
-    // Logique pour déterminer le chemin de l'image en fonction de l'ID du produit
     if (id == 'AXg2ouAmz9t6115IFvdM') {
-      return 'assets/images/homeImg.jpg'; // Chemin de l'image pour le produit avec ID 1
+      return 'assets/images/homeImg.jpg';
     } else if (id == 'mztE3llC2MpQ7n8cxtLO') {
-      return 'assets/images/imageTest.jpg'; // Chemin de l'image pour le produit avec ID 2
+      return 'assets/images/imageTest.jpg';
     }
     else{
     return 'pas de lien';}
@@ -163,7 +159,6 @@ class _MyFavState extends State<MyFav> {
         },
       );
     }
-
     return Scaffold(
       appBar: AppBar(
           title:const Text('Liste de mes favoris'),

@@ -1,52 +1,56 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_ready/models/subCategory_model.dart';
+import 'package:get_ready/services/subCategory_service.dart';
+import '../services/brand_service.dart';
 import '../services/product_service.dart';
 import 'brand_model.dart';
 
 class Product{
+  //propriétés
   final String? id;
   final String libelle;
   final String description;
   final String? brandId;
-   final Brand? brand; // Référence à un document Firestore
+  final Brand? brand;
   final String? subCategoryId;
-   final SubCategory? subCategory;
+  final SubCategory? subCategory;
   final String? conseilUtilisation;
   final String mesure;
   final double prix;
-  //final int? nombre;
   final List<dynamic> listIngredients;
   final bool? activation;
+  //final int? nombre;
   //final DateTime? dateCreation;
 
-  Product(
-      {
-     this.id,
+  //constructeur
+  Product({
+    this.id,
     required this.libelle,
     required this.description,
-        required this.listIngredients,
-     this.brand,
-        this.brandId,
-        this.conseilUtilisation,
-        required this.mesure,
-        required this.prix,
-        this.subCategoryId,
-        this.subCategory,
+    required this.listIngredients,
+    this.brand,
+    this.brandId,
+    this.conseilUtilisation,
+    required this.mesure,
+    required this.prix,
+    this.subCategoryId,
+    this.subCategory,
+    this.activation
       /*  this.nombre,
         this.dateCreation, */
-        this.activation
       }
       );
 
+  //méthodes
   static Future<Product?> fromMap(Map<String, dynamic> productMap) async {
     String? brandId = productMap['idMarque'].id;
     String? subCategoryId = productMap['idSousCategorie'].id;
     if (brandId == null) return null;
-
     // Charger les données de la marque
-    Brand? brand = await ProductService.fetchBrandData(brandId);
-    SubCategory? subCategory = await ProductService.fetchSubCategoryData(subCategoryId);
+    Brand? brand = await BrandService.fetchBrandData(brandId);
+    //Charger les données de la sous-catégorie
+    SubCategory? subCategory = await SubCategoryService.fetchSubCategoryData(subCategoryId);
 
     return Product(
       libelle: productMap['libelle'],
@@ -62,12 +66,11 @@ class Product{
       subCategoryId: productMap['idSousCategorie'].id,
     );
   }
-
   Map<String, dynamic> toMap() {
     return {
       'libelle': libelle,
       'description': description,
-      'idMarque': brandId, // Stocker l'ID de la référence
+      'idMarque': brandId,
       'idSousCategorie' : subCategoryId,
       'conseilUtil': conseilUtilisation,
       'mesure': mesure,
@@ -80,10 +83,8 @@ class Product{
     Map<String, dynamic> data = snapshot.data()!;
 
     String id = snapshot.reference.id;
-    // Récupérer l'ID de référence du document Brand
     String? brandId = data['idMarque'].id;
     String? subCategoryId = data['idSousCategorie'].id;
-    // Utiliser l'ID de référence pour créer une instance de Product sans le champ brand pour l'instant
     String libelle = data['libelle'];
     String description = data['description'];
     String conseilUtilisation = data['conseilUtil'];
@@ -105,5 +106,4 @@ class Product{
       listIngredients:listIngredients,
     );
   }
-
 }

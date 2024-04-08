@@ -23,12 +23,12 @@ class _ConnexionState extends State<Connexion> {
     mailController.dispose();
     mdpController.dispose();
   }
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,9 +96,9 @@ class _ConnexionState extends State<Connexion> {
               );
             } on FirebaseAuthException catch (e) {
               if (e.code == 'user-not-found') {
-                print('No user found for that email.');
+                const SnackBar(content:Text('Aucun utilisateur trouvé pour ces informations de connexion'));
               } else if (e.code == 'wrong-password') {
-                print('Wrong password provided for that user.');
+                const SnackBar(content:Text('Les informations de connexion sont incorrectes'));
               }
 
             }
@@ -111,7 +111,7 @@ class _ConnexionState extends State<Connexion> {
           ),
         ),
         CupertinoButton(
-          child: const Text("Je n'ai pas encore de compte"),
+          child: const Text("Créer mon compte"),
           onPressed: () {
             Navigator.push(
               context,

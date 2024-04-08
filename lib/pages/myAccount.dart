@@ -5,6 +5,7 @@ import 'package:get_ready/main.dart';
 
 import '../models/utilisateur_model.dart';
 import '../services/utilisateur_service.dart';
+import 'connexion.dart';
 import 'myCart.dart';
 import 'myFav.dart';
 
@@ -29,30 +30,34 @@ class _MyAccountState extends State<MyAccount> {
   final nomController = TextEditingController();
   final telController = TextEditingController();
 
-// Exemple d'utilisation dans votre Widget
   @override
   void initState() {
     super.initState();
-    loadUserData(); // Appeler la méthode pour charger les données avec les données de Brand
+    loadUserData(); //On appelle la fonction de chargement des infos de l'utilisateur connecté
   }
   Future<void> loadUserData() async {
-    // Récupérer les données de Product depuis Firestore (par exemple avec retrieveProducts())
+    // Récupérer les données complètes de l'utilisateur avec l'id de l'utilisateur connecté
     Utilisateur utilisateur = (await UtilisateurService().getUserLinkToFirestore(user?.uid)) as Utilisateur;
 
-    // Mettre à jour l'état de votre Widget avec les nouveaux produits chargés
+    // Mettre à jour l'état du widget
     setState(() {
       utilisateur = utilisateur;
+      //Les text box du formulaire prennent la value des infos utilisateurs
       prenomController.text = utilisateur.prenom;
       nomController.text = utilisateur.nom;
       telController.text = utilisateur.telephone;
       mailController.text = user!.email!;
     });
   }
+  //méthode de déconnexion
   signOut() async {
     await auth.signOut();
+    //Redirection vers la page de connexion
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const MyHomePage(title: MyApp.appTitle)));
+        context, MaterialPageRoute(builder: (context) => const Connexion()));
   }
+
+  //Pour la navbar
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -162,26 +167,7 @@ class _MyAccountState extends State<MyAccount> {
       SizedBox(
         child: ElevatedButton(
           onPressed: () async {
-            try {
-              final credential = await FirebaseAuth.instance
-                  .createUserWithEmailAndPassword(
-                email: mailController.text,
-                password: prenomController.text,
-              );
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const MyHomePage(title: MyApp.appTitle)),
-              );
-            } on FirebaseAuthException catch (e) {
-              if (e.code == 'weak-password') {
-                print('The password provided is too weak.');
-              } else if (e.code == 'email-already-in-use') {
-                print('The account already exists for that email.');
-              }
-            } catch (e) {
-              print(e);
-            }
-            FocusScope.of(context).requestFocus(FocusNode());
+         //Mettre la modification de l'utilisateur
           },
           style: ButtonStyle(
             backgroundColor: MaterialStatePropertyAll(Colors.red[200]!),
@@ -227,6 +213,5 @@ class _MyAccountState extends State<MyAccount> {
 
       ),
     );
-
   }
   }

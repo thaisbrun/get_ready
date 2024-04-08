@@ -5,12 +5,13 @@ import 'package:get_ready/services/product_service.dart';
 import 'package:get_ready/services/utilisateur_service.dart';
 
 class Cart {
+  //propriétés
  final List<dynamic>? listProduits;
   final Utilisateur? utilisateur;
   final String? utilisateurId;
   final Timestamp? dateCreation;
   final bool activation;
-
+  //constructeur
   Cart({
     this.listProduits,
     this.dateCreation,
@@ -18,7 +19,7 @@ class Cart {
     this.utilisateurId,
     required this.activation
   });
-
+  //methodes
   Map<String, dynamic> toMap() {
     return {
       'idUtilisateur' : utilisateurId,
@@ -27,37 +28,36 @@ class Cart {
       'activation': activation,
     };
   }
-
-  static Future<Cart?> fromMap(Map<String, dynamic> productMap) async {
-    String? utilisateurId = productMap['idUtilisateur'];
+  static Future<Cart?> fromMap(Map<String, dynamic> cartMap) async {
+    //Je récupère l'id du user dans mon objet Panier
+    String? utilisateurId = cartMap['idUtilisateur'];
+    //Si le panier n'a pas d'utilisateur je retourne null
     if (utilisateurId == null) return null;
 
-    // Charger les données de la marque
+    // Charger les données complètes de l'objet utilisateur
     Utilisateur? utilisateur = await UtilisateurService().getUserLinkToFirestore(utilisateurId);
 
     return Cart(
-      listProduits: productMap['listExemplaires'],
-      activation: productMap['activation'],
+      listProduits: cartMap['listExemplaires'],
+      activation: cartMap['activation'],
       utilisateur: utilisateur,
-      dateCreation: productMap['dateCreation'],
-      utilisateurId: productMap['idUtilisateur'],
+      dateCreation: cartMap['dateCreation'],
+      utilisateurId: cartMap['idUtilisateur'],
     );
+
   }
   static Future<Cart> getCartWithBrandData(Cart cart) async {
-
+    //Chargement de l'objet utilisateur et de ses propriétés
     Utilisateur? utilisateur = await UtilisateurService().getUserLinkToFirestore(cart.utilisateurId);
-    //Ici pour la liste d'ingrédients
-    List<dynamic> listExemplaires = []; // Liste pour stocker les détails des ingrédients
-    // Récupération des détails des ingrédients pour chaque référence d'ingrédient dans le produit
-    // Utilisation de forEach
-
+    List<dynamic> listExemplaires = []; // Liste pour stocker les détails des produits
+    //Je parcours la liste des produits du Panier
     for (var produit in cart.listProduits!) {
       if (cart.listProduits!.isNotEmpty) {
-        Future<Product?> ing = ProductService.getProductWithBrandData(produit.id);
-        listExemplaires.add(ing);
+        //Pour chaque produit je charge ses infos complètes et l'ajoute à ma liste dynamique
+        Future<Product?> prdt = ProductService.getProductWithBrandData(produit.id);
+        listExemplaires.add(prdt);
       }
     }
-
     return Cart(
       dateCreation: cart.dateCreation,
       activation: cart.activation,
@@ -69,21 +69,17 @@ class Cart {
   factory Cart.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
     Map<String, dynamic> data = snapshot.data()!;
 
-// Récupérer l'ID de référence du document Brand
     String utilisateurId = data['idUtilisateur'];
     List<dynamic> listProduitsReferences = data['listExemplaires'];
     List<Product?> listProduits = [];
-// Utiliser l'ID de référence pour créer une instance de Product sans le champ brand pour l'instant
     Timestamp? dateCreation = data['dateCreation'];
     bool activation = data['activation'];
-    // Liste pour stocker les détails des ingrédients
-    // Récupération des détails des ingrédients pour chaque référence d'ingrédient dans le produit
-    // Utilisation de forEach
 
+    //Je parcours la liste des produits référencés et charge leurs infos
     for (var product in listProduitsReferences) {
       if (listProduitsReferences.isNotEmpty) {
-        Future<Product?> ing = ProductService().loadfullProduct(product.id);
-        listProduits.add(ing as Product?);
+        Future<Product?> pdt = ProductService().loadfullProduct(product.id);
+        listProduits.add(pdt as Product?);
       }
     }
     return Cart(

@@ -11,23 +11,22 @@ class Brand {
     //this.dateCreation,
     //this.activation,
   });
-
   Map<String, dynamic> toMap() {
-    return {
-      'id':id,
-      'libelle': libelle,
-      //'dateCreation': dateCreation,
-      //'activation': activation
-    };
-  }
-   factory Brand.fromSnapshot(DocumentSnapshot snapshot) {
+     return {
+       'id':id,
+       'libelle': libelle,
+       //'dateCreation': dateCreation,
+       //'activation': activation
+     };
+   }
+  factory Brand.fromSnapshot(DocumentSnapshot snapshot) {
      Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
      return Brand(
        id: snapshot.id,
-       libelle: data['libelle'] ?? '', // Supposons que le nom de la marque soit stocké sous la clé 'name'
+       libelle: data['libelle'] ?? '', //On dit que le libelle peut etre vide
      );
    }
-  Brand.fromMap(Map<String, dynamic> brandMap) :
+   Brand.fromMap(Map<String, dynamic> brandMap) :
 
         libelle = brandMap['libelle'];
         //dateCreation = brandMap['dateCreation'],

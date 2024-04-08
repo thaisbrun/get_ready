@@ -1,11 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_ready/pages/ProductByCategoryPage.dart';
 import 'package:get_ready/services/cart_service.dart';
-import 'package:get_ready/services/product_service.dart';
 import '../main.dart';
-import '../models/cart_model.dart';
 import '../models/product_model.dart';
 import 'connexion.dart';
 import 'myAccount.dart';
@@ -24,6 +21,8 @@ class _MyCartState extends State<MyCart> {
   final user = FirebaseAuth.instance.currentUser;
   CartService cartService = CartService();
   List<Product>? productsList;
+
+  //Méthode utilisée pour la navbar
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -58,14 +57,12 @@ class _MyCartState extends State<MyCart> {
       }
     });
   }
-
   void initState() {
     super.initState();
-    loadCartData(); // Appeler la méthode pour charger les données avec les données de Brand
+  //  loadCartData();
   }
 
-  Future<void> loadCartData() async {
-    // Récupérer les données de Product depuis Firestore (par exemple avec retrieveProducts())
+ /* Future<void> loadCartData() async {
     Cart cart = (await CartService().getCartLinkToFirestore(user?.uid)) as Cart;
     List<Product> productsWithBrandData = [];
     for (Product product in cart!.listProduits!) {
@@ -74,15 +71,11 @@ class _MyCartState extends State<MyCart> {
       productsWithBrandData.add(productWithBrandData);
     }
 
-    // Mettre à jour l'état de votre Widget avec les nouveaux produits chargés
     setState(() {
       productsList = productsWithBrandData;
-    });
-    // Mettre à jour l'état de votre Widget avec les nouveaux produits chargés
-    setState(() {
       cart = cart;
     });
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -92,6 +85,7 @@ class _MyCartState extends State<MyCart> {
         backgroundColor: Colors.red[200]!,),
       body: Column(
         children: [
+          /*
           Flexible(
             child:ListView.builder(
               itemCount: productsList?.length,
@@ -159,7 +153,8 @@ class _MyCartState extends State<MyCart> {
                 );
               },
             ),
-          ),        ],
+          ), */
+        ],
       ),
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
