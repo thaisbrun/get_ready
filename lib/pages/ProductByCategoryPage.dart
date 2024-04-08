@@ -1,7 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get_ready/main.dart';
 import 'package:get_ready/models/subCategory_model.dart';
 import '../models/product_model.dart';
@@ -108,11 +106,11 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
               children: [
         Center(
         child: Padding(
-        padding: EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8.0),
         child: Center(
           child: DropdownButton<SubCategory>(
           value: null,
-            hint: Text('Trier sous-catégorie'),
+            hint: const Text('Trier sous-catégorie'),
           onChanged: (newValue) {
             setState(() {
               selectedSubCategory = newValue;
@@ -128,7 +126,7 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
         ),
       ),
     ),
-                Expanded(
+                const Expanded(
                   child:Padding(
                     padding: EdgeInsets.all(10.0),
                     child: SearchBar(
@@ -177,7 +175,7 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
                             ),
                             const SizedBox(height: 8),
                             Text("${brand?.libelle.toUpperCase()} - ${subCategory?.name}",
-                                style:TextStyle(fontStyle: FontStyle.italic)),
+                                style:const TextStyle(fontStyle: FontStyle.italic)),
                             const SizedBox(height: 8),
                             Row(
                               mainAxisSize: MainAxisSize.min,
@@ -202,7 +200,7 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
                         decoration: BoxDecoration(
                             color: Colors.grey,
                             borderRadius: BorderRadius.circular(8.0),
-                            image: DecorationImage(
+                            image: const DecorationImage(
                               fit: BoxFit.cover,
                               image: NetworkImage('item.imageUrl'),
                             ))),

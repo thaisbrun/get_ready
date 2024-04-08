@@ -8,7 +8,22 @@ import '../models/subCategory_model.dart';
 
 class ProductService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
+  Future<Product?> loadfullProduct(String? id) async {
+    if (id == null) return null;
 
+    QuerySnapshot<Map<String, dynamic>> userSnapshot = await FirebaseFirestore.instance
+        .collection('Produits')
+        .where("id", isEqualTo: id) // Assurez-vous que la clé utilisateur est correcte
+        .get();
+
+    if (userSnapshot.docs.isNotEmpty) {
+      // Utilisez le premier document trouvé
+      DocumentSnapshot<Map<String, dynamic>> firstDoc = userSnapshot.docs.first;
+      return Product.fromDocumentSnapshot(firstDoc);
+    } else {
+      return null; // Aucun utilisateur trouvé avec la clé donnée
+    }
+  }
   Future<List<Product>> retrieveProducts() async {
     try {
       QuerySnapshot<Map<String, dynamic>> snapshot =
@@ -101,7 +116,6 @@ class ProductService {
       return null;
     }
   }
-
   static Future<Product> getProductWithBrandData(Product product) async {
 
     Brand? brand = await fetchBrandData(product.brandId);

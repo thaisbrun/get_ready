@@ -19,5 +19,4 @@ class UtilisateurService{
     } else {
       return null; // Aucun utilisateur trouvé avec la clé donnée
     }   }
-
 }

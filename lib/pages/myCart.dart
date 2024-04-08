@@ -2,7 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_ready/pages/ProductByCategoryPage.dart';
+import 'package:get_ready/services/cart_service.dart';
+import 'package:get_ready/services/product_service.dart';
 import '../main.dart';
+import '../models/cart_model.dart';
+import '../models/product_model.dart';
 import 'connexion.dart';
 import 'myAccount.dart';
 import 'myFav.dart';
@@ -16,40 +20,70 @@ class MyCart extends StatefulWidget {
 
 class _MyCartState extends State<MyCart> {
   int _selectedIndex = 0;
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final user = FirebaseAuth.instance.currentUser;
+  CartService cartService = CartService();
+  List<Product>? productsList;
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
       if(_selectedIndex==0) {
         Navigator.of(context).pushReplacement(
-             MaterialPageRoute(builder: (context) => const MyHomePage(title: MyApp.appTitle)
+            MaterialPageRoute(builder: (context) => const MyHomePage(title: MyApp.appTitle)
             )
         );
       }
       if(_selectedIndex==1) {
         Navigator.of(context).pushReplacement(
-             MaterialPageRoute(builder: (context) => const MyCart()
+            MaterialPageRoute(builder: (context) => const MyCart()
             )
         );
       }
       if(_selectedIndex==2) {
         Navigator.of(context).pushReplacement(
-             MaterialPageRoute(builder: (context) => const MyFav()
+            MaterialPageRoute(builder: (context) => const MyFav()
             )
         );
       }
       if(_selectedIndex==3) {
         if(FirebaseAuth.instance.currentUser != null){
           Navigator.of(context).pushReplacement(
-               MaterialPageRoute(builder: (context) => const MyAccount(title:MyApp.appTitle))
+              MaterialPageRoute(builder: (context) => const MyAccount(title:MyApp.appTitle))
           );
         }else{
           Navigator.of(context).pushReplacement(
-               MaterialPageRoute(builder: (context) => const Connexion())
+              MaterialPageRoute(builder: (context) => const Connexion())
           );
         }
       }
     });
   }
+
+  void initState() {
+    super.initState();
+    loadCartData(); // Appeler la méthode pour charger les données avec les données de Brand
+  }
+
+  Future<void> loadCartData() async {
+    // Récupérer les données de Product depuis Firestore (par exemple avec retrieveProducts())
+    Cart cart = (await CartService().getCartLinkToFirestore(user?.uid)) as Cart;
+    List<Product> productsWithBrandData = [];
+    for (Product product in cart!.listProduits!) {
+      Product product2 = ProductService().loadfullProduct(product.id) as Product;
+      Product productWithBrandData = await ProductService.getProductWithBrandData(product2);
+      productsWithBrandData.add(productWithBrandData);
+    }
+
+    // Mettre à jour l'état de votre Widget avec les nouveaux produits chargés
+    setState(() {
+      productsList = productsWithBrandData;
+    });
+    // Mettre à jour l'état de votre Widget avec les nouveaux produits chargés
+    setState(() {
+      cart = cart;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,48 +93,73 @@ class _MyCartState extends State<MyCart> {
       body: Column(
         children: [
           Flexible(
-            child:Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: StreamBuilder(
-                stream: FirebaseFirestore.instance.collection("SousCategories").where("idCategorie", isEqualTo: FirebaseFirestore.instance.doc('Categories/S06QeCJdPDMn7E4LavRK')).snapshots(),
-                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
-                  }
-
-                  if (!snapshot.hasData) {
-                    return const Text("Aucun produit");
-                  }
-
-                  List<dynamic> sousCategories = [];
-                  for (var element in snapshot.data!.docs) {
-                    sousCategories.add(element);
-                  }
-
-                  return ListView.builder(
-                    itemCount: sousCategories.length,
-                    itemBuilder: (context, index) {
-                      final sousCategorie = sousCategories[index];
-                      final libelle = sousCategorie['libelle'];
-
-                      return Card(
-                        child: ListTile(
-                          dense: true,
-                          visualDensity: const VisualDensity(vertical: 1),
-                          title: Text('$libelle'),
-                          textColor: Colors.red[200]!,
-                          trailing: const Icon(Icons.open_in_new),
-
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
+            child:ListView.builder(
+              itemCount: productsList?.length,
+              itemBuilder: (BuildContext context, int index) {
+                final product = productsList![index];
+                final libelle = product.libelle;
+                final brand = product.brand;
+                final subCategory = product.subCategory;
+                final mesure = product.mesure;
+                final prix = product.prix;
+                return Container(
+                  height: 136,
+                  margin:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 8.0),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: const Color(0xFFE0E0E0)),
+                      borderRadius: BorderRadius.circular(8.0)),
+                  padding: const EdgeInsets.all(8),
+                  child: Row(
+                    children: [
+                      Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                libelle,
+                                style: const TextStyle(fontWeight: FontWeight.bold),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              const SizedBox(height: 8),
+                              Text("${brand?.libelle.toUpperCase()} - ${subCategory?.name}",
+                                  style:const TextStyle(fontStyle: FontStyle.italic)),
+                              const SizedBox(height: 8),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icons.favorite_border,
+                                  Icons.open_in_new,
+                                ].map((e) {
+                                  return InkWell(
+                                    onTap: () {},
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right: 8.0),
+                                      child: Icon(e, size: 16),
+                                    ),
+                                  );
+                                }).toList(),
+                              )
+                            ],
+                          )),
+                      Container(
+                          width: 100,
+                          height: 100,
+                          decoration: BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius: BorderRadius.circular(8.0),
+                              image: const DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage('item.imageUrl'),
+                              ))),
+                    ],
+                  ),
+                );
+              },
             ),
-          ),
-        ],
+          ),        ],
       ),
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
