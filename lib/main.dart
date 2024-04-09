@@ -53,29 +53,24 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Product>? productsList;
   int _selectedIndex = 0;
 
-  // Méthode asynchrone pour charger les données de Product avec les données de Brand
   Future<void> loadProductWithBrandData() async {
-    // Récupérer les données de Product depuis Firestore (par exemple avec retrieveProducts())
     List<Product> products = await ProductService().retrieveProducts();
-    // Charger les données de Brand pour chaque Product
     List<Product> productsWithBrandData = [];
     for (Product product in products) {
-      Product productWithBrandData = await ProductService.getProductWithBrandData(product);
+      Product productWithBrandData = await ProductService.getProductWithData(product);
       productsWithBrandData.add(productWithBrandData);
 
     }
 
-    // Mettre à jour l'état de votre Widget avec les nouveaux produits chargés
     setState(() {
       productsList = productsWithBrandData;
     });
   }
 
-// Exemple d'utilisation dans votre Widget
   @override
   void initState() {
     super.initState();
-    loadProductWithBrandData(); // Appeler la méthode pour charger les données avec les données de Brand
+    loadProductWithBrandData();
   }
 
   void _onItemTapped(int index) {
@@ -163,12 +158,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: List.generate(
                           product.listIngredients.length,
                               (index) => FutureBuilder<Ingredient?>(
-                            future: product.listIngredients[index], // Récupère le Future<Ingredient?>
+                            future: product.listIngredients[index],
                             builder: (context, snapshot) {
                               if (snapshot.connectionState == ConnectionState.done) {
                                 final ingredient = snapshot.data;
                                 if (ingredient != null) {
-                                  return Text(ingredient.libelle); // Utilise libelle après la résolution
+                                  return Text(ingredient.libelle);
                                 }
                               }
                               return const CircularProgressIndicator(); // Affiche une indication de chargement en attendant la résolution du Future
@@ -258,7 +253,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             color:Colors.red[100]!,
                             child: ListTile(
                               leading: const CircleAvatar(
-                                backgroundImage: AssetImage("assets/images/homeImg.jpg"), // No matter how big it is, it won't overflow
+                                backgroundImage: AssetImage("assets/images/homeImg.jpg"),
                               ),
                               dense: true,
                               visualDensity: const VisualDensity(vertical: 1),
@@ -288,11 +283,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
         ),
         drawer: Drawer(
-          // Add a ListView to the drawer. This ensures the user can scroll
-          // through the options in the drawer if there isn't enough vertical
-          // space to fit everything.
           child: ListView(
-            // Important: Remove any padding from the ListView.
             padding: EdgeInsets.zero,
             children: [
               const DrawerHeader(

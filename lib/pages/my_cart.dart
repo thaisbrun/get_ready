@@ -69,8 +69,8 @@ class _MyCartState extends State<MyCart> {
   Future<void> loadCartData() async {
     Cart cart = (await CartService().getCartLinkToFirestore(user?.uid)) as Cart;
     List<Product> productsWithBrandData = [];
-    for (Product product in cart!.listProduits!) {
-      Product productWithBrandData = await ProductService.getProductWithBrandData(product);
+    for (Product product in cart.listProduits!) {
+      Product productWithBrandData = await ProductService.getProductWithData(product);
       productsWithBrandData.add(productWithBrandData);
     }
 

@@ -72,7 +72,7 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
     // Charger les données de Brand pour chaque Product
     List<Product> productsWithBrandData = [];
     for (Product product in products) {
-      Product productWithBrandData = await ProductService.getProductWithBrandData(product);
+      Product productWithBrandData = await ProductService.getProductWithData(product);
       productsWithBrandData.add(productWithBrandData);
 
     }

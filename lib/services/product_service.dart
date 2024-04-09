@@ -10,25 +10,26 @@ import 'brand_service.dart';
 
 class ProductService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
+  //Fonction qui charge le produit en fonction de son id
   Future<Product?> loadfullProduct(String? id) async {
     if (id == null) return null;
     try{
     QuerySnapshot<Map<String, dynamic>> userSnapshot = await FirebaseFirestore.instance
         .collection('Produits')
-        .where(FieldPath.documentId, isEqualTo: id) // Assurez-vous que la clé utilisateur est correcte
+        .where(FieldPath.documentId, isEqualTo: id)
         .get();
 
     if (userSnapshot.docs.isNotEmpty) {
-      // Utilisez le premier document trouvé
       DocumentSnapshot<Map<String, dynamic>> firstDoc = userSnapshot.docs.first;
       return Product.fromDocumentSnapshot(firstDoc);
     } else {
-      return null; // Aucun utilisateur trouvé avec la clé donnée
+      return null;
     }}catch (e) {
-      print("Erreur lors de la récupération des produits du panier: $e");
+      print("Erreur lors de la récupération des infos du produit : $e");
       rethrow;
     }
   }
+  //Fonction qui charge la liste des produits
   Future<List<Product>> retrieveProducts() async {
     try {
       QuerySnapshot<Map<String, dynamic>> snapshot =
@@ -41,18 +42,18 @@ class ProductService {
       rethrow;
     }
   }
+  //Fonction qui charge les produits de la souscatégorie indiquée
   Future<List<Product>> retrieveProductsByCategoryId(String categoryId) async {
     try {
+      //Chargement des sous catégories présentes dans la catégorie
       DocumentReference categoryRef = _db.collection("Categories").doc(categoryId);
-      // 1. Récupérez les sous-catégories correspondant à l'ID de catégorie spécifié
       QuerySnapshot<Map<String, dynamic>> subCategorySnapshot =
       await _db.collection("SousCategories")
-          .where("idCategorie", isEqualTo: categoryRef) // Assurez-vous que la clé utilisateur est correcte
+          .where("idCategorie", isEqualTo: categoryRef)
           .get();
 
       List<DocumentReference> subCategoryRefs = subCategorySnapshot.docs.map((doc) => doc.reference).toList();
-
-      // 2. Récupérez les produits correspondant aux sous-catégories obtenues
+      //Chargement des produits appartenant aux sous catégories
       QuerySnapshot<Map<String, dynamic>> productSnapshot = await _db
           .collection("Produits")
           .where("idSousCategorie", whereIn: subCategoryRefs)
@@ -62,11 +63,11 @@ class ProductService {
           .map((docSnapshot) => Product.fromDocumentSnapshot(docSnapshot))
           .toList();
     } catch (e) {
-      print("Erreur lors de la récupération des produits par sub cat : $e");
+      print("Erreur lors de la récupération des produits par sous catégories : $e");
       rethrow;
     }
   }
-
+  // 3 fonctions de base : ajout, update et delete
   addProduct(Product productData) async {
     await _db.collection("Produits").add(productData.toMap());
   }
@@ -77,7 +78,7 @@ class ProductService {
   Future<void> deleteProduct(String documentId) async {
     await _db.collection("Produits").doc(documentId).delete();
   }
-
+  //Fonction pour charger un ingrédient en fonction de son id
   static Future<Ingredient?> fetchIngredientData(String? ingredientId) async {
 
     if (ingredientId == null) return null;
@@ -92,15 +93,12 @@ class ProductService {
       return null;
     }
   }
-  static Future<Product> getProductWithBrandData(Product product) async {
+  //Fonction pour charger un produit et ses données
+  static Future<Product> getProductWithData(Product product) async {
 
     Brand? brand = await BrandService.fetchBrandData(product.brandId);
     SubCategory? subCategory = await SubCategoryService.fetchSubCategoryData(product.subCategoryId);
-    //Ici pour la liste d'ingrédients
-    List<dynamic> ingredients = []; // Liste pour stocker les détails des ingrédients
-    // Récupération des détails des ingrédients pour chaque référence d'ingrédient dans le produit
-    // Utilisation de forEach
-
+    List<dynamic> ingredients = [];
     for (var ingredient in product.listIngredients) {
       if (product.listIngredients.isNotEmpty) {
       Future<Ingredient?> ing = fetchIngredientData(ingredient.id);

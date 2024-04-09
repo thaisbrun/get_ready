@@ -53,11 +53,9 @@ class Cart {
    List<dynamic> listProduitsReferences = data['listExemplaires'];
    Timestamp? dateCreation = data['dateCreation'];
    bool activation = data['activation'];
-
-   // Créer une liste de futures pour les produits
    List<Future<Product?>> futures = [];
 
-   // Je parcours la liste des produits référencés et charge leurs infos
+   //Parcours produits référencés et charger tt les données
    for (var productReference in listProduitsReferences) {
      if (listProduitsReferences.isNotEmpty) {
        // Ajouter chaque future à la liste de futures

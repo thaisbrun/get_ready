@@ -12,11 +12,11 @@ class CartService {
     //Chargement de l'objet utilisateur et de ses propriétés
     Utilisateur? utilisateur = await UtilisateurService().getUserLinkToFirestore(cart.utilisateurId);
     List<dynamic> listExemplaires = []; // Liste pour stocker les détails des produits
-    //Je parcours la liste des produits du Panier
+    //Parcours la liste des produits du Panier
     for (var produit in cart.listProduits!) {
       if (cart.listProduits!.isNotEmpty) {
-        //Pour chaque produit je charge ses infos complètes et l'ajoute à ma liste dynamique
-        Future<Product?> prdt = ProductService.getProductWithBrandData(produit.id);
+        //Pour chaque produit je charge ses infos complètes + ajout
+        Future<Product?> prdt = ProductService.getProductWithData(produit.id);
         listExemplaires.add(prdt);
       }
     }
@@ -33,15 +33,14 @@ class CartService {
 
     QuerySnapshot<Map<String, dynamic>> cartSnapshot = await FirebaseFirestore.instance
         .collection('Paniers')
-        .where("idUtilisateur", isEqualTo: refUserAuth) // Assurez-vous que la clé utilisateur est correcte
+        .where("idUtilisateur", isEqualTo: refUserAuth)
         .get();
 
     if (cartSnapshot.docs.isNotEmpty) {
-      // Utilisez le premier document trouvé
       DocumentSnapshot<Map<String, dynamic>> firstDoc = cartSnapshot.docs.first;
       return Cart.fromDocumentSnapshot(firstDoc);
     } else {
-      return null; // Aucun utilisateur trouvé avec la clé donnée
+      return null;
     }
   }
   addToCart(Cart cartData) async {
