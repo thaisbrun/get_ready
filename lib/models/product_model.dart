@@ -82,7 +82,7 @@ class Product{
   factory Product.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
     Map<String, dynamic> data = snapshot.data()!;
 
-    String id = snapshot.reference.id;
+    String id = snapshot.id;
     String? brandId = data['idMarque'].id;
     String? subCategoryId = data['idSousCategorie'].id;
     String libelle = data['libelle'];

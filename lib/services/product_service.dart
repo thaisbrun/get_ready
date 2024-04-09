@@ -12,10 +12,10 @@ class ProductService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   Future<Product?> loadfullProduct(String? id) async {
     if (id == null) return null;
-
+    try{
     QuerySnapshot<Map<String, dynamic>> userSnapshot = await FirebaseFirestore.instance
         .collection('Produits')
-        .where("id", isEqualTo: id) // Assurez-vous que la clé utilisateur est correcte
+        .where(FieldPath.documentId, isEqualTo: id) // Assurez-vous que la clé utilisateur est correcte
         .get();
 
     if (userSnapshot.docs.isNotEmpty) {
@@ -24,6 +24,9 @@ class ProductService {
       return Product.fromDocumentSnapshot(firstDoc);
     } else {
       return null; // Aucun utilisateur trouvé avec la clé donnée
+    }}catch (e) {
+      print("Erreur lors de la récupération des produits du panier: $e");
+      rethrow;
     }
   }
   Future<List<Product>> retrieveProducts() async {

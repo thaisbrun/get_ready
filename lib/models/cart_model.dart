@@ -46,48 +46,36 @@ class Cart {
     );
 
   }
-  static Future<Cart> getCartWithBrandData(Cart cart) async {
-    //Chargement de l'objet utilisateur et de ses propriétés
-    Utilisateur? utilisateur = await UtilisateurService().getUserLinkToFirestore(cart.utilisateurId);
-    List<dynamic> listExemplaires = []; // Liste pour stocker les détails des produits
-    //Je parcours la liste des produits du Panier
-    for (var produit in cart.listProduits!) {
-      if (cart.listProduits!.isNotEmpty) {
-        //Pour chaque produit je charge ses infos complètes et l'ajoute à ma liste dynamique
-        Future<Product?> prdt = ProductService.getProductWithBrandData(produit.id);
-        listExemplaires.add(prdt);
-      }
-    }
-    return Cart(
-      dateCreation: cart.dateCreation,
-      activation: cart.activation,
-      utilisateurId: cart.utilisateurId,
-      utilisateur: utilisateur,
-      listProduits: listExemplaires,
-    );
-  }
-  factory Cart.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
-    Map<String, dynamic> data = snapshot.data()!;
+ static Future<Cart> fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) async {
+   Map<String, dynamic> data = snapshot.data()!;
 
-    String utilisateurId = data['idUtilisateur'];
-    List<dynamic> listProduitsReferences = data['listExemplaires'];
-    List<Product?> listProduits = [];
-    Timestamp? dateCreation = data['dateCreation'];
-    bool activation = data['activation'];
+   String utilisateurId = data['idUtilisateur'];
+   List<dynamic> listProduitsReferences = data['listExemplaires'];
+   Timestamp? dateCreation = data['dateCreation'];
+   bool activation = data['activation'];
 
-    //Je parcours la liste des produits référencés et charge leurs infos
-    for (var product in listProduitsReferences) {
-      if (listProduitsReferences.isNotEmpty) {
-        Future<Product?> pdt = ProductService().loadfullProduct(product.id);
-        listProduits.add(pdt as Product?);
-      }
-    }
-    return Cart(
-        listProduits: listProduits,
-        utilisateurId: utilisateurId,
-        dateCreation: dateCreation,
-        activation: activation
-    );
-  }
+   // Créer une liste de futures pour les produits
+   List<Future<Product?>> futures = [];
 
+   // Je parcours la liste des produits référencés et charge leurs infos
+   for (var productReference in listProduitsReferences) {
+     if (listProduitsReferences.isNotEmpty) {
+       // Ajouter chaque future à la liste de futures
+       futures.add(ProductService().loadfullProduct(productReference.id));
+     }
+   }
+
+   // Attendre que toutes les futures se terminent
+   List<Product?> products = await Future.wait(futures);
+
+   // Filtrer les produits non nulls
+   List<Product> productList = products.where((product) => product != null).map((product) => product!).toList();
+
+   return Cart(
+     utilisateurId: utilisateurId,
+     dateCreation: dateCreation,
+     activation: activation,
+     listProduits: productList,
+   );
+ }
 }

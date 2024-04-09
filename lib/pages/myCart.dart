@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get_ready/pages/ProductByCategoryPage.dart';
 import 'package:get_ready/services/cart_service.dart';
 import '../main.dart';
+import '../models/cart_model.dart';
 import '../models/product_model.dart';
+import '../services/product_service.dart';
 import 'connexion.dart';
 import 'myAccount.dart';
 import 'myFav.dart';
@@ -59,15 +61,14 @@ class _MyCartState extends State<MyCart> {
   }
   void initState() {
     super.initState();
-  //  loadCartData();
+    loadCartData();
   }
 
- /* Future<void> loadCartData() async {
+  Future<void> loadCartData() async {
     Cart cart = (await CartService().getCartLinkToFirestore(user?.uid)) as Cart;
     List<Product> productsWithBrandData = [];
     for (Product product in cart!.listProduits!) {
-      Product product2 = ProductService().loadfullProduct(product.id) as Product;
-      Product productWithBrandData = await ProductService.getProductWithBrandData(product2);
+      Product productWithBrandData = await ProductService.getProductWithBrandData(product);
       productsWithBrandData.add(productWithBrandData);
     }
 
@@ -75,7 +76,7 @@ class _MyCartState extends State<MyCart> {
       productsList = productsWithBrandData;
       cart = cart;
     });
-  }*/
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +86,7 @@ class _MyCartState extends State<MyCart> {
         backgroundColor: Colors.red[200]!,),
       body: Column(
         children: [
-          /*
+
           Flexible(
             child:ListView.builder(
               itemCount: productsList?.length,
@@ -153,7 +154,7 @@ class _MyCartState extends State<MyCart> {
                 );
               },
             ),
-          ), */
+          ),
         ],
       ),
       drawer: Drawer(
