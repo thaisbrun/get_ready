@@ -164,6 +164,17 @@ class _MyCartState extends State<MyCart> {
               },
             ),
           ),
+    Container(
+      margin: const EdgeInsets.only(bottom: 350.0),
+          child: ElevatedButton(
+            style: const ButtonStyle(
+              backgroundColor: MaterialStatePropertyAll(Colors.pink),
+              foregroundColor: const MaterialStatePropertyAll(Colors.white),
+            ),
+            onPressed: () {}, child: const Text('Passer au paiement',
+              selectionColor: Colors.white),
+          ),
+    ),
         ],
 
       ),
