@@ -1,14 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_ready/main.dart';
-import 'package:get_ready/models/subCategory_model.dart';
+import 'package:get_ready/models/subcategory_model.dart';
 import '../models/product_model.dart';
 import '../services/product_service.dart';
-import '../services/subCategory_service.dart';
+import '../services/subcategory_service.dart';
 import 'connexion.dart';
-import 'myAccount.dart';
-import 'myCart.dart';
-import 'myFav.dart';
+import 'my_account.dart';
+import 'my_cart.dart';
+import 'my_fav.dart';
 
 class ProductByCategoryPage extends StatefulWidget {
   const ProductByCategoryPage({super.key, required this.categoryId});

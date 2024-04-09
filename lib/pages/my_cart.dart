@@ -1,14 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get_ready/pages/ProductByCategoryPage.dart';
+import 'package:get_ready/pages/product_by_category_page.dart';
 import 'package:get_ready/services/cart_service.dart';
 import '../main.dart';
 import '../models/cart_model.dart';
 import '../models/product_model.dart';
 import '../services/product_service.dart';
 import 'connexion.dart';
-import 'myAccount.dart';
-import 'myFav.dart';
+import 'my_account.dart';
+import 'my_fav.dart';
 
 class MyCart extends StatefulWidget {
   const MyCart({super.key});
@@ -59,6 +60,7 @@ class _MyCartState extends State<MyCart> {
       }
     });
   }
+  @override
   void initState() {
     super.initState();
     loadCartData();
@@ -86,7 +88,6 @@ class _MyCartState extends State<MyCart> {
         backgroundColor: Colors.red[200]!,),
       body: Column(
         children: [
-
           Flexible(
             child:ListView.builder(
               itemCount: productsList?.length,
@@ -98,7 +99,7 @@ class _MyCartState extends State<MyCart> {
                 final mesure = product.mesure;
                 final prix = product.prix;
                 return Container(
-                  height: 136,
+                  height: 200,
                   margin:
                   const EdgeInsets.symmetric(horizontal: 16, vertical: 8.0),
                   decoration: BoxDecoration(
@@ -119,36 +120,44 @@ class _MyCartState extends State<MyCart> {
                                 overflow: TextOverflow.ellipsis,
                               ),
                               const SizedBox(height: 8),
-                              Text("${brand?.libelle.toUpperCase()} - ${subCategory?.name}",
+                              Text("${brand?.libelle.toUpperCase()}",
+                                  style:const TextStyle(fontStyle: FontStyle.italic)),
+                              const SizedBox(height: 8),
+                              Text("${product.prix} €",
                                   style:const TextStyle(fontStyle: FontStyle.italic)),
                               const SizedBox(height: 8),
                               Row(
                                 mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                  const Text('Quantité : '),
+                                  IconButton(iconSize: 16, padding: const EdgeInsets.only(right: 8.0),
+                                    icon: const Icon(Icons.add), onPressed: () {  }),
+                                  IconButton(iconSize: 16, padding: const EdgeInsets.only(right: 8.0),
+                                    icon: const Icon(Icons.remove), onPressed: () {  },),
+                                ]
+                              ),
+                              Row(
                                 children: [
-                                  Icons.favorite_border,
-                                  Icons.open_in_new,
-                                ].map((e) {
-                                  return InkWell(
-                                    onTap: () {},
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(right: 8.0),
-                                      child: Icon(e, size: 16),
+                                  ElevatedButton(
+                                    style: ButtonStyle(
+                                  backgroundColor: MaterialStatePropertyAll(Colors.red[200]!),
+                                  foregroundColor: const MaterialStatePropertyAll(Colors.white),
                                     ),
-                                  );
-                                }).toList(),
-                              )
+                                    onPressed: () {}, child: const Text('Ajouter au panier', selectionColor: Colors.white),
+                                  ),
+                                  const Spacer(),
+                              CupertinoButton(
+                                onPressed: () {},
+                                child: const Text('Retirer du panier',
+
+                                    style: TextStyle(fontSize: 14),
+                                    selectionColor: Colors.black45),
+                              ),
+                                ],
+                              ),
                             ],
                           )),
-                      Container(
-                          width: 100,
-                          height: 100,
-                          decoration: BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.circular(8.0),
-                              image: const DecorationImage(
-                                fit: BoxFit.cover,
-                                image: NetworkImage('item.imageUrl'),
-                              ))),
                     ],
                   ),
                 );
@@ -156,7 +165,9 @@ class _MyCartState extends State<MyCart> {
             ),
           ),
         ],
+
       ),
+
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
         // through the options in the drawer if there isn't enough vertical

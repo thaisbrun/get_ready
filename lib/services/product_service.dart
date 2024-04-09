@@ -1,11 +1,11 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_ready/models/product_model.dart';
-import 'package:get_ready/services/subCategory_service.dart';
+import 'package:get_ready/services/subcategory_service.dart';
 
 import '../models/brand_model.dart';
 import '../models/ingredient_model.dart';
-import '../models/subCategory_model.dart';
+import '../models/subcategory_model.dart';
 import 'brand_service.dart';
 
 class ProductService {

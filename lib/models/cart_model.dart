@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_ready/models/product_model.dart';
-import 'package:get_ready/models/utilisateur_model.dart';
+import 'package:get_ready/models/user_model.dart';
 import 'package:get_ready/services/product_service.dart';
 import 'package:get_ready/services/utilisateur_service.dart';
 

@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import '../models/subCategory_model.dart';
+import '../models/subcategory_model.dart';
 
 class SubCategoryService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;

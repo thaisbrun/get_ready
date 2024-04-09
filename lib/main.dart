@@ -4,10 +4,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_ready/models/favs_models.dart';
 import 'package:get_ready/pages/connexion.dart';
-import 'package:get_ready/pages/myAccount.dart';
-import 'package:get_ready/pages/myCart.dart';
-import 'package:get_ready/pages/myFav.dart';
-import 'package:get_ready/pages/ProductByCategoryPage.dart';
+import 'package:get_ready/pages/my_account.dart';
+import 'package:get_ready/pages/my_cart.dart';
+import 'package:get_ready/pages/my_fav.dart';
+import 'package:get_ready/pages/product_by_category_page.dart';
 import 'package:get_ready/services/favori_service.dart';
 import 'package:get_ready/services/product_service.dart';
 

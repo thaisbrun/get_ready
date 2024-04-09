@@ -124,6 +124,7 @@ class _ConnexionState extends State<Connexion> {
       ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: const <BottomNavigationBarItem>[
@@ -136,11 +137,17 @@ class _ConnexionState extends State<Connexion> {
             label: 'Mon Panier',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Mes favoris',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.supervised_user_circle_sharp),
             label: 'Mon Compte',
           )
         ],
         selectedItemColor: Colors.red[200],
+
+
       ),
     );
   }

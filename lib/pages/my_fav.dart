@@ -7,8 +7,8 @@ import '../main.dart';
 import '../models/favs_models.dart';
 import '../models/product_model.dart';
 import 'connexion.dart';
-import 'myAccount.dart';
-import 'myCart.dart';
+import 'my_account.dart';
+import 'my_cart.dart';
 
 class MyFav extends StatefulWidget {
   const MyFav({super.key});

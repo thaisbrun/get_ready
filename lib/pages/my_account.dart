@@ -3,11 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_ready/main.dart';
 
-import '../models/utilisateur_model.dart';
+import '../models/user_model.dart';
 import '../services/utilisateur_service.dart';
 import 'connexion.dart';
-import 'myCart.dart';
-import 'myFav.dart';
+import 'my_cart.dart';
+import 'my_fav.dart';
 
 class MyAccount extends StatefulWidget {
   const MyAccount({super.key, required this.title});

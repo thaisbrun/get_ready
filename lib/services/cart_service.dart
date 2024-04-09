@@ -4,7 +4,7 @@ import 'package:get_ready/services/product_service.dart';
 import 'package:get_ready/services/utilisateur_service.dart';
 
 import '../models/product_model.dart';
-import '../models/utilisateur_model.dart';
+import '../models/user_model.dart';
 
 class CartService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
