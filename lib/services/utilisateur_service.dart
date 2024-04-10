@@ -20,7 +20,7 @@ class UtilisateurService{
       return null; // Aucun utilisateur trouvé avec la clé donnée
     }   }
    updateUser(Utilisateur userData) async {
-     await _db.collection("Utilisateur").doc(userData.refUserAuth).update(
+     await _db.collection("Utilisateurs").doc(userData.id).update(
          userData.toMap());
    }
 

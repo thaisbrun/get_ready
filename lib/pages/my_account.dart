@@ -21,14 +21,16 @@ class MyAccount extends StatefulWidget {
 class _MyAccountState extends State<MyAccount> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final user = FirebaseAuth.instance.currentUser;
-  late Utilisateur utilisateur;
+  Utilisateur utilisateur = Utilisateur();
   final _formKey = GlobalKey<FormState>();
   UtilisateurService utilisateurService = UtilisateurService();
   int _selectedIndex = 0;
+  final idController = TextEditingController();
   final mailController = TextEditingController();
   final prenomController = TextEditingController();
   final nomController = TextEditingController();
   final telController = TextEditingController();
+  final refUserAuthController = TextEditingController();
 
   @override
   void initState() {
@@ -41,11 +43,11 @@ class _MyAccountState extends State<MyAccount> {
 
     // Mettre à jour l'état du widget
     setState(() {
-      utilisateur = utilisateur;
-      //Les text box du formulaire prennent la value des infos utilisateurs
-      prenomController.text = utilisateur.prenom;
-      nomController.text = utilisateur.nom;
-      telController.text = utilisateur.telephone;
+      idController.text = utilisateur.id!;
+      prenomController.text = utilisateur.prenom!;
+      nomController.text = utilisateur.nom!;
+      refUserAuthController.text = utilisateur.refUserAuth!;
+      telController.text = utilisateur.telephone!;
       mailController.text = user!.email!;
     });
   }
@@ -167,8 +169,21 @@ class _MyAccountState extends State<MyAccount> {
       SizedBox(
         child: ElevatedButton(
           onPressed: () async {
+            utilisateur = utilisateur;
+            utilisateur.id = idController.text;
+            utilisateur.prenom = prenomController.text;
+            utilisateur.refUserAuth = refUserAuthController.text;
+            utilisateur.nom = nomController.text;
+            utilisateur.telephone = telController.text;
+            String mail = mailController.text;
          //Mettre la modification de l'utilisateur
-            user?.verifyBeforeUpdateEmail(mailController.text);
+            user?.updateEmail(mail).then((_) {
+              // Succès : l'email de l'utilisateur a été mis à jour avec succès
+              print('Email mis à jour avec succès.');
+            }).catchError((error) {
+              // Erreur : afficher un message d'erreur ou traiter l'erreur selon les besoins
+              print('Erreur lors de la mise à jour de l\'email : $error');
+            });
             utilisateurService.updateUser(utilisateur);
           },
           style: ButtonStyle(
