@@ -33,6 +33,14 @@ Utilisateur({
       telephone: telephone,
     );
   }
+  Map<String, dynamic> toMap() {
+    return {
+      'prenom' : prenom,
+      'nom': nom,
+      'refUserAuth': refUserAuth,
+      'telephone': telephone,
+    };
+  }
 
 Utilisateur.fromMap(Map<String, dynamic> utilisateurMap) :
       prenom = utilisateurMap['prenom'],

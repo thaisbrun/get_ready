@@ -168,6 +168,8 @@ class _MyAccountState extends State<MyAccount> {
         child: ElevatedButton(
           onPressed: () async {
          //Mettre la modification de l'utilisateur
+            user?.verifyBeforeUpdateEmail(mailController.text);
+            utilisateurService.updateUser(utilisateur);
           },
           style: ButtonStyle(
             backgroundColor: MaterialStatePropertyAll(Colors.red[200]!),

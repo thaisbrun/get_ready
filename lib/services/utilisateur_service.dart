@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/user_model.dart';
 
 class UtilisateurService{
-
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
    Future<Utilisateur?> getUserLinkToFirestore(String? refUserAuth) async {
     if (refUserAuth == null) return null;
 
@@ -19,4 +19,10 @@ class UtilisateurService{
     } else {
       return null; // Aucun utilisateur trouvé avec la clé donnée
     }   }
+   updateUser(Utilisateur userData) async {
+     await _db.collection("Utilisateur").doc(userData.refUserAuth).update(
+         userData.toMap());
+   }
+
+
 }

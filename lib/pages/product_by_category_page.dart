@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_ready/main.dart';
 import 'package:get_ready/models/subcategory_model.dart';
+import 'package:get_ready/services/favori_service.dart';
+import '../models/favs_models.dart';
+import '../models/ingredient_model.dart';
 import '../models/product_model.dart';
 import '../services/product_service.dart';
 import '../services/subcategory_service.dart';
@@ -22,6 +26,7 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
   int _selectedIndex = 0;
   List<Product>? productsList;
   ProductService service = ProductService();
+  FavService favService = FavService();
   SubCategoryService subCategoryService = SubCategoryService();
   SubCategory? selectedSubCategory; // Variable pour stocker la sous-catégorie sélectionnée
   List<SubCategory>? listSubCategory;
@@ -95,6 +100,93 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
   }
   @override
   Widget build(BuildContext context) {
+    Future<void> showProductInformationsDialog(Product product) async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: true, // user peut cliquer a coté pour fermer
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Informations produit', selectionColor: Colors.red[200]!,
+                style: const TextStyle(fontWeight: FontWeight.bold)),
+            content:
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  Image.asset('assets/images/imageTest.jpg'),
+                  ListBody(
+                    children: <Widget>[
+                      Text('\nProduit ${product.subCategory?.name} - ${product.brand?.libelle.toUpperCase()} '),
+                      Text('${product.libelle} \n', selectionColor: Colors.red[200]!,
+                          style: TextStyle(fontWeight: FontWeight.bold,
+                              color: Colors.red[200]!,
+                              fontSize: 18)),
+                      Text('${product.prix.toString()} €',
+                        textAlign: TextAlign.right,
+                        style: const TextStyle(fontWeight: FontWeight.bold,
+                            color: Colors.pink,
+                            fontSize: 20),),
+                      Text(product.mesure,
+                          textAlign: TextAlign.right,
+                          style: const TextStyle(fontStyle: FontStyle.italic)
+                      ),
+                      Text('Description ',
+                          style: TextStyle(fontWeight: FontWeight.normal,
+                              color: Colors.red[200]!,
+                              fontSize: 12)),
+                      Text(product.description),
+                      Text("\nConseils d'utilisation ",
+                          style: TextStyle(fontWeight: FontWeight.normal,
+                              color: Colors.red[200]!,
+                              fontSize: 12)),
+                      Text(product.conseilUtilisation!),
+                      Text("\nIngrédients ",
+                          style: TextStyle(fontWeight: FontWeight.normal,
+                              color: Colors.red[200]!,
+                              fontSize: 12)),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: List.generate(
+                          product.listIngredients.length,
+                              (index) => FutureBuilder<Ingredient?>(
+                            future: product.listIngredients[index],
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState == ConnectionState.done) {
+                                final ingredient = snapshot.data;
+                                if (ingredient != null) {
+                                  return Text(ingredient.libelle);
+                                }
+                              }
+                              return const CircularProgressIndicator(); // Affiche une indication de chargement en attendant la résolution du Future
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll(Colors.red[200]!),
+                  foregroundColor: const MaterialStatePropertyAll(Colors.white),
+                ),
+                onPressed: () {
+                },
+                child: const Text('Ajouter au panier', selectionColor: Colors.white),
+              ),
+              TextButton(
+                child: const Text('Fermer'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text('Produits'),
@@ -153,7 +245,7 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
               final ingredient = index < listIngredients.length ? listIngredients[index] : null;
 
                return Container(
-                height: 136,
+                height: 170,
                 margin:
                 const EdgeInsets.symmetric(horizontal: 16, vertical: 8.0),
                 decoration: BoxDecoration(
@@ -176,22 +268,39 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
                             const SizedBox(height: 8),
                             Text("${brand?.libelle.toUpperCase()} - ${subCategory?.name}",
                                 style:const TextStyle(fontStyle: FontStyle.italic)),
+                            Text('${product.prix.toString()} €',
+                              textAlign: TextAlign.right,
+                              style: const TextStyle(fontWeight: FontWeight.bold,
+                                  color: Colors.pink,
+                                  fontSize: 20),),
                             const SizedBox(height: 8),
                             Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icons.favorite_border,
-                                Icons.open_in_new,
-                              ].map((e) {
-                                return InkWell(
-                                  onTap: () {},
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(right: 8.0),
-                                    child: Icon(e, size: 16),
-                                  ),
-                                );
-                              }).toList(),
-                            )
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  IconButton(iconSize: 22, padding: const EdgeInsets.only(right: 8.0),
+                                      icon: const Icon(Icons.favorite_border),
+                                      color: Colors.pink,
+                                      onPressed: () {
+                                        favService.addFav(Fav(userId: FirebaseAuth.instance.currentUser?.uid,
+                                            productId: product.id, dateCreation: Timestamp.now(), activation: true));
+
+                                      }),
+                                  IconButton(iconSize: 22, padding: const EdgeInsets.only(right: 8.0),
+                                    icon: const Icon(Icons.open_in_new), onPressed: () {
+                                      showProductInformationsDialog(Product(
+                                        libelle: libelle,
+                                        description: description,
+                                        brand:brand,
+                                        subCategory: subCategory,
+                                        conseilUtilisation:conseilUtilisation,
+                                        mesure:mesure,
+                                        prix:prix,
+                                        listIngredients: listIngredients,
+                                      ));
+                                    },),
+                                ]
+                            ),
                           ],
                         )),
                     Container(
