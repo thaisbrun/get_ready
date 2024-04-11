@@ -83,16 +83,27 @@ class _MyHomePageState extends State<MyHomePage> {
         );
       }
       if(_selectedIndex==1) {
-        Navigator.of(context).pushReplacement(
+        if(FirebaseAuth.instance.currentUser != null){
+          Navigator.of(context).pushReplacement(
              MaterialPageRoute(builder: (context) => const MyCart()
             )
-        );
+        );}else{
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => const Connexion())
+          );
+        }
       }
       if(_selectedIndex==2) {
-        Navigator.of(context).pushReplacement(
+        if(FirebaseAuth.instance.currentUser != null){
+          Navigator.of(context).pushReplacement(
              MaterialPageRoute(builder: (context) => const MyFav()
             )
         );
+      }else{
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const Connexion())
+        );
+      }
       }
     if(_selectedIndex==3) {
       if(FirebaseAuth.instance.currentUser != null){

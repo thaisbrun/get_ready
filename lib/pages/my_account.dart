@@ -103,11 +103,14 @@ class _MyAccountState extends State<MyAccount> {
     child:Column(
     children: [
     Container(
-    margin: const EdgeInsets.only(bottom: 10),
+    margin: const EdgeInsets.only(bottom: 10, top:150),
     child: TextFormField(
-    decoration: const InputDecoration(
+    decoration: InputDecoration(
     labelText: "Prénom : ",
     border:OutlineInputBorder(),
+      enabledBorder:OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.red[200]!, width: 2.0),
+      ),
     ),
     validator: (value){
     if(value == null || value.isEmpty){
@@ -121,9 +124,12 @@ class _MyAccountState extends State<MyAccount> {
     Container(
     margin: const EdgeInsets.only(bottom: 10),
     child: TextFormField(
-    decoration: const InputDecoration(
+    decoration: InputDecoration(
     labelText: "Nom : ",
     border:OutlineInputBorder(),
+      enabledBorder:OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.red[200]!, width: 2.0),
+      ),
     ),
     validator: (value){
     if(value == null || value.isEmpty){
@@ -137,9 +143,12 @@ class _MyAccountState extends State<MyAccount> {
     Container(
     margin: const EdgeInsets.only(bottom: 10),
     child: TextFormField(
-    decoration: const InputDecoration(
+    decoration:  InputDecoration(
     labelText: "Téléphone : ",
     border:OutlineInputBorder(),
+      enabledBorder:OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.red[200]!, width: 2.0),
+      ),
     ),
     validator: (value){
     if(value == null || value.isEmpty){
@@ -151,11 +160,14 @@ class _MyAccountState extends State<MyAccount> {
     ),
     ),
     Container(
-    margin: const EdgeInsets.only(bottom: 10),
+    margin: const EdgeInsets.only(bottom: 40),
     child: TextFormField(
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
     labelText: "Mail : ",
     border:OutlineInputBorder(),
+        enabledBorder:OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.red[200]!, width: 2.0),
+        ),
     ),
     validator: (value){
     if(value == null || value.isEmpty){
@@ -167,6 +179,7 @@ class _MyAccountState extends State<MyAccount> {
     ),
     ),
       SizedBox(
+        width:double.infinity,
         child: ElevatedButton(
           onPressed: () async {
             utilisateur = utilisateur;
@@ -189,16 +202,20 @@ class _MyAccountState extends State<MyAccount> {
           style: ButtonStyle(
             backgroundColor: MaterialStatePropertyAll(Colors.red[200]!),
             foregroundColor: const MaterialStatePropertyAll(Colors.white),
+
           ),
-          child: const Text("Modifier mon profil", selectionColor: Colors.white),
-        ),
+
+          child: const Text("Modifier mon profil", selectionColor: Colors.white), ),
+
       ),
-      CupertinoButton(
+          Container(
+            margin: const EdgeInsets.only(top: 20.0),
+      child:CupertinoButton(
         child: const Text("Déconnexion"),
         onPressed: () {
           signOut();
         },
-      ),
+      ),),
     ],
     ),
     ),

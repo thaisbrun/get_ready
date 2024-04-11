@@ -42,7 +42,7 @@ class _ConnexionState extends State<Connexion> {
       child:Column(
       children: [
       Container(
-      margin: const EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(top:250,bottom: 10),
       child: TextFormField(
       decoration: InputDecoration(
       labelText: 'Mail  ',
@@ -61,7 +61,7 @@ class _ConnexionState extends State<Connexion> {
       ),
       ),
       Container(
-      margin: const EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(bottom: 40),
       child: TextFormField(
       decoration: InputDecoration(
       labelText: 'Mot de passe ',
@@ -110,7 +110,9 @@ class _ConnexionState extends State<Connexion> {
             child: const Text("Me connecter"),
           ),
         ),
-        CupertinoButton(
+        Container(
+          margin: const EdgeInsets.only(top: 20.0),
+        child:CupertinoButton(
           child: const Text("Créer mon compte"),
           onPressed: () {
             Navigator.push(
@@ -118,7 +120,7 @@ class _ConnexionState extends State<Connexion> {
               CupertinoPageRoute(builder: (context) => const RegisterPage()),
             );
           },
-        ),
+        ),)
       ],
       ),
       ),

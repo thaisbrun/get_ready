@@ -48,8 +48,15 @@ class _RegisterState extends State<RegisterPage> {
         key: _formKey,
         child:Column(
           children: [
+        Container(
+        margin: const EdgeInsets.only(top:50,bottom: 10),
+            child:Text('Inscrivez-vous dès maintenant ! ',
+                style: TextStyle(fontWeight: FontWeight.bold,
+                color: Colors.pink,
+                fontSize: 20))
+        ),
             Container(
-              margin: const EdgeInsets.only(bottom: 10),
+              margin: const EdgeInsets.only(top:50,bottom: 10),
               child: TextFormField(
                 decoration: InputDecoration(
                   labelText: "Prénom ",
@@ -125,7 +132,7 @@ class _RegisterState extends State<RegisterPage> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(bottom: 10),
+              margin: const EdgeInsets.only(bottom: 40),
               child: TextFormField(
                 decoration: InputDecoration(
                   labelText: 'Mot de passe ',
@@ -144,6 +151,7 @@ class _RegisterState extends State<RegisterPage> {
               ),
             ),
             SizedBox(
+              width:double.infinity,
               child: ElevatedButton(
               onPressed: () async {
                 try {
@@ -168,7 +176,7 @@ class _RegisterState extends State<RegisterPage> {
                   FocusScope.of(context).requestFocus(FocusNode());
             },
               style: ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(Colors.red[200]!),
+                backgroundColor: MaterialStatePropertyAll(Colors.red[200]!),
                 foregroundColor: const MaterialStatePropertyAll(Colors.white),
               ),
                 child: const Text("M'inscrire", selectionColor: Colors.white),
