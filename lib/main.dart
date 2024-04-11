@@ -293,71 +293,70 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
               ),
         ),
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              const DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Color(0xFFEF9A9A),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/logo.png"), // Remplacez "votre_image.jpg" par le chemin de votre image
+                  fit: BoxFit.cover,
                 ),
-                child: Text('Get Ready'),
+                color: Color(0xFFEF9A9A),
               ),
-              ListTile(
-                title: const Text('Produits teint'),
-                selected: _selectedIndex == 3,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'S06QeCJdPDMn7E4LavRK')),
-                  );
-                },
-              ),
-              ListTile(
-                title: const Text('Produits yeux'),
-                selected: _selectedIndex == 3,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'IJNzsCvZlQiYLgWsOT8k')),
-                  );
-                },
-              ),
-              ListTile(
-                title: const Text('Produits lèvres'),
-                selected: _selectedIndex == 0,
-                onTap: () {
-                  // Update the state of the app
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'zqlU4lCuCAfiu30KIH6h')),
-                  );
-                },
-              ),
-              ListTile(
-                title: const Text('Produits sourcils'),
-                selected: _selectedIndex == 3,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'3C5vfgtxttPvB0Nc79d2')),
-                  );
-                },
-              ),
-              ListTile(
-                title: const Text('Produits ongles'),
-                selected: _selectedIndex == 3,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'4UFwQChDvPHUrg7k8XiS')),
-                  );
-                },
-              ),
-            ],
-          ),
-
+              child: Text(''),
+            ),
+            ListTile(
+              title: const Text('Produits teint'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'S06QeCJdPDMn7E4LavRK')),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Produits yeux'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'IJNzsCvZlQiYLgWsOT8k')),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Produits lèvres'),
+              onTap: () {
+                // Update the state of the app
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'zqlU4lCuCAfiu30KIH6h')),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Produits sourcils'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'3C5vfgtxttPvB0Nc79d2')),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Produits ongles'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'4UFwQChDvPHUrg7k8XiS')),
+                );
+              },
+            ),
+          ],
         ),
+
+      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,

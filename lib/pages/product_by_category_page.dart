@@ -70,6 +70,15 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
       }
     });
   }
+  String getImagePath(String? id) {
+    if (id == 'S06QeCJdPDMn7E4LavRK') {
+      return 'assets/images/produitTeint.jpg';
+    } else if (id == 'IJNzsCvZlQiYLgWsOT8k') {
+      return 'assets/images/produitYeux.jpg';
+    }
+    else{
+      return 'pas de lien';}
+  }
   Future<void> loadProductWithBrandData() async {
     String categoryId = widget.categoryId;
     // Récupérer les données de Product depuis Firestore (par exemple avec retrieveProducts())
@@ -194,9 +203,10 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
       body:Center(
         child: Column(
           children: [
+            Image.asset(getImagePath(widget.categoryId)),
              Row(
               children: [
-        Center(
+                Center(
         child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Center(
@@ -338,7 +348,6 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
             ),
             ListTile(
               title: const Text('Produits teint'),
-              selected: _selectedIndex == 3,
               onTap: () {
                 Navigator.push(
                   context,
@@ -348,7 +357,6 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
             ),
             ListTile(
               title: const Text('Produits yeux'),
-              selected: _selectedIndex == 3,
               onTap: () {
                 Navigator.push(
                   context,
@@ -358,7 +366,6 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
             ),
             ListTile(
               title: const Text('Produits lèvres'),
-              selected: _selectedIndex == 0,
               onTap: () {
                 // Update the state of the app
                 Navigator.push(
@@ -369,7 +376,6 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
             ),
             ListTile(
               title: const Text('Produits sourcils'),
-              selected: _selectedIndex == 3,
               onTap: () {
                 Navigator.push(
                   context,
@@ -379,7 +385,6 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
             ),
             ListTile(
               title: const Text('Produits ongles'),
-              selected: _selectedIndex == 3,
               onTap: () {
                 Navigator.push(
                   context,

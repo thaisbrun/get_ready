@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get_ready/pages/product_by_category_page.dart';
 import 'package:get_ready/services/favori_service.dart';
 
 import '../main.dart';
@@ -228,6 +229,70 @@ class _MyFavState extends State<MyFav> {
       )
         ]
     )
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/logo.png"), // Remplacez "votre_image.jpg" par le chemin de votre image
+                  fit: BoxFit.cover,
+                ),
+                color: Color(0xFFEF9A9A),
+              ),
+              child: Text(''),
+            ),
+            ListTile(
+              title: const Text('Produits teint'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'S06QeCJdPDMn7E4LavRK')),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Produits yeux'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'IJNzsCvZlQiYLgWsOT8k')),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Produits lèvres'),
+              onTap: () {
+                // Update the state of the app
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'zqlU4lCuCAfiu30KIH6h')),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Produits sourcils'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'3C5vfgtxttPvB0Nc79d2')),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Produits ongles'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'4UFwQChDvPHUrg7k8XiS')),
+                );
+              },
+            ),
+          ],
+        ),
+
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

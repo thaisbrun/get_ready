@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_ready/main.dart';
 import 'package:get_ready/pages/connexion.dart';
+import 'package:get_ready/pages/product_by_category_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -134,6 +135,7 @@ class _RegisterState extends State<RegisterPage> {
             Container(
               margin: const EdgeInsets.only(bottom: 40),
               child: TextFormField(
+                obscureText: true,
                 decoration: InputDecoration(
                   labelText: 'Mot de passe ',
                   hintText: 'Entrez votre mdp',
@@ -198,7 +200,72 @@ class _RegisterState extends State<RegisterPage> {
         ),
       ),
     ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/logo.png"), // Remplacez "votre_image.jpg" par le chemin de votre image
+                  fit: BoxFit.cover,
+                ),
+                color: Color(0xFFEF9A9A),
+              ),
+              child: Text(''),
+            ),
+            ListTile(
+              title: const Text('Produits teint'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'S06QeCJdPDMn7E4LavRK')),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Produits yeux'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'IJNzsCvZlQiYLgWsOT8k')),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Produits lèvres'),
+              onTap: () {
+                // Update the state of the app
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'zqlU4lCuCAfiu30KIH6h')),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Produits sourcils'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'3C5vfgtxttPvB0Nc79d2')),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Produits ongles'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'4UFwQChDvPHUrg7k8XiS')),
+                );
+              },
+            ),
+          ],
+        ),
+
+      ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: const <BottomNavigationBarItem>[
@@ -211,13 +278,18 @@ class _RegisterState extends State<RegisterPage> {
             label: 'Mon Panier',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Mes favoris',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.supervised_user_circle_sharp),
             label: 'Mon Compte',
           )
         ],
         selectedItemColor: Colors.red[200],
-      ),
-    );
+
+
+      ),    );
   }
 }
 

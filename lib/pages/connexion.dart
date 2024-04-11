@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_ready/main.dart';
+import 'package:get_ready/pages/product_by_category_page.dart';
 import 'package:get_ready/pages/register.dart';
 
 class Connexion extends StatefulWidget {
@@ -36,13 +37,13 @@ class _ConnexionState extends State<Connexion> {
       title:const Text('Connexion'),
           backgroundColor: Colors.red[200]!),
      body:Container(
-          margin:const EdgeInsets.all(20),
       child: Form(
       key: _formKey,
       child:Column(
       children: [
-      Container(
-      margin: const EdgeInsets.only(top:250,bottom: 10),
+        Image.asset("assets/images/getready2.png"),
+        Container(
+          margin: const EdgeInsets.only(bottom: 10, top:50, left:20, right:20),
       child: TextFormField(
       decoration: InputDecoration(
       labelText: 'Mail  ',
@@ -61,10 +62,11 @@ class _ConnexionState extends State<Connexion> {
       ),
       ),
       Container(
-      margin: const EdgeInsets.only(bottom: 40),
+        margin: const EdgeInsets.only(bottom: 30,left:20, right:20),
       child: TextFormField(
+        obscureText: true,
       decoration: InputDecoration(
-      labelText: 'Mot de passe ',
+        labelText: 'Mot de passe ',
       hintText: 'Entrez votre mot de passe',
         enabledBorder:OutlineInputBorder(
           borderSide: BorderSide(color: Colors.red[200]!, width: 2.0),
@@ -80,10 +82,8 @@ class _ConnexionState extends State<Connexion> {
       ),
       ),
         SizedBox(
-          width:double.infinity,
           child:ElevatedButton(onPressed: () async {
             try {
-
               final mail = mailController.text;
               final mdp = mdpController.text;
               final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -106,6 +106,8 @@ class _ConnexionState extends State<Connexion> {
             style: ButtonStyle(
               backgroundColor: MaterialStatePropertyAll(Colors.red[200]!),
               foregroundColor: const MaterialStatePropertyAll(Colors.white),
+                padding: const MaterialStatePropertyAll<EdgeInsetsGeometry>(
+                  EdgeInsets.symmetric(horizontal: 50.0), )
             ),
             child: const Text("Me connecter"),
           ),
@@ -124,6 +126,70 @@ class _ConnexionState extends State<Connexion> {
       ],
       ),
       ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/logo.png"), // Remplacez "votre_image.jpg" par le chemin de votre image
+                  fit: BoxFit.cover,
+                ),
+                color: Color(0xFFEF9A9A),
+              ),
+              child: Text(''),
+            ),
+            ListTile(
+              title: const Text('Produits teint'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'S06QeCJdPDMn7E4LavRK')),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Produits yeux'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'IJNzsCvZlQiYLgWsOT8k')),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Produits lèvres'),
+              onTap: () {
+                // Update the state of the app
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'zqlU4lCuCAfiu30KIH6h')),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Produits sourcils'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'3C5vfgtxttPvB0Nc79d2')),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Produits ongles'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProductByCategoryPage(categoryId:'4UFwQChDvPHUrg7k8XiS')),
+                );
+              },
+            ),
+          ],
+        ),
+
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
