@@ -88,6 +88,7 @@ class _MyCartState extends State<MyCart> {
         backgroundColor: Colors.red[200]!,),
       body: Column(
         children: [
+          Image.asset("assets/images/panier.png"),
           Flexible(
             child:ListView.builder(
               itemCount: productsList?.length,
@@ -130,7 +131,7 @@ class _MyCartState extends State<MyCart> {
                                 mainAxisSize: MainAxisSize.min,
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
-                                  const Text('Quantité : '),
+                                  const Text('Quantité : 1 '),
                                   IconButton(iconSize: 16, padding: const EdgeInsets.only(right: 8.0),
                                     icon: const Icon(Icons.add), onPressed: () {  }),
                                   IconButton(iconSize: 16, padding: const EdgeInsets.only(right: 8.0),
@@ -178,7 +179,6 @@ class _MyCartState extends State<MyCart> {
         ],
 
       ),
-
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,

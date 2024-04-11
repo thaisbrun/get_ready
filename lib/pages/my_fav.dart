@@ -167,6 +167,7 @@ class _MyFavState extends State<MyFav> {
       body: Center(
         child: Column(
           children: [
+            Image.asset("assets/images/fav.jpg"),
             const Padding(padding: EdgeInsets.all(16.0)),
             Flexible(
               child:ListView.builder(
@@ -179,13 +180,14 @@ class _MyFavState extends State<MyFav> {
                   final dateCreation = favori.dateCreation;
                   if (produit != null) {
                   return Card(
+                    color:Colors.pink.shade50,
                     margin: const EdgeInsets.all(10.0),
                       clipBehavior: Clip.antiAlias,
                       child: Column(
                           children: [
                             Image.asset(getImagePath(favori.productId)),
                             ListTile(
-                      title: Text(produit.libelle),
+                      title: Text(produit.libelle, style: TextStyle(color: Colors.pink, fontSize: 20),),
                       subtitle: Text(
                         ' Produit ${produit.subCategory!.name.toLowerCase()} de chez ${produit.brand!.libelle.toUpperCase()} ',
                         style: TextStyle(color: Colors.black.withOpacity(0.6)),
