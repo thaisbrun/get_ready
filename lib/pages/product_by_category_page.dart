@@ -107,6 +107,30 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
       listSubCategory = subCategories;
     });
   }
+  String getImagePathProduct(String? id) {
+    if (id == '5J6KpoFPbi2xDemurgsD') {
+      return 'assets/images/productImg/productOilstick.jpg';
+    } else if (id == 'AXg2ouAmz9t6115IFvdM') {
+      return 'assets/images/productImg/productMascara.jpg';
+    } else if(id == '1gqLDOIXVeM6wnntP6Bb'){
+      return 'assets/images/productImg/productBrowPencil.jpg';
+    }else if(id == 'Jl1qAWHLeThugMabIV2W'){
+      return 'assets/images/productImg/productLipstick.jpg';
+    }else if(id == 'NZdIIVNA12qcd6Yih48j'){
+      return 'assets/images/productImg/productGelbrow.jpg';
+    }else if(id == 'RrrVA4gkQDDLUqZE8qIF'){
+      return 'assets/images/productImg/productFakeNails.jpg';
+    }else if(id == 'TFkzSOQLxVuhIIhUyufD'){
+      return 'assets/images/productImg/productConcealer.jpg';
+    }else if(id == 'mztE3llC2MpQ7n8cxtLO'){
+      return 'assets/images/productImg/productPalette.jpg';
+    }else if(id == 'zlTmJS8SvxOLiyotcley'){
+      return 'assets/images/productImg/productPowder.jpg';
+    }
+    else{
+      return 'pas de lien';}
+  }
+
   @override
   Widget build(BuildContext context) {
     Future<void> showProductInformationsDialog(Product product) async {
@@ -121,7 +145,7 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
             SingleChildScrollView(
               child: Column(
                 children: [
-                  Image.asset('assets/images/imageTest.jpg'),
+                  Image.asset(getImagePathProduct(product.id)),
                   ListBody(
                     children: <Widget>[
                       Text('\nProduit ${product.subCategory?.name} - ${product.brand?.libelle.toUpperCase()} '),
@@ -271,7 +295,8 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
                           children: [
                             Text(
                               libelle,
-                              style: const TextStyle(fontWeight: FontWeight.bold),
+                              style:
+                              TextStyle(fontWeight: FontWeight.bold, color: Colors.red[200], fontSize: 18),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -319,9 +344,9 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
                         decoration: BoxDecoration(
                             color: Colors.grey,
                             borderRadius: BorderRadius.circular(8.0),
-                            image: const DecorationImage(
+                            image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: NetworkImage('item.imageUrl'),
+                              image: NetworkImage(getImagePathProduct(product.id)),
                             ))),
                   ],
                 ),
@@ -342,8 +367,10 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
           children: [
             const DrawerHeader(
               decoration: BoxDecoration(
-                color: Color(0xFFEF9A9A),
-              ),
+        image: DecorationImage(
+            image: AssetImage("assets/images/logo.png"), // Remplacez "votre_image.jpg" par le chemin de votre image
+      fit: BoxFit.cover,
+    ),),
               child: Text('Get Ready'),
             ),
             ListTile(

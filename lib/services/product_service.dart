@@ -95,7 +95,6 @@ class ProductService {
   }
   //Fonction pour charger un produit et ses données
   static Future<Product> getProductWithData(Product product) async {
-
     Brand? brand = await BrandService.fetchBrandData(product.brandId);
     SubCategory? subCategory = await SubCategoryService.fetchSubCategoryData(product.subCategoryId);
     List<dynamic> ingredients = [];

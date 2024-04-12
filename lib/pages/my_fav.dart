@@ -41,14 +41,28 @@ class _MyFavState extends State<MyFav> {
       favList = favorisWithBrandData;
     });
   }
-  String getImagePath(String? id) {
-    if (id == 'AXg2ouAmz9t6115IFvdM') {
-      return 'assets/images/homeImg.jpg';
-    } else if (id == 'mztE3llC2MpQ7n8cxtLO') {
-      return 'assets/images/imageTest.jpg';
+  String getImagePathProduct(String? id) {
+    if (id == '5J6KpoFPbi2xDemurgsD') {
+      return 'assets/images/productImg/productOilstick.jpg';
+    } else if (id == 'AXg2ouAmz9t6115IFvdM') {
+      return 'assets/images/productImg/productMascara.jpg';
+    } else if(id == '1gqLDOIXVeM6wnntP6Bb'){
+      return 'assets/images/productImg/productBrowPencil.jpg';
+    }else if(id == 'Jl1qAWHLeThugMabIV2W'){
+      return 'assets/images/productImg/productLipstick.jpg';
+    }else if(id == 'NZdIIVNA12qcd6Yih48j'){
+      return 'assets/images/productImg/productGelbrow.jpg';
+    }else if(id == 'RrrVA4gkQDDLUqZE8qIF'){
+      return 'assets/images/productImg/productFakeNails.jpg';
+    }else if(id == 'TFkzSOQLxVuhIIhUyufD'){
+      return 'assets/images/productImg/productConcealer.jpg';
+    }else if(id == 'mztE3llC2MpQ7n8cxtLO'){
+      return 'assets/images/productImg/productPalette.jpg';
+    }else if(id == 'zlTmJS8SvxOLiyotcley'){
+      return 'assets/images/productImg/productPowder.jpg';
     }
     else{
-    return 'pas de lien';}
+      return 'pas de lien';}
   }
   void _onItemTapped(int index) {
     setState(() {
@@ -98,7 +112,7 @@ class _MyFavState extends State<MyFav> {
             SingleChildScrollView(
               child: Column(
                 children: [
-                  Image.asset('assets/images/imageTest.jpg'),
+                  Image.asset(getImagePathProduct(product.id)),
                   ListBody(
                     children: <Widget>[
                       Text('\nProduit ${product.subCategory?.name} - ${product.brand?.libelle.toUpperCase()} '),
@@ -185,7 +199,7 @@ class _MyFavState extends State<MyFav> {
                       clipBehavior: Clip.antiAlias,
                       child: Column(
                           children: [
-                            Image.asset(getImagePath(favori.productId)),
+                            Image.asset(getImagePathProduct(favori.productId)),
                             ListTile(
                       title: Text(produit.libelle, style: TextStyle(color: Colors.pink, fontSize: 20),),
                       subtitle: Text(

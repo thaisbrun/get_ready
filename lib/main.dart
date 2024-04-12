@@ -119,6 +119,29 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  String getImagePathProduct(String? id) {
+    if (id == '5J6KpoFPbi2xDemurgsD') {
+      return 'assets/images/productImg/productOilstick.jpg';
+    } else if (id == 'AXg2ouAmz9t6115IFvdM') {
+      return 'assets/images/productImg/productMascara.jpg';
+    } else if(id == '1gqLDOIXVeM6wnntP6Bb'){
+      return 'assets/images/productImg/productBrowPencil.jpg';
+    }else if(id == 'Jl1qAWHLeThugMabIV2W'){
+      return 'assets/images/productImg/productLipstick.jpg';
+    }else if(id == 'NZdIIVNA12qcd6Yih48j'){
+      return 'assets/images/productImg/productGelbrow.jpg';
+    }else if(id == 'RrrVA4gkQDDLUqZE8qIF'){
+      return 'assets/images/productImg/productFakeNails.jpg';
+    }else if(id == 'TFkzSOQLxVuhIIhUyufD'){
+      return 'assets/images/productImg/productConcealer.jpg';
+    }else if(id == 'mztE3llC2MpQ7n8cxtLO'){
+      return 'assets/images/productImg/productPalette.jpg';
+    }else if(id == 'zlTmJS8SvxOLiyotcley'){
+      return 'assets/images/productImg/productPowder.jpg';
+    }
+    else{
+      return 'pas de lien';}
+  }
   @override
   Widget build(BuildContext context) {
     Future<void> showProductInformationsDialog(Product product) async {
@@ -133,7 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
             SingleChildScrollView(
               child: Column(
                 children: [
-                  Image.asset('assets/images/imageTest.jpg'),
+                  Image.asset(getImagePathProduct(product.id)),
                   ListBody(
                     children: <Widget>[
                       Text('\nProduit ${product.subCategory?.name} - ${product.brand?.libelle.toUpperCase()} '),
@@ -251,6 +274,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         itemCount: productsList!.length,
                         itemBuilder: (context, index) {
                           final product = productsList![index];
+                          final id = product.id;
                           final libelle = product.libelle;
                           final brand = product.brand;
                           final subCategory = product.subCategory;
@@ -263,8 +287,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           return Card(
                             color:Colors.red[100]!,
                             child: ListTile(
-                              leading: const CircleAvatar(
-                                backgroundImage: AssetImage("assets/images/homeImg.jpg"),
+                              leading: CircleAvatar(
+                                backgroundImage: AssetImage(getImagePathProduct(id)),
                               ),
                               dense: true,
                               visualDensity: const VisualDensity(vertical: 1),
@@ -274,6 +298,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   icon:const Icon(Icons.open_in_new),
                              onPressed: () {
                                 showProductInformationsDialog(Product(
+                                  id:id,
                                   libelle: libelle,
                                     description: description,
                                     brand:brand,
