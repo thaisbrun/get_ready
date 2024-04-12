@@ -199,7 +199,7 @@ class _MyFavState extends State<MyFav> {
                       clipBehavior: Clip.antiAlias,
                       child: Column(
                           children: [
-                            Image.asset(getImagePathProduct(favori.productId)),
+                            Image.asset(getImagePathProduct(favori.productId), width:500, height: 300),
                             ListTile(
                       title: Text(produit.libelle, style: TextStyle(color: Colors.pink, fontSize: 20),),
                       subtitle: Text(

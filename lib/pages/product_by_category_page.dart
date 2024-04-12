@@ -268,6 +268,7 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
             itemCount: productsList?.length,
             itemBuilder: (BuildContext context, int index) {
               final product = productsList![index];
+              final id = product.id;
               final libelle = product.libelle;
               final brand = product.brand;
               final subCategory = product.subCategory;
@@ -283,6 +284,7 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
                 margin:
                 const EdgeInsets.symmetric(horizontal: 16, vertical: 8.0),
                 decoration: BoxDecoration(
+                    color:Colors.pink.shade50,
                     border: Border.all(color: const Color(0xFFE0E0E0)),
                     borderRadius: BorderRadius.circular(8.0)),
                 padding: const EdgeInsets.all(8),
@@ -324,6 +326,7 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
                                   IconButton(iconSize: 22, padding: const EdgeInsets.only(right: 8.0),
                                     icon: const Icon(Icons.open_in_new), onPressed: () {
                                       showProductInformationsDialog(Product(
+                                        id:id,
                                         libelle: libelle,
                                         description: description,
                                         brand:brand,
@@ -346,7 +349,7 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
                             borderRadius: BorderRadius.circular(8.0),
                             image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: NetworkImage(getImagePathProduct(product.id)),
+                              image: AssetImage(getImagePathProduct(product.id)),
                             ))),
                   ],
                 ),
