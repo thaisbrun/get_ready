@@ -50,8 +50,8 @@ class _RegisterState extends State<RegisterPage> {
         child:Column(
           children: [
         Container(
-        margin: const EdgeInsets.only(top:50,bottom: 10),
-            child:Text('Inscrivez-vous dès maintenant ! ',
+        margin: const EdgeInsets.only(top:40,bottom: 10),
+            child:const Text('Inscrivez-vous dès maintenant ! ',
                 style: TextStyle(fontWeight: FontWeight.bold,
                 color: Colors.pink,
                 fontSize: 20))

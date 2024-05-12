@@ -75,6 +75,10 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
       return 'assets/images/produitTeint.jpg';
     } else if (id == 'IJNzsCvZlQiYLgWsOT8k') {
       return 'assets/images/produitYeux.jpg';
+    }else if (id == 'zqlU4lCuCAfiu30KIH6h') {
+      return 'assets/images/produitLevres.jpg';
+    }else if (id == '4UFwQChDvPHUrg7k8XiS') {
+      return 'assets/images/produitOngles.jpg';
     }
     else{
       return 'pas de lien';}

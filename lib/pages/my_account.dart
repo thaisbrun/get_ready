@@ -110,7 +110,7 @@ class _MyAccountState extends State<MyAccount> {
     child: TextFormField(
     decoration: InputDecoration(
     labelText: "Prénom : ",
-    border:OutlineInputBorder(),
+    border:const OutlineInputBorder(),
       enabledBorder:OutlineInputBorder(
         borderSide: BorderSide(color: Colors.red[200]!, width: 2.0),
       ),
@@ -129,7 +129,7 @@ class _MyAccountState extends State<MyAccount> {
     child: TextFormField(
     decoration: InputDecoration(
     labelText: "Nom : ",
-    border:OutlineInputBorder(),
+    border:const OutlineInputBorder(),
       enabledBorder:OutlineInputBorder(
         borderSide: BorderSide(color: Colors.red[200]!, width: 2.0),
       ),
@@ -148,7 +148,7 @@ class _MyAccountState extends State<MyAccount> {
     child: TextFormField(
     decoration:  InputDecoration(
     labelText: "Téléphone : ",
-    border:OutlineInputBorder(),
+    border:const OutlineInputBorder(),
       enabledBorder:OutlineInputBorder(
         borderSide: BorderSide(color: Colors.red[200]!, width: 2.0),
       ),
@@ -167,7 +167,7 @@ class _MyAccountState extends State<MyAccount> {
     child: TextFormField(
       decoration: InputDecoration(
     labelText: "Mail : ",
-    border:OutlineInputBorder(),
+    border:const OutlineInputBorder(),
         enabledBorder:OutlineInputBorder(
           borderSide: BorderSide(color: Colors.red[200]!, width: 2.0),
         ),

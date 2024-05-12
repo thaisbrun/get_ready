@@ -201,7 +201,7 @@ class _MyFavState extends State<MyFav> {
                           children: [
                             Image.asset(getImagePathProduct(favori.productId), width:500, height: 300),
                             ListTile(
-                      title: Text(produit.libelle, style: TextStyle(color: Colors.pink, fontSize: 20),),
+                      title: Text(produit.libelle, style: const TextStyle(color: Colors.pink, fontSize: 20),),
                       subtitle: Text(
                         ' Produit ${produit.subCategory!.name.toLowerCase()} de chez ${produit.brand!.libelle.toUpperCase()} ',
                         style: TextStyle(color: Colors.black.withOpacity(0.6)),
