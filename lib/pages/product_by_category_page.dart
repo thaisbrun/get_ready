@@ -79,9 +79,12 @@ class _ProductByCategoryPageState extends State<ProductByCategoryPage> {
       return 'assets/images/produitLevres.jpg';
     }else if (id == '4UFwQChDvPHUrg7k8XiS') {
       return 'assets/images/produitOngles.jpg';
+    }else if(id == '3C5vfgtxttPvB0Nc79d2'){
+      return 'assets/images/produitsSourcils.jpg';
     }
-    else{
-      return 'pas de lien';}
+    else {
+      return 'pas de lien';
+    }
   }
   Future<void> loadProductWithBrandData() async {
     String categoryId = widget.categoryId;
