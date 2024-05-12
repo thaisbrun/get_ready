@@ -22,6 +22,7 @@ class UtilisateurService{
    updateUser(Utilisateur userData) async {
      await _db.collection("Utilisateurs").doc(userData.id).update(
          userData.toMap());
+
    }
 
 

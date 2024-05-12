@@ -195,6 +195,8 @@ class _MyAccountState extends State<MyAccount> {
             user?.updateEmail(mail).then((_) {
               // Succès : l'email de l'utilisateur a été mis à jour avec succès
               print('Email mis à jour avec succès.');
+              const snackBar = SnackBar(content: Text('Vos informations de profil ont bien été modifiées.'));
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }).catchError((error) {
               // Erreur : afficher un message d'erreur ou traiter l'erreur selon les besoins
               print('Erreur lors de la mise à jour de l\'email : $error');
@@ -208,7 +210,9 @@ class _MyAccountState extends State<MyAccount> {
               EdgeInsets.symmetric(horizontal: 50.0), )
           ),
 
-          child: const Text("Modifier mon profil", selectionColor: Colors.white), ),
+          child: const Text("Modifier mon profil", selectionColor: Colors.white),
+
+        ),
 
       ),
           Container(

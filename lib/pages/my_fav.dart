@@ -228,6 +228,9 @@ class _MyFavState extends State<MyFav> {
                               foregroundColor: const MaterialStatePropertyAll(Colors.white),
                             ),
                             onPressed: () {
+
+                              const snackBar = SnackBar(content: Text('Le produit a été rajouté au panier avec succès !'));
+                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
                             },
                             child: const Text('Ajouter au panier', selectionColor: Colors.white),
                           ),
