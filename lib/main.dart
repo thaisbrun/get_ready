@@ -218,6 +218,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () {
                   favService.addFav(Fav(userId: FirebaseAuth.instance.currentUser?.uid,
                       productId: product.id, dateCreation: Timestamp.now(), activation: true));
+                  const snackBar = SnackBar(content: Text('Le produit a été rajouté en favori avec succès !'));
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
                 },
               ),
               ElevatedButton(
@@ -226,6 +229,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   foregroundColor: const MaterialStatePropertyAll(Colors.white),
                 ),
                 onPressed: () {
+                  const snackBar = SnackBar(content: Text('Le produit a été rajouté au panier avec succès !'));
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 },
                 child: const Text('Ajouter au panier', selectionColor: Colors.white),
               ),
