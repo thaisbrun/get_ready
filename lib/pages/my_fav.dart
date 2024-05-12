@@ -215,6 +215,9 @@ class _MyFavState extends State<MyFav> {
                             icon:const Icon(Icons.close_rounded),
                             onPressed: () {
                               favService.deleteFav(favori.id);
+                              setState(() {
+                                favList?.removeWhere((element) => element.id == favori.id);
+                              });
                             },
                           ),
                           const Text('Supprimer favoris'),

@@ -220,7 +220,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       productId: product.id, dateCreation: Timestamp.now(), activation: true));
                   const snackBar = SnackBar(content: Text('Le produit a été rajouté en favori avec succès !'));
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
+                  setState(() {
+                  });
                 },
               ),
               ElevatedButton(
